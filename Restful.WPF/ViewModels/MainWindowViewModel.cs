@@ -4,42 +4,37 @@ using Prism.Regions;
 using Restful.Core.Constant;
 using Restful.Core.Constants;
 using Restful.Core.ViewModels;
+using Restful.WPF.Theme;
 using Restful.WPF.Views;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Restful.WPF.ViewModels
 {
     public partial class MainWindowViewModel : RegionViewModelBase
     {
+        private readonly IThemeService _themeService;
         public DelegateCommand<string> MenuItemClicked { get; set; }
-        public DelegateCommand<object> ThemeButtonClicked { get; set; }
+        public DelegateCommand ThemeButtonClicked { get; set; }
 
-        public MainWindowViewModel(IRegionManager regionManager) : base(regionManager)
+        public MainWindowViewModel(IRegionManager regionManager, IThemeService themeService) : base(regionManager)
         {
             Title = Constants.ApplicationTitle;
             MenuItemClicked = new DelegateCommand<string>(OnMenuItemClickedExecuted);
-            ThemeButtonClicked = new DelegateCommand<object>(OnThemeButtonClickedExecuted);
+            ThemeButtonClicked = new DelegateCommand(OnThemeButtonClickedExecuted);
+           _themeService = themeService;
         }
 
         private void OnMenuItemClickedExecuted(string view)
         {
-
             if (!String.IsNullOrEmpty(view))
                 _regionManager.RequestNavigate(Regions.MainContentRegion, view);
         }
 
-        private void OnThemeButtonClickedExecuted(object obj)
+        private void OnThemeButtonClickedExecuted()
         {
-
-            // Detect current theme and change accordingly
-            var currentTheme = ThemeManager.Current.DetectTheme(Application.Current);
-            if (currentTheme != null)
-            {
-                var newThemeName = currentTheme.BaseColorScheme == "Light" ? "Dark.Red" : "Light.Red";
-                ThemeManager.Current.ChangeTheme(Application.Current, newThemeName);
-            }
-
+            _themeService.ChangeApplicationTheme();
         }
 
     }

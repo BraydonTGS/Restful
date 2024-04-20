@@ -3,6 +3,7 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
 using Restful.RequestsModule;
+using Restful.WPF.Theme;
 using Restful.WPF.Views;
 using System.Windows;
 
@@ -21,7 +22,7 @@ namespace Restful.WPF
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.RegisterSingleton<IThemeService, ThemeService>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
