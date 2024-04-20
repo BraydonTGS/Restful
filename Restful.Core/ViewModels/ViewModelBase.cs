@@ -1,8 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Prism.Navigation;
 
 namespace Restful.Core.ViewModels
 {
-    public partial class ViewModelBase : ObservableObject
+    public partial class ViewModelBase : ObservableObject, IDestructible
     {
         [ObservableProperty]
         private string _title = string.Empty;
@@ -14,5 +15,7 @@ namespace Restful.Core.ViewModels
         public bool IsNotBusy => !IsBusy;
 
         public ViewModelBase() { }
+
+        public virtual void Destroy() { }
     }
 }

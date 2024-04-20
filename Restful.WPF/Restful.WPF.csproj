@@ -6,9 +6,12 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.10" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Restful.Core\Restful.Core.csproj" />
+    <ProjectReference Include="..\Restful.RequestsModule\Restful.RequestsModule.csproj" />
   </ItemGroup>
 </Project>
