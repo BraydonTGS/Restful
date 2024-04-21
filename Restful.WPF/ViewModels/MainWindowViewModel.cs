@@ -1,14 +1,10 @@
-﻿using ControlzEx.Theming;
-using Prism.Commands;
+﻿using Prism.Commands;
 using Prism.Regions;
 using Restful.Core.Constant;
 using Restful.Core.Constants;
 using Restful.Core.ViewModels;
 using Restful.WPF.Theme;
-using Restful.WPF.Views;
 using System;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace Restful.WPF.ViewModels
 {
@@ -18,12 +14,18 @@ namespace Restful.WPF.ViewModels
         public DelegateCommand<string> MenuItemClicked { get; set; }
         public DelegateCommand ThemeButtonClicked { get; set; }
 
+        public DelegateCommand<string> AccentButtonClicked { get; set; }
+
         public MainWindowViewModel(IRegionManager regionManager, IThemeService themeService) : base(regionManager)
         {
             Title = Constants.ApplicationTitle;
+
+            _themeService = themeService;
+
             MenuItemClicked = new DelegateCommand<string>(OnMenuItemClickedExecuted);
             ThemeButtonClicked = new DelegateCommand(OnThemeButtonClickedExecuted);
-           _themeService = themeService;
+            AccentButtonClicked = new DelegateCommand<string>(OnAccentButtonClickedExecuted);
+
         }
 
         private void OnMenuItemClickedExecuted(string view)
@@ -35,6 +37,11 @@ namespace Restful.WPF.ViewModels
         private void OnThemeButtonClickedExecuted()
         {
             _themeService.ChangeApplicationTheme();
+        }
+
+        private void OnAccentButtonClickedExecuted(string str)
+        {
+            _themeService.ChangeApplicationAccent(str);
         }
 
     }

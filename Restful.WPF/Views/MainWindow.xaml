@@ -10,6 +10,7 @@
     xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:sys="clr-namespace:System;assembly=netstandard"
+    xmlns:theme="clr-namespace:Restful.WPF.Theme"
     Title="{Binding Title}"
     Width="1200"
     Height="700"
@@ -20,17 +21,6 @@
     ResizeMode="CanResizeWithGrip"
     ShowIconOnTitleBar="True"
     WindowStartupLocation="CenterScreen">
-
-    <Window.Resources>
-        <!--  Define the list of themes directly in XAML  -->
-        <x:Array x:Key="Themes" Type="{x:Type sys:String}">
-            <sys:String>Red</sys:String>
-            <sys:String>Green</sys:String>
-            <sys:String>Blue</sys:String>
-            <sys:String>Orange</sys:String>
-            <sys:String>Yellow</sys:String>
-        </x:Array>
-    </Window.Resources>
 
     <!--  Window Icon  -->
     <mah:MetroWindow.IconTemplate>
@@ -49,6 +39,7 @@
     <!--  Toolbar Items  -->
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
+            <!--  Save  -->
             <Button ToolTip="Save">
                 <iconPacks:PackIconModern
                     Width="20"
@@ -58,6 +49,7 @@
                     VerticalAlignment="Center"
                     Kind="Save" />
             </Button>
+            <!--  Theme Button  -->
             <Button Command="{Binding ThemeButtonClicked}" ToolTip="Change Theme">
                 <iconPacks:PackIconModern
                     Width="20"
@@ -67,13 +59,27 @@
                     VerticalAlignment="Center"
                     Kind="Lightbulb" />
             </Button>
+            <!--  Accent Button  -->
             <mah:DropDownButton
                 x:Name="AccentSelector"
-                VerticalAlignment="Center"
-                ItemsSource="{StaticResource Themes}"
+                Height="auto"
+                HorizontalContentAlignment="Left"
+                VerticalContentAlignment="Center"
+                DisplayMemberPath="Name"
+                ItemsSource="{x:Static theme:ThemeAccents.Accents}"
                 ToolTip="Change Accent Color">
+                <mah:DropDownButton.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource {x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
+                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:DropDownButton}}, Path=DataContext.AccentButtonClicked}" />
+                        <Setter Property="CommandParameter" Value="{Binding Name}" />
+                    </Style>
+                </mah:DropDownButton.ItemContainerStyle>
                 <mah:DropDownButton.Icon>
-                    <iconPacks:PackIconMaterial Margin="6" Kind="Brush" />
+                    <iconPacks:PackIconMaterial
+                        Width="20"
+                        Height="20"
+                        Margin="4"
+                        Kind="Brush" />
                 </mah:DropDownButton.Icon>
             </mah:DropDownButton>
         </mah:WindowCommands>

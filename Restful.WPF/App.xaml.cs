@@ -16,7 +16,7 @@ namespace Restful.WPF
     {
         protected override Window CreateShell()
         {
-            ThemeManager.Current.ChangeTheme(this, "Dark.Red");
+            LoadApplicationTheme();
             return Container.Resolve<MainWindow>();
         }
 
@@ -28,6 +28,13 @@ namespace Restful.WPF
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             moduleCatalog.AddModule<ModuleRequestsModule>();
+        }
+
+        private void LoadApplicationTheme()
+        {
+            var themeService = Container.Resolve<IThemeService>();
+            var savedTheme = themeService.LoadCurrentThemeSettings();
+            ThemeManager.Current.ChangeTheme(this, savedTheme);
         }
     }
 }
