@@ -1,7 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Regions;
 using Restful.Core.Constant;
-using Restful.Core.Constants;
 using Restful.Core.ViewModels;
 using Restful.WPF.Theme;
 using System;

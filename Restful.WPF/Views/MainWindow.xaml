@@ -5,7 +5,7 @@
     xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     xmlns:controls="clr-namespace:Restful.WPF.Controls"
     xmlns:controlzex="urn:controlzex"
-    xmlns:global="clr-namespace:Restful.Core.Constants;assembly=Restful.Core"
+    xmlns:global="clr-namespace:Restful.Core.Constant;assembly=Restful.Core"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:prism="http://prismlibrary.com/"
@@ -101,6 +101,7 @@
         <!--  Main Region  -->
         <ContentControl
             Margin="100,50,0,0"
+            HorizontalAlignment="Center"
             Panel.ZIndex="0"
             prism:RegionManager.RegionName="{x:Static global:Regions.MainContentRegion}" />
 

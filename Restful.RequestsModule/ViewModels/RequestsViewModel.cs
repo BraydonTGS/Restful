@@ -8,5 +8,9 @@ namespace Restful.RequestsModule.ViewModels
         public RequestsViewModel(IRegionManager regionManager) : base(regionManager)
         {
         }
+        public override void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            
+        }
     }
 }

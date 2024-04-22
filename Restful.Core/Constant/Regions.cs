@@ -1,4 +1,4 @@
-﻿namespace Restful.Core.Constants
+﻿namespace Restful.Core.Constant
 {
     public static class Regions
     {
