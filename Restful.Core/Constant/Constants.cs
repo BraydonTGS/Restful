@@ -25,6 +25,6 @@
         public const string ColorIndigo = "Indigo";
         public const string ColorViolet = "Violet";
         public const string ColorPink = "Pink";
-        #endregion  
+        #endregion
     }
 }

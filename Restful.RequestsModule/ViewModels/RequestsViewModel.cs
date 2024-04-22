@@ -1,5 +1,7 @@
 ﻿using Prism.Regions;
+using Restful.Core.Constant;
 using Restful.Core.ViewModels;
+using Restful.RequestsModule.Views;
 
 namespace Restful.RequestsModule.ViewModels
 {
@@ -10,7 +12,18 @@ namespace Restful.RequestsModule.ViewModels
         }
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-            
+            NavigateToRequestsTree();
         }
+
+
+        #region NavigateToRequestsTree
+        /// <summary>
+        /// Navigate to the Requests Tree View
+        /// </summary>
+        private void NavigateToRequestsTree()
+        {
+            RequestNavigate(Regions.RequestsTreeRegion, nameof(RequestsTreeView));
+        }
+        #endregion
     }
 }

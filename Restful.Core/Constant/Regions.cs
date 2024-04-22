@@ -2,10 +2,14 @@
 {
     public static class Regions
     {
-        // Main //
+        #region Main
         public const string MainContentRegion = "Main_Content_Region";
+        #endregion
 
-        // Requests //
+        #region Requests
         public const string RequestsRegion = "Requests_Region";
+        public const string RequestsTreeRegion = "Requests_Tree_Region";
+        public const string RequestDetailsRegion = "Request_Details_Region";
+        #endregion
     }
 }

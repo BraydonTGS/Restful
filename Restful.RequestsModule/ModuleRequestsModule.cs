@@ -12,12 +12,15 @@ namespace Restful.RequestsModule
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var regionManager = containerProvider.Resolve<RegionManager>();
-            regionManager.RegisterViewWithRegion(Regions.RequestsRegion, typeof(RequestsView));
+            regionManager.RegisterViewWithRegion(Regions.RequestsTreeRegion, typeof(RequestsTreeView));
+            regionManager.RegisterViewWithRegion(Regions.RequestDetailsRegion, typeof(RequestDetailsView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<RequestsView, RequestsViewModel>();
+            containerRegistry.RegisterForNavigation<RequestsTreeView, RequestsTreeViewModel>();
+            containerRegistry.RegisterForNavigation<RequestDetailsView, RequestDetailsViewModel>();
         }
     }
 }
