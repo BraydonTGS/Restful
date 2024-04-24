@@ -15,38 +15,35 @@ namespace Restful.RequestsModule.Models
         private HttpMethod _httpMethod;
 
         [ObservableProperty]
-        private ObservableCollection<Parameters> _parameters;
+        private ObservableCollection<Parameter> _parameters;
+
+        [ObservableProperty]
+        private ObservableCollection<Header> _headers;
 
         public Request() { }
         public Request(string requestName)
-        { 
+        {
             Name = requestName;
-            Parameters = new ObservableCollection<Parameters> 
+            InitializeDefaultHeaders();
+            InitializeDefaultParameters();
+        }
+
+        private void InitializeDefaultHeaders()
+        {
+            Headers = new ObservableCollection<Header>
             {
-                new Parameters { Key = string.Empty, Value = string.Empty },
-                new Parameters { Key = string.Empty, Value = string.Empty },
-                new Parameters { Key = string.Empty, Value = string.Empty },
-                new Parameters { Key = string.Empty, Value = string.Empty },
-                new Parameters { Key = string.Empty, Value = string.Empty },
-                new Parameters { Key = string.Empty, Value = string.Empty },
-                new Parameters { Key = string.Empty, Value = string.Empty },
-                new Parameters { Key = string.Empty, Value = string.Empty }
+                new Header("Content-Type", "application/json", true),
+                new Header("Content-Length", "<calculated when request is sent>", true),
+                new Header("Host", "<calculated when request is sent>", true),
+                new Header("Accept", "*/*", true),
+                new Header("Accept-Encoding", "gzip, deflate, br", true),
+                new Header("Connection", "keep-alive", true)
             };
         }
-    }
 
-    public partial class Parameters : ObservableObject
-    {
-        [ObservableProperty]
-        private bool _enabled;
-
-        [ObservableProperty]
-        private string _key;
-
-        [ObservableProperty]
-        private string _value;
-
-        [ObservableProperty]
-        private string _description;
+        private void InitializeDefaultParameters()
+        {
+            Parameters = new ObservableCollection<Parameter>();
+        }
     }
 }
