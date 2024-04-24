@@ -20,6 +20,7 @@ namespace Restful.RequestsModule.ViewModels
         public RequestsTreeViewModel(
             IRegionManager regionManager) : base(regionManager)
         {
+            Requests = new ObservableCollection<Request>();
             RequestItemClicked = new DelegateCommand<Request>(OnRequestItemClicked);
         }
 
@@ -30,7 +31,7 @@ namespace Restful.RequestsModule.ViewModels
         /// <param name="navigationContext"></param>
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-            InitTestData();
+           // InitTestData();
         }
         #endregion
 

@@ -12,7 +12,6 @@ namespace Restful.WPF.ViewModels
         private readonly IThemeService _themeService;
         public DelegateCommand<string> MenuItemClicked { get; set; }
         public DelegateCommand ThemeButtonClicked { get; set; }
-
         public DelegateCommand<string> AccentButtonClicked { get; set; }
 
         public MainWindowViewModel(IRegionManager regionManager, IThemeService themeService) : base(regionManager)

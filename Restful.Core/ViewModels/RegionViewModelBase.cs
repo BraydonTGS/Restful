@@ -12,7 +12,6 @@ namespace Restful.Core.ViewModels
         public virtual bool IsNavigationTarget(NavigationContext navigationContext) => true;
         public virtual void OnNavigatedFrom(NavigationContext navigationContext) { }
         public virtual void OnNavigatedTo(NavigationContext navigationContext) { }
-
         public void RequestNavigate(string regionName, string viewName, NavigationParameters? parameters = null) 
         { 
             var uri = new Uri(viewName, UriKind.Relative);

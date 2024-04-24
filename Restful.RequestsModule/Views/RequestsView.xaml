@@ -25,26 +25,6 @@
             <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
 
-
-        <!--  Buttons Row  -->
-        <StackPanel
-            Grid.ColumnSpan="2"
-            HorizontalAlignment="Left"
-            Orientation="Horizontal">
-            <Button Margin="10,0,5,0" ToolTip="Add New Request">
-                <iconPacks:PackIconModern
-                    Width="12"
-                    Height="12"
-                    Kind="Add" />
-            </Button>
-            <Button Margin="10,0,5,0" ToolTip="Edit Request">
-                <iconPacks:PackIconModern
-                    Width="12"
-                    Height="12"
-                    Kind="Edit" />
-            </Button>
-        </StackPanel>
-
         <!--  Requests Tree Region  -->
         <ContentControl
             Grid.Row="1"
