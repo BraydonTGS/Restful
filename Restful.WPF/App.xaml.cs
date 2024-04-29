@@ -3,8 +3,10 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
 using Restful.RequestsModule;
+using Restful.WPF.Config;
 using Restful.WPF.Theme;
 using Restful.WPF.Views;
+using System;
 using System.Windows;
 
 namespace Restful.WPF
@@ -16,13 +18,15 @@ namespace Restful.WPF
     {
         protected override Window CreateShell()
         {
+            // Handle non-UI thread exceptions
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             LoadApplicationTheme();
             return Container.Resolve<MainWindow>();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<IThemeService, ThemeService>();
+            RegisterWpfAppServices.RegisterWpfServices(containerRegistry);
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
@@ -35,6 +39,17 @@ namespace Restful.WPF
             var themeService = Container.Resolve<IThemeService>();
             var savedTheme = themeService.LoadCurrentThemeSettings();
             ThemeManager.Current.ChangeTheme(this, savedTheme);
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            ShowExceptionDetails(e.ExceptionObject as Exception);
+        }
+
+        private void ShowExceptionDetails(Exception ex)
+        {
+            if (ex == null) return;
+            MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

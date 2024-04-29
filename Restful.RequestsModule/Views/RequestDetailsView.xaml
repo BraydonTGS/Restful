@@ -186,6 +186,7 @@
                 <TextBox
                     x:Name="responseTextBox"
                     Grid.Row="2"
+                    Foreground="Green"
                     Grid.ColumnSpan="2"
                     Width="750"
                     Height="450"

@@ -1,11 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Regions;
 using Restful.Core.ViewModels;
+using Restful.RequestsModule.Api;
 using Restful.RequestsModule.Models;
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Restful.RequestsModule.ViewModels
@@ -18,12 +17,12 @@ namespace Restful.RequestsModule.ViewModels
         [ObservableProperty]
         private string _results;
 
-        private readonly HttpClient _httpClient;
+        private readonly IApiService _apiService;
 
         public DelegateCommand SubmitButtonClicked { get; set; }
-        public RequestDetailsViewModel(IRegionManager regionManager) : base(regionManager)
+        public RequestDetailsViewModel(IRegionManager regionManager, IApiService apiService) : base(regionManager)
         {
-            _httpClient = new HttpClient();
+            _apiService = apiService;
             Request = new Request("Default");
             SubmitButtonClicked = new DelegateCommand(async () => await OnSubmitButtonClickedExecuted());
         }
@@ -31,34 +30,22 @@ namespace Restful.RequestsModule.ViewModels
         {
             if (navigationContext.Parameters.TryGetValue(typeof(Request).Name, out Request request))
             {
-
+                Request = request;
             }
-            if (Request is null)
-                Request = new Request();
+            Request ??= new Request();
         }
 
         private async Task OnSubmitButtonClickedExecuted()
         {
             try
             {
-                var url = Request.Url;
-                if (!string.IsNullOrEmpty(url))
-                {
-                    HttpResponseMessage response = await _httpClient.GetAsync(url);
-                    response.EnsureSuccessStatusCode();
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    var formattedJson = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseBody), Formatting.Indented);
-                    Results = formattedJson;
-                }
+                Results = await _apiService.ProcessRequestAsync(Request);
             }
-            catch (HttpRequestException e)
+            catch (Exception ex)
             {
-                Results = $"Error: {e.Message}";
+                Results = ex.Message.ToString();
             }
-            catch (Exception e)
-            {
-                Results = $"Unexpected error: {e.Message}";
-            }
+
         }
     }
 }
