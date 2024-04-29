@@ -6,6 +6,7 @@ using Restful.RequestsModule.Api;
 using Restful.RequestsModule.Models;
 using System;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Restful.RequestsModule.ViewModels
 {
@@ -43,7 +44,8 @@ namespace Restful.RequestsModule.ViewModels
             }
             catch (Exception ex)
             {
-                Results = ex.Message.ToString();
+                if (ex == null) return;
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
