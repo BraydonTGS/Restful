@@ -40,6 +40,7 @@ namespace Restful.RequestsModule.ViewModels
         {
             try
             {
+                if (!string.IsNullOrEmpty(Results)) Results = string.Empty;
                 Results = await _apiService.ProcessRequestAsync(Request);
             }
             catch (Exception ex)

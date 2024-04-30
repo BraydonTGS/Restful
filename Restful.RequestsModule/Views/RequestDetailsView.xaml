@@ -193,7 +193,6 @@
                     Margin="5"
                     VerticalAlignment="Top"
                     extensions:TextEditorExtensions.BoundText="{Binding Results}"
-                    Background="White"
                     FontWeight="Bold"
                     IsReadOnly="True"
                     ShowLineNumbers="True"
