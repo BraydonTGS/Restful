@@ -1,8 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Regions;
 using Restful.Core.Constant;
+using Restful.Core.Errors;
+using Restful.Core.Events;
+using Restful.Core.Models;
 using Restful.Core.ViewModels;
+using Restful.RequestsModule.Api;
 using Restful.RequestsModule.Models;
 using Restful.RequestsModule.Views;
 using System;
@@ -12,16 +17,26 @@ namespace Restful.RequestsModule.ViewModels
 {
     public partial class RequestsTreeViewModel : RegionViewModelBase
     {
+        private readonly IEventAggregator _eventAggregator;
+        private readonly IErrorHandler _errorHandler;
+
         [ObservableProperty]
         private ObservableCollection<Request> _requests;
 
         public DelegateCommand<Request> RequestItemClicked { get; set; }
 
         public RequestsTreeViewModel(
-            IRegionManager regionManager) : base(regionManager)
+            IRegionManager regionManager,
+            IEventAggregator eventAggregator,
+            IErrorHandler errorHandler) : base(regionManager)
         {
+            _eventAggregator = eventAggregator;
+            _errorHandler = errorHandler;
+
             Requests = new ObservableCollection<Request>();
             RequestItemClicked = new DelegateCommand<Request>(OnRequestItemClicked);
+
+            _eventAggregator.GetEvent<RequestSavedEvent>().Subscribe(OnRequestSavedEventPublished);
         }
 
         #region OnNavigatedTo
@@ -31,7 +46,7 @@ namespace Restful.RequestsModule.ViewModels
         /// <param name="navigationContext"></param>
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-           // InitTestData();
+            //InitTestData();
         }
         #endregion
 
@@ -53,6 +68,11 @@ namespace Restful.RequestsModule.ViewModels
             }
         }
         #endregion
+
+        private void OnRequestSavedEventPublished(IModel<Guid> model)
+        {
+            Requests.Add((Request)model);
+        }
 
         #region InitTestData
         /// <summary>

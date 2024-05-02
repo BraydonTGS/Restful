@@ -2,6 +2,7 @@
 using Prism.Modularity;
 using Prism.Regions;
 using Restful.Core.Constant;
+using Restful.Core.Errors;
 using Restful.RequestsModule.Api;
 using Restful.RequestsModule.ViewModels;
 using Restful.RequestsModule.Views;

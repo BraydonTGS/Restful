@@ -1,32 +1,47 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Regions;
+using Restful.Core.Constant;
+using Restful.Core.Errors;
+using Restful.Core.Events;
 using Restful.Core.ViewModels;
 using Restful.RequestsModule.Api;
 using Restful.RequestsModule.Models;
 using System;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace Restful.RequestsModule.ViewModels
 {
     public partial class RequestDetailsViewModel : RegionViewModelBase
     {
+        private readonly IApiService _apiService;
+        private readonly IEventAggregator _eventAggregator;
+        private readonly IErrorHandler _errorHandler;
+
         [ObservableProperty]
         private Request _request;
 
         [ObservableProperty]
         private string _results;
-
-        private readonly IApiService _apiService;
-
         public DelegateCommand SubmitButtonClicked { get; set; }
-        public RequestDetailsViewModel(IRegionManager regionManager, IApiService apiService) : base(regionManager)
+        public DelegateCommand SaveButtonClicked { get; set; }
+        public RequestDetailsViewModel(
+            IRegionManager regionManager,
+            IApiService apiService,
+            IEventAggregator eventAggregator,
+            IErrorHandler errorHandler) : base(regionManager)
         {
             _apiService = apiService;
-            Request = new Request("Default");
+            _eventAggregator = eventAggregator;
+            _errorHandler = errorHandler;
+
+            Request = new Request(Constants.Default);
+
             SubmitButtonClicked = new DelegateCommand(async () => await OnSubmitButtonClickedExecuted());
+            SaveButtonClicked = new DelegateCommand(async () => await OnSaveButtonClickedExecuted());
         }
+
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             if (navigationContext.Parameters.TryGetValue(typeof(Request).Name, out Request request))
@@ -45,10 +60,26 @@ namespace Restful.RequestsModule.ViewModels
             }
             catch (Exception ex)
             {
-                if (ex == null) return;
-                MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Results = string.Empty;
+                _errorHandler.DisplayExceptionMessage(ex);
             }
+        }
 
+        private async Task OnSaveButtonClickedExecuted()
+        {
+            try
+            {
+                // Simulate Saving the Result to the DB //
+                await Task.Delay(1000);
+                _eventAggregator.GetEvent<RequestSavedEvent>().Publish(Request);
+
+            }
+            catch (Exception ex)
+            {
+                Results = string.Empty;
+                _errorHandler.DisplayExceptionMessage(ex);
+                throw;
+            }
         }
     }
 }

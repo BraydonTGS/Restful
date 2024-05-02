@@ -35,28 +35,6 @@
             Margin="10"
             HorizontalAlignment="Left"
             ItemsSource="{Binding Requests}">
-            <ListView.Style>
-                <Style TargetType="ListView">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Requests.Count}" Value="0">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate>
-                                        <TextBlock
-                                            Margin="0,0,0,10"
-                                            Padding="5"
-                                            HorizontalAlignment="left"
-                                            VerticalAlignment="Center"
-                                            FontStyle="Italic"
-                                            Opacity="0.6"
-                                            Text="Create a New Request" />
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.Style>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding RequestItemClicked}" CommandParameter="{Binding ElementName=RequestsTreeListView, Path=SelectedItem}" />

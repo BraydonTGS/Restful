@@ -2,6 +2,7 @@
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
+using Restful.Core.Errors;
 using Restful.RequestsModule;
 using Restful.WPF.Config;
 using Restful.WPF.Theme;
@@ -48,8 +49,8 @@ namespace Restful.WPF
 
         private void ShowExceptionDetails(Exception ex)
         {
-            if (ex == null) return;
-            MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            var errorHandler = Container.Resolve<IErrorHandler>();
+            errorHandler.DisplayExceptionMessage(ex);
         }
     }
 }

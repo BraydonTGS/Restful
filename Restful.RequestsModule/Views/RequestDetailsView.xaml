@@ -104,15 +104,12 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <!--  Title for Request Name  -->
-                <TextBlock
+                <!--  Label for the request name  -->
+                <TextBox
                     Grid.Row="0"
                     Grid.Column="0"
                     Margin="5"
-                    HorizontalAlignment="Left"
-                    FontSize="18"
-                    FontWeight="Bold"
-                    Text="{Binding Request.Name, StringFormat='Request: {0}'}" />
+                    Text="{Binding Request.Name, UpdateSourceTrigger=PropertyChanged}" />
 
                 <!--  Buttons Row  -->
                 <StackPanel
@@ -125,6 +122,7 @@
                         Margin="5"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
+                        Command="{Binding SaveButtonClicked}"
                         ToolTip="Save Request">
                         <iconPacks:PackIconModern
                             Width="15"
@@ -193,6 +191,7 @@
                     Margin="5"
                     VerticalAlignment="Top"
                     extensions:TextEditorExtensions.BoundText="{Binding Results}"
+                    Background="White"
                     FontWeight="Bold"
                     IsReadOnly="True"
                     ShowLineNumbers="True"

@@ -4,6 +4,7 @@
     {
         #region Application
         public const string ApplicationTitle = "Restful";
+        public const string Default = "Default";
         #endregion
 
         #region Theme

@@ -1,9 +1,4 @@
-﻿using ICSharpCode.AvalonEdit.Highlighting;
-using System;
-using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
+﻿using System.Windows.Controls;
 
 namespace Restful.RequestsModule.Views
 {
@@ -15,8 +10,6 @@ namespace Restful.RequestsModule.Views
         public RequestDetailsView()
         {
             InitializeComponent();
-            responseTextBox.SyntaxHighlighting
-                .GetNamedColor("String").Foreground = new SimpleHighlightingBrush(Colors.Green);
         }
     }
 }

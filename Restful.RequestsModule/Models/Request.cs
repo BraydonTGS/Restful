@@ -1,10 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Restful.Core.Enums;
 using Restful.Core.Models;
 using System;
 using System.Collections.ObjectModel;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using HttpMethod = Restful.Core.Enums.HttpMethod;
 
 namespace Restful.RequestsModule.Models

@@ -21,16 +21,22 @@ namespace Restful.RequestsModule.Api
                 var results = await ExecuteHttpRequestAsync(requestMessage);
                 return results;
             }
-            catch (Exception ex) { throw; }
+            catch (Exception) { throw; }
         }
         #endregion
 
         #region BuildRequestMessageFromRequest
+        /// <summary>
+        /// Using the Request Object From the User, Build the HTTP Request Message
+        /// that will be sent with the client
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         private HttpRequestMessage BuildRequestMessageFromRequest(Request request)
         {
             try
             {
-                var httpRequestMessage = new HttpRequestMessage(new System.Net.Http.HttpMethod(request.HttpMethod.ToString()), request.Url);
+                var httpRequestMessage = new HttpRequestMessage(new HttpMethod(request.HttpMethod.ToString()), request.Url);
 
                 foreach (var header in request.Headers)
                     if (header.Enabled)
