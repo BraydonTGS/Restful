@@ -21,11 +21,14 @@ namespace Restful.RequestsModule.Models
         private ObservableCollection<Header> _headers;
 
         public Request() { }
-        public Request(string requestName)
+        public Request(bool initDefault = false)
         {
-            Name = requestName;
-            InitializeDefaultHeaders();
-            InitializeDefaultParameters();
+            if (initDefault)
+            {
+                InitializeDefaultHeaders();
+                InitializeDefaultParameters();
+            }
+
         }
 
         private void InitializeDefaultHeaders()

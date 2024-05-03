@@ -2,7 +2,6 @@
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
-using Restful.Core.Constant;
 using Restful.Core.Errors;
 using Restful.Core.Events;
 using Restful.Core.ViewModels;
@@ -36,7 +35,7 @@ namespace Restful.RequestsModule.ViewModels
             _eventAggregator = eventAggregator;
             _errorHandler = errorHandler;
 
-            Request = new Request(Constants.Default);
+            Request = new Request(true);
 
             SubmitButtonClicked = new DelegateCommand(async () => await OnSubmitButtonClickedExecuted());
             SaveButtonClicked = new DelegateCommand(async () => await OnSaveButtonClickedExecuted());
@@ -46,9 +45,10 @@ namespace Restful.RequestsModule.ViewModels
         {
             if (navigationContext.Parameters.TryGetValue(typeof(Request).Name, out Request request))
             {
+                Results = string.Empty;
                 Request = request;
             }
-            Request ??= new Request();
+            Request ??= new Request(true);
         }
 
         private async Task OnSubmitButtonClickedExecuted()
@@ -71,14 +71,16 @@ namespace Restful.RequestsModule.ViewModels
             {
                 // Simulate Saving the Result to the DB //
                 await Task.Delay(1000);
-                _eventAggregator.GetEvent<RequestSavedEvent>().Publish(Request);
+
+                _eventAggregator
+                    .GetEvent<RequestSavedEvent>()
+                    .Publish(Request);
 
             }
             catch (Exception ex)
             {
                 Results = string.Empty;
                 _errorHandler.DisplayExceptionMessage(ex);
-                throw;
             }
         }
     }

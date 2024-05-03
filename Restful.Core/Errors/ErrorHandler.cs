@@ -12,11 +12,16 @@ namespace Restful.Core.Errors
         /// Display a Basic Error Message when an Exception is Caught
         /// </summary>
         /// <param name="ex"></param>
-        public void DisplayExceptionMessage(Exception ex)
+        public void DisplayExceptionMessage(Exception ex, string message = "")
         {
             if (ex == null) return;
-            MessageBox.Show($"An unexpected error occurred: {ex.Message}",
-                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            if (string.IsNullOrEmpty(message))
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            else
+                MessageBox.Show($"{message}: {ex.Message}",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         #endregion
     }

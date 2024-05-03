@@ -6,6 +6,6 @@ namespace Restful.Core.Errors
     /// </summary>
     public interface IErrorHandler
     {
-        void DisplayExceptionMessage(Exception ex);
+        void DisplayExceptionMessage(Exception ex, string message = "");
     }
 }

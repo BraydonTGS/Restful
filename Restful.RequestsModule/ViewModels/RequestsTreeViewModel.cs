@@ -7,7 +7,6 @@ using Restful.Core.Errors;
 using Restful.Core.Events;
 using Restful.Core.Models;
 using Restful.Core.ViewModels;
-using Restful.RequestsModule.Api;
 using Restful.RequestsModule.Models;
 using Restful.RequestsModule.Views;
 using System;
@@ -24,6 +23,7 @@ namespace Restful.RequestsModule.ViewModels
         private ObservableCollection<Request> _requests;
 
         public DelegateCommand<Request> RequestItemClicked { get; set; }
+        public DelegateCommand AddNewRequest { get; set; }
 
         public RequestsTreeViewModel(
             IRegionManager regionManager,
@@ -35,8 +35,11 @@ namespace Restful.RequestsModule.ViewModels
 
             Requests = new ObservableCollection<Request>();
             RequestItemClicked = new DelegateCommand<Request>(OnRequestItemClicked);
+            AddNewRequest = new DelegateCommand(OnAddNewRequestExecuted);
 
-            _eventAggregator.GetEvent<RequestSavedEvent>().Subscribe(OnRequestSavedEventPublished);
+            _eventAggregator
+                .GetEvent<RequestSavedEvent>()
+                .Subscribe(OnRequestSavedEventPublished);
         }
 
         #region OnNavigatedTo
@@ -46,7 +49,7 @@ namespace Restful.RequestsModule.ViewModels
         /// <param name="navigationContext"></param>
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-            //InitTestData();
+            // Load the current users requests //
         }
         #endregion
 
@@ -59,35 +62,35 @@ namespace Restful.RequestsModule.ViewModels
         {
             if (request != null)
             {
-                var parameters = new NavigationParameters
-                {
-                    { nameof(Request), request }
-                };
-
+                var parameters = new NavigationParameters { { nameof(Request), request } };
                 RequestNavigate(Regions.RequestDetailsRegion, nameof(RequestDetailsView), parameters);
             }
         }
         #endregion
 
-        private void OnRequestSavedEventPublished(IModel<Guid> model)
+        private void OnAddNewRequestExecuted()
         {
-            Requests.Add((Request)model);
+            var parameters = new NavigationParameters { { nameof(Request), new Request(true) } };
+            RequestNavigate(Regions.RequestDetailsRegion, nameof(RequestDetailsView), parameters);
         }
 
-        #region InitTestData
+        #region OnRequestSavedEventPublished
         /// <summary>
-        /// For Now, Init with Test Data when the Tree is Navigated to
+        /// Event that is Published when the User Saves a Request
+        /// Only add a new Request to the Collection
         /// </summary>
-        private void InitTestData()
+        /// <param name="model"></param>
+        private void OnRequestSavedEventPublished(IModel<Guid> model)
         {
-            Requests = new ObservableCollection<Request>
+            try
             {
-                new Request { Id = Guid.NewGuid(), Name = "Get All" },
-                new Request { Id = Guid.NewGuid(), Name = "GetById" },
-                new Request { Id = Guid.NewGuid(), Name = "GetByIdIncludeCustomer" },
-                new Request { Id = Guid.NewGuid(), Name = "CreateNew" },
-                new Request { Id = Guid.NewGuid(), Name = "Delete" },
-            };
+                if (!Requests.Contains((Request)model))
+                    Requests.Add((Request)model);
+            }
+            catch (Exception ex)
+            {
+                _errorHandler.DisplayExceptionMessage(ex);
+            }
         }
         #endregion
     }
