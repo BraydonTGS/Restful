@@ -9,6 +9,7 @@ using Restful.RequestsModule.Api;
 using Restful.RequestsModule.Models;
 using System;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Restful.RequestsModule.ViewModels
 {
@@ -20,9 +21,6 @@ namespace Restful.RequestsModule.ViewModels
 
         [ObservableProperty]
         private Request _request;
-
-        [ObservableProperty]
-        private string _results;
         public DelegateCommand SubmitButtonClicked { get; set; }
         public DelegateCommand SaveButtonClicked { get; set; }
         public RequestDetailsViewModel(
@@ -37,51 +35,77 @@ namespace Restful.RequestsModule.ViewModels
 
             Request = new Request(true);
 
-            SubmitButtonClicked = new DelegateCommand(async () => await OnSubmitButtonClickedExecuted());
-            SaveButtonClicked = new DelegateCommand(async () => await OnSaveButtonClickedExecuted());
+            ConfigureDelegateCommands();
         }
+
+        #region
+        /// <summary>
+        /// Configure the Delegate Commands
+        /// </summary>
+        private void ConfigureDelegateCommands()
+        {
+            SubmitButtonClicked = new DelegateCommand(
+                (async () => await OnSubmitButtonClickedExecuted()), CanSubmitButtonClickedExecuted)
+                .ObservesProperty(() => Request.Url);
+
+            SaveButtonClicked = new DelegateCommand(
+                (async () => await OnSaveButtonClickedExecuted()), CanSaveButtonClickedExecuted)
+                .ObservesProperty(() => Request.Name);
+        }
+        #endregion
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             if (navigationContext.Parameters.TryGetValue(typeof(Request).Name, out Request request))
             {
-                Results = string.Empty;
                 Request = request;
             }
             Request ??= new Request(true);
         }
 
+        public override void OnNavigatedFrom(NavigationContext navigationContext) { Request = null; }
+
         private async Task OnSubmitButtonClickedExecuted()
         {
             try
             {
-                if (!string.IsNullOrEmpty(Results)) Results = string.Empty;
-                Results = await _apiService.ProcessRequestAsync(Request);
+                if (!string.IsNullOrEmpty(Request.TempResult)) Request.TempResult = string.Empty;
+                Request.TempResult = await _apiService.ProcessRequestAsync(Request);
             }
             catch (Exception ex)
             {
-                Results = string.Empty;
+                Request.TempResult = string.Empty;
                 _errorHandler.DisplayExceptionMessage(ex);
             }
         }
+        private bool CanSubmitButtonClickedExecuted() =>  !string.IsNullOrEmpty(Request.Url);
 
+
+        #region OnSaveButtonClickedExecuted
+        /// <summary>
+        /// Command that is Fired when the User Clicks Save
+        /// </summary>
+        /// <returns></returns>
         private async Task OnSaveButtonClickedExecuted()
         {
             try
             {
                 // Simulate Saving the Result to the DB //
-                await Task.Delay(1000);
+                await Task.Delay(500);
 
-                _eventAggregator
-                    .GetEvent<RequestSavedEvent>()
-                    .Publish(Request);
-
+                // Validate the Request Being Saved //
+                if (!string.IsNullOrEmpty(Request?.Name))
+                    _eventAggregator
+                        .GetEvent<RequestSavedEvent>()
+                        .Publish(Request);
             }
             catch (Exception ex)
             {
-                Results = string.Empty;
+                Request.TempResult = string.Empty;
                 _errorHandler.DisplayExceptionMessage(ex);
             }
         }
+        private bool CanSaveButtonClickedExecuted() => !string.IsNullOrEmpty(Request.Name);
+        #endregion
     }
 }

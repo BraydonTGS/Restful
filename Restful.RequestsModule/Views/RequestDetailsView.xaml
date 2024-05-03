@@ -114,7 +114,7 @@
                     VerticalAlignment="Center"
                     mah:TextBoxHelper.ClearTextButton="True"
                     mah:TextBoxHelper.Watermark="Request Name"
-                    Text="{Binding Request.Name, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Request.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <!--  Buttons Row  -->
                 <StackPanel
@@ -195,7 +195,7 @@
                     Width="750"
                     Margin="5"
                     VerticalAlignment="Top"
-                    extensions:TextEditorExtensions.BoundText="{Binding Results}"
+                    extensions:TextEditorExtensions.BoundText="{Binding Request.TempResult}"
                     Background="White"
                     FontWeight="Bold"
                     IsReadOnly="True"

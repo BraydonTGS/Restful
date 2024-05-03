@@ -20,6 +20,12 @@ namespace Restful.RequestsModule.Models
         [ObservableProperty]
         private ObservableCollection<Header> _headers;
 
+        [ObservableProperty]
+        private string _tempResult;
+
+        [ObservableProperty]
+        private Response _response;
+
         public Request() { }
         public Request(bool initDefault = false)
         {
