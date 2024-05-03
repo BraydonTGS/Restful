@@ -17,5 +17,7 @@ namespace Restful.Core.ViewModels
         public ViewModelBase() { }
 
         public virtual void Destroy() { }
+        protected virtual void HandleException(Exception exception) { }
+        protected virtual void TaskCompleted() { }
     }
 }
