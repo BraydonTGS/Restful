@@ -48,7 +48,7 @@ namespace Restful.RequestsModule.ViewModels
             {
                 if (IsBusy) return;
                 IsBusy = true;
-                await Task.Delay(1000);
+                await Task.Delay(3000);
             }
             catch (Exception ex)
             {

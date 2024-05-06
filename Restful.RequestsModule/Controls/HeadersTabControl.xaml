@@ -1,0 +1,43 @@
+﻿<UserControl
+    x:Class="Restful.RequestsModule.Controls.HeadersTabControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Restful.RequestsModule.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <DataGrid
+        Width="750"
+        x:Name="headersDataGrid"
+        Margin="5"
+        Padding="5"
+        AutoGenerateColumns="False"
+        CanUserAddRows="True"
+        CanUserDeleteRows="True"
+        CanUserSortColumns="True"
+        ItemsSource="{Binding Request.Headers}">
+        <DataGrid.Columns>
+            <DataGridCheckBoxColumn
+                Width="Auto"
+                Binding="{Binding Enabled}"
+                Header="Enabled" />
+            <DataGridTextColumn
+                Width="Auto"
+                MinWidth="100"
+                Binding="{Binding Key}"
+                Header="Key" />
+            <DataGridTextColumn
+                Width="Auto"
+                MinWidth="250"
+                Binding="{Binding Value}"
+                Header="Value" />
+            <DataGridTextColumn
+                Width="Auto"
+                MinWidth="250"
+                Binding="{Binding Description}"
+                Header="Description" />
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>

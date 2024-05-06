@@ -15,7 +15,7 @@
     mc:Ignorable="d">
     <Grid>
         <!--  Requests View  -->
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -44,8 +44,6 @@
             Width="200"
             Height="200"
             Margin="0,0,100,50"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
             Panel.ZIndex="100"
             IsActive="{Binding IsBusy}"
             Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
