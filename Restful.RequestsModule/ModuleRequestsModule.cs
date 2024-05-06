@@ -2,7 +2,6 @@
 using Prism.Modularity;
 using Prism.Regions;
 using Restful.Core.Constant;
-using Restful.Core.Errors;
 using Restful.RequestsModule.Api;
 using Restful.RequestsModule.ViewModels;
 using Restful.RequestsModule.Views;
@@ -16,7 +15,6 @@ namespace Restful.RequestsModule
         {
             var regionManager = containerProvider.Resolve<RegionManager>();
             regionManager.RegisterViewWithRegion(Regions.RequestsTreeRegion, typeof(RequestsTreeView));
-            regionManager.RegisterViewWithRegion(Regions.RequestDetailsRegion, typeof(RequestDetailsView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

@@ -13,28 +13,43 @@
     d:DesignWidth="800"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
+    <Grid>
+        <!--  Requests View  -->
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-    <!--  Requests View  -->
-    <Grid HorizontalAlignment="Left">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+            <!--  Requests Tree Region  -->
+            <ContentControl
+                Grid.Row="1"
+                Grid.Column="0"
+                prism:RegionManager.RegionName="{x:Static global:Regions.RequestsTreeRegion}"
+                Visibility="{Binding IsNotBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-        <!--  Requests Tree Region  -->
-        <ContentControl
-            Grid.Row="1"
-            Grid.Column="0"
-            prism:RegionManager.RegionName="{x:Static global:Regions.RequestsTreeRegion}" />
+            <!--  Requests Details Region  -->
+            <ContentControl
+                Grid.Row="1"
+                Grid.Column="1"
+                prism:RegionManager.RegionName="{x:Static global:Regions.RequestDetailsRegion}"
+                Visibility="{Binding IsNotBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </Grid>
 
-        <!--  Requests Details Region  -->
-        <ContentControl
-            Grid.Row="1"
-            Grid.Column="1"
-            prism:RegionManager.RegionName="{x:Static global:Regions.RequestDetailsRegion}" />
+        <mah:ProgressRing
+            Width="200"
+            Height="200"
+            Margin="0,0,100,50"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Panel.ZIndex="100"
+            IsActive="{Binding IsBusy}"
+            Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
     </Grid>
+
 </UserControl>

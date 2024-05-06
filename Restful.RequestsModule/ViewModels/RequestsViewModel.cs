@@ -1,4 +1,5 @@
-﻿using Prism.Regions;
+﻿using ControlzEx.Standard;
+using Prism.Regions;
 using Restful.Core.Constant;
 using Restful.Core.Errors;
 using Restful.Core.Extensions;
@@ -41,7 +42,21 @@ namespace Restful.RequestsModule.ViewModels
         /// For Now Simulate the Loading of the Requests from the API
         /// </summary>
         /// <returns></returns>
-        private async Task LoadRequestsAsync() {await Task.Delay(1000); }
+        private async Task LoadRequestsAsync()
+        {
+            try
+            {
+                if (IsBusy) return;
+                IsBusy = true;
+                await Task.Delay(1000);
+            }
+            catch (Exception ex)
+            {
+                _errorHandler.DisplayExceptionMessage(ex);
+                throw;
+            }
+            finally { IsBusy = false; }
+        }
 
         #endregion
 

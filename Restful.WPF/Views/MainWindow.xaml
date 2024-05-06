@@ -99,8 +99,10 @@
 
         <!--  Main Region  -->
         <ContentControl
+            Grid.Column="1"
             Margin="100,50,0,0"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
             Panel.ZIndex="0"
             prism:RegionManager.RegionName="Main_Content_Region" />
 
