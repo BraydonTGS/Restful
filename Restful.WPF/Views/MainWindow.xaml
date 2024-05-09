@@ -86,8 +86,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <!--  Adjust the Width for the HamburgerMenu column as necessary  -->
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="100" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -100,7 +99,7 @@
         <!--  Main Region  -->
         <ContentControl
             Grid.Column="1"
-            Margin="100,50,0,0"
+            Margin="20"
             Panel.ZIndex="0"
             prism:RegionManager.RegionName="Main_Content_Region" />
 

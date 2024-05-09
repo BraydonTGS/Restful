@@ -41,6 +41,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
@@ -49,7 +50,7 @@
                 <TextBox
                     Grid.Row="0"
                     Grid.Column="0"
-                    Width="120"
+                    Width="150"
                     Margin="5"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
@@ -57,84 +58,89 @@
                     mah:TextBoxHelper.Watermark="Request Name"
                     Text="{Binding Request.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <!--  Buttons Row  -->
-                <StackPanel
+                <!--  Save and Export Button  -->
+                <Button
                     Grid.Row="0"
-                    Grid.Column="1"
+                    Grid.Column="2"
+                    Margin="5,5,40,5"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    Orientation="Horizontal">
-                    <Button
-                        Margin="5"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Command="{Binding SaveButtonClicked}"
-                        ToolTip="Save Request">
-                        <iconPacks:PackIconModern
-                            Width="15"
-                            Height="15"
-                            Kind="Save" />
-                    </Button>
-                    <Button
-                        Margin="5"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        ToolTip="Export JSON">
-                        <iconPacks:PackIconModern
-                            Width="15"
-                            Height="15"
-                            Kind="CabinetFilesVariant" />
-                    </Button>
-                </StackPanel>
+                    Command="{Binding SaveButtonClicked}"
+                    ToolTip="Save Request">
+                    <iconPacks:PackIconModern
+                        Width="15"
+                        Height="15"
+                        Kind="Save" />
+                </Button>
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Margin="5"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    ToolTip="Export JSON">
+                    <iconPacks:PackIconModern
+                        Width="15"
+                        Height="15"
+                        Kind="CabinetFilesVariant" />
+                </Button>
 
-                <!--  URL Input and Request Type Dropdown  -->
-                <StackPanel
+
+                <!--  Request Type Dropdown  -->
+                <ComboBox
+                    x:Name="requestTypeComboBox"
                     Grid.Row="1"
-                    Grid.ColumnSpan="2"
-                    Margin="0,0,0,10"
+                    Grid.Column="0"
+                    Width="150"
+                    Height="30"
+                    Margin="5"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Orientation="Horizontal">
-                    <ComboBox
-                        x:Name="requestTypeComboBox"
-                        Width="120"
-                        Height="30"
-                        Margin="5,0,10,0"
-                        SelectedIndex="0"
-                        SelectedValue="{Binding Request.HttpMethod, Converter={StaticResource StringToEnumConverter}}"
-                        SelectedValuePath="Content">
-                        <ComboBoxItem Content="GET" />
-                        <ComboBoxItem Content="POST" />
-                        <ComboBoxItem Content="PUT" />
-                        <ComboBoxItem Content="DELETE" />
-                        <ComboBoxItem Content="Patch" />
-                    </ComboBox>
-                    <TextBox
-                        x:Name="urlTextBox"
-                        Width="500"
-                        Height="30"
-                        Margin="5,0,10,0"
-                        VerticalAlignment="Center"
-                        mah:TextBoxHelper.ClearTextButton="True"
-                        mah:TextBoxHelper.Watermark="Enter URL"
-                        Text="{Binding Request.Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        ToolTip="Enter URL here" />
-                    <Button
-                        Width="100"
-                        Height="30"
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Command="{Binding SubmitButtonClicked}"
-                        Content="Submit" />
-                </StackPanel>
+                    VerticalAlignment="Center"
+                    SelectedIndex="0"
+                    SelectedValue="{Binding Request.HttpMethod, Converter={StaticResource StringToEnumConverter}}"
+                    SelectedValuePath="Content">
+                    <ComboBoxItem Content="GET" />
+                    <ComboBoxItem Content="POST" />
+                    <ComboBoxItem Content="PUT" />
+                    <ComboBoxItem Content="DELETE" />
+                    <ComboBoxItem Content="Patch" />
+                </ComboBox>
+
+                <!--  Input URL  -->
+                <TextBox
+                    x:Name="urlTextBox"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Width="500"
+                    Height="30"
+                    MaxWidth="1000"
+                    Margin="5,0,20,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    mah:TextBoxHelper.ClearTextButton="True"
+                    mah:TextBoxHelper.Watermark="Enter URL"
+                    Text="{Binding Request.Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ToolTip="Enter URL here" />
+
+                <!--  Submit Button  -->
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Width="100"
+                    Height="30"
+                    Margin="5"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Command="{Binding SubmitButtonClicked}"
+                    Content="Submit" />
+
 
                 <!--  Response Text Area  -->
                 <avalonEdit:TextEditor
                     x:Name="responseTextBox"
                     Grid.Row="2"
-                    Grid.ColumnSpan="2"
-                    Width="750"
-                    MaxWidth="750"
+                    Grid.ColumnSpan="3"
                     Margin="5"
                     VerticalAlignment="Top"
                     extensions:TextEditorExtensions.BoundText="{Binding Request.TempResult}"

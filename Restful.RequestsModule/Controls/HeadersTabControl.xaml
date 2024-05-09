@@ -9,7 +9,6 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <DataGrid
-        Width="750"
         x:Name="headersDataGrid"
         Margin="5"
         Padding="5"

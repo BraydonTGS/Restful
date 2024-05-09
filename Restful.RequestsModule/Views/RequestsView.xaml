@@ -15,7 +15,7 @@
     mc:Ignorable="d">
     <Grid>
         <!--  Requests View  -->
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Stretch">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -41,9 +41,9 @@
         </Grid>
 
         <mah:ProgressRing
-            Width="200"
-            Height="200"
-            Margin="0,0,100,50"
+            Margin="0, 0, 100, 0"
+            Width="100"
+            Height="100"
             Panel.ZIndex="100"
             IsActive="{Binding IsBusy}"
             Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
