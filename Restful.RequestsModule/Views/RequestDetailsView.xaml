@@ -78,6 +78,7 @@
                     Margin="5"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
+                    Command="{Binding ExportButtonClicked}"
                     ToolTip="Export JSON">
                     <iconPacks:PackIconModern
                         Width="15"
