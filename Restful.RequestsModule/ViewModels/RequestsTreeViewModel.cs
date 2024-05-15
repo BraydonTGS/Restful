@@ -25,6 +25,7 @@ namespace Restful.RequestsModule.ViewModels
         public DelegateCommand<Request> RequestItemClicked { get; set; }
         public DelegateCommand AddNewRequest { get; set; }
 
+        #region Constructor
         public RequestsTreeViewModel(
             IRegionManager regionManager,
             IEventAggregator eventAggregator,
@@ -41,16 +42,11 @@ namespace Restful.RequestsModule.ViewModels
                 .GetEvent<RequestSavedEvent>()
                 .Subscribe(OnRequestSavedEventPublished);
         }
+        #endregion
 
         #region OnNavigatedTo
-        /// <summary>
-        /// On Navigated To
-        /// </summary>
-        /// <param name="navigationContext"></param>
-        public override void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            // Load the current users requests //
-        }
+        /// <inheritdoc/>
+        public override void OnNavigatedTo(NavigationContext navigationContext) { }
         #endregion
 
         #region OnRequestItemClicked
@@ -68,11 +64,16 @@ namespace Restful.RequestsModule.ViewModels
         }
         #endregion
 
+        #region OnAddNewRequestExecuted
+        /// <summary>
+        /// Command that is Fired when the User Clicks the Add New Request Button
+        /// </summary>
         private void OnAddNewRequestExecuted()
         {
             var parameters = new NavigationParameters { { nameof(Request), new Request(true) } };
             RequestNavigate(Regions.RequestDetailsRegion, nameof(RequestDetailsView), parameters);
         }
+        #endregion
 
         #region OnRequestSavedEventPublished
         /// <summary>

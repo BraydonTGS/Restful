@@ -1,6 +1,4 @@
-﻿using ControlzEx.Theming;
-using MahApps.Metro.Controls;
-using System.Windows;
+﻿using MahApps.Metro.Controls;
 
 namespace Restful.WPF.Views
 {

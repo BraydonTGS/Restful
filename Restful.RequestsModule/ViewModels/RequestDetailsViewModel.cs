@@ -142,7 +142,6 @@ namespace Restful.RequestsModule.ViewModels
                 if (!string.IsNullOrEmpty(fullFilePath))
                     _fileExportService.ExportJsonStringToFile(Request.TempResult, fullFilePath);
 
-
             }
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
         }

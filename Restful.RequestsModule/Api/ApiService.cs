@@ -13,6 +13,15 @@ namespace Restful.RequestsModule.Api
         public ApiService(HttpClient client) => _client = client;
 
         #region ProcessRequestAsync
+        /// <summary>
+        /// Process the User's Request Async
+        /// 
+        /// Generate the Request Message
+        /// 
+        /// Execute the HTTP Request
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<string> ProcessRequestAsync(Request request)
         {
             try

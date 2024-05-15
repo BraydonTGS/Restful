@@ -40,31 +40,51 @@
                         Label="Requests"
                         Tag="RequestsView" />
                     <mah:HamburgerMenuGlyphItem
+                        Command="{Binding MenuItemClicked}"
+                        CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                         Glyph="&#xe736;"
                         Label="Collections"
-                        Tag="CollectionsView" />
+                        Tag="ComingSoonView" />
                     <mah:HamburgerMenuGlyphItem
+                        Command="{Binding MenuItemClicked}"
+                        CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                         Glyph="&#xE756;"
                         Label="Terminal"
-                        Tag="TerminalView" />
+                        Tag="ComingSoonView" />
                     <mah:HamburgerMenuGlyphItem
+                        Command="{Binding MenuItemClicked}"
+                        CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                         Glyph="&#xE81E;"
                         Label="History"
-                        Tag="HistoryView" />
+                        Tag="ComingSoonView" />
                     <mah:HamburgerMenuGlyphItem
+                        Command="{Binding MenuItemClicked}"
+                        CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                         Glyph="&#xE70B;"
                         Label="Notes"
-                        Tag="NotesView" />
+                        Tag="ComingSoonView" />
                     <mah:HamburgerMenuGlyphItem
+                        Command="{Binding MenuItemClicked}"
+                        CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                         Glyph="&#xE736;"
                         Label="Documentation"
-                        Tag="DocumentationView" />
+                        Tag="ComingSoonView" />
                 </mah:HamburgerMenuItemCollection>
             </mah:HamburgerMenu.ItemsSource>
             <mah:HamburgerMenu.OptionsItemsSource>
                 <mah:HamburgerMenuItemCollection>
-                    <mah:HamburgerMenuGlyphItem Glyph="&#xE748;" Label="Switch User" />
-                    <mah:HamburgerMenuGlyphItem Glyph="&#xE713;" Label="Settings" />
+                    <mah:HamburgerMenuGlyphItem
+                        Command="{Binding MenuItemClicked}"
+                        CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
+                        Glyph="&#xE748;"
+                        Label="Switch User"
+                        Tag="ComingSoonView" />
+                    <mah:HamburgerMenuGlyphItem
+                        Command="{Binding MenuItemClicked}"
+                        CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
+                        Glyph="&#xE713;"
+                        Label="Settings"
+                        Tag="ComingSoonView" />
                 </mah:HamburgerMenuItemCollection>
             </mah:HamburgerMenu.OptionsItemsSource>
         </mah:HamburgerMenu>

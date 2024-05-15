@@ -25,10 +25,7 @@ namespace Restful.RequestsModule.ViewModels
         #endregion
 
         #region OnNavigatedTo
-        /// <summary>
-        /// On Navigated To
-        /// </summary>
-        /// <param name="navigationContext"></param>
+        /// <inheritdoc/>
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             // Load all of the Requests for the Current User //

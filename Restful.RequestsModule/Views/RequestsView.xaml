@@ -40,10 +40,13 @@
                 Visibility="{Binding IsNotBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </Grid>
 
+        <!--  Mah Progress Ring  -->
         <mah:ProgressRing
-            Margin="0, 0, 100, 0"
             Width="100"
             Height="100"
+            Margin="0,0,120,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
             Panel.ZIndex="100"
             IsActive="{Binding IsBusy}"
             Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />

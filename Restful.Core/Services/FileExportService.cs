@@ -4,6 +4,9 @@ using System.Windows.Forms;
 
 namespace Restful.Core.Services
 {
+    /// <summary>
+    /// File Export Service
+    /// </summary>
     public class FileExportService : IFileExportService
     {
         #region ChooseExportFilePath
@@ -20,10 +23,11 @@ namespace Restful.Core.Services
                 {
                     Title = "Save File",
                     Filter = "Text Files (*.txt)|*.txt|JSON Files (*.json)|*.json|All files (*.*)|*.*",
-                    DefaultExt = "txt"
+                    DefaultExt = "json"
                 };
 
-                if (saveFileDialog.ShowDialog()== DialogResult.OK) return saveFileDialog.FileName;
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    return saveFileDialog.FileName;
 
                 return string.Empty;
             }
@@ -43,7 +47,8 @@ namespace Restful.Core.Services
             try
             {
                 var directory = Path.GetDirectoryName(location);
-                if (!Directory.Exists(directory)) { Directory.CreateDirectory(directory); }
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(location);
 
                 File.WriteAllText(location, json, Encoding.UTF8);
 
