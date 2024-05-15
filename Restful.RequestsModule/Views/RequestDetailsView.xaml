@@ -154,5 +154,10 @@
                     WordWrap="True" />
             </Grid>
         </TabItem>
+
+        <!--  Body  -->
+        <TabItem Header="Body">
+            <controls:BodyTabControl />
+        </TabItem>
     </TabControl>
 </UserControl>

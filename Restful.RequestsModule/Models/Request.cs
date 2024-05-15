@@ -21,6 +21,9 @@ namespace Restful.RequestsModule.Models
         private ObservableCollection<Header> _headers;
 
         [ObservableProperty]
+        private string _body;
+
+        [ObservableProperty]
         private string _tempResult;
 
         [ObservableProperty]

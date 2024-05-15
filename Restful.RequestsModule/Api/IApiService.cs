@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace Restful.RequestsModule.Api
 {
+    /// <summary>
+    /// IApiService
+    /// </summary>
     public interface IApiService
     {
         Task<string> ProcessRequestAsync(Request request);

@@ -9,6 +9,9 @@ using System.Net.Http;
 
 namespace Restful.RequestsModule
 {
+    /// <summary>
+    /// Request Module - Register Types, Views, ViewModels, BL 
+    /// </summary>
     public class ModuleRequestsModule : IModule
     {
         public void OnInitialized(IContainerProvider containerProvider)

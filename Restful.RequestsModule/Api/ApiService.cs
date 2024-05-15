@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Restful.RequestsModule.Api
 {
+    /// <summary>
+    /// Api Service
+    /// </summary>
     public class ApiService : IApiService
     {
         private readonly HttpClient _client;

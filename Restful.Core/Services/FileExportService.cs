@@ -22,7 +22,7 @@ namespace Restful.Core.Services
                 SaveFileDialog saveFileDialog = new SaveFileDialog
                 {
                     Title = "Save File",
-                    Filter = "Text Files (*.txt)|*.txt|JSON Files (*.json)|*.json|All files (*.*)|*.*",
+                    Filter = "JSON Files (*.json)|*.json|Text Files (*.txt)|*.txt|All files (*.*)|*.*",
                     DefaultExt = "json"
                 };
 
