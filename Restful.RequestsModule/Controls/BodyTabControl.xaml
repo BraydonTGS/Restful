@@ -11,11 +11,20 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock
+            Margin="5"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            FontSize="20"
+            Text="Add Request Body:" />
         <!--  Response Text Area  -->
         <avalonEdit:TextEditor
             x:Name="bodyTextBox"
-            Grid.Row="2"
-            Grid.ColumnSpan="3"
+            Grid.Row="1"
             Margin="5"
             VerticalAlignment="Top"
             Background="White"
