@@ -59,8 +59,9 @@ namespace Restful.RequestsModule.ViewModels
                 (async () => await OnSaveButtonClickedExecuted()), CanSaveButtonClickedExecuted)
                 .ObservesProperty(() => Request.Name);
 
-            ExportButtonClicked = new DelegateCommand(OnExportButtonClickedExecuted, CanExportButtonClickedExecuted)
-                .ObservesProperty(() => Request.TempResult);
+            if (Request?.TempResult != null)
+                ExportButtonClicked = new DelegateCommand(OnExportButtonClickedExecuted, CanExportButtonClickedExecuted)
+                    .ObservesProperty(() => Request.TempResult.Text);
         }
         #endregion
 
@@ -90,12 +91,16 @@ namespace Restful.RequestsModule.ViewModels
         {
             try
             {
-                if (!string.IsNullOrEmpty(Request.TempResult)) Request.TempResult = string.Empty;
-                Request.TempResult = await _apiService.ProcessRequestAsync(Request);
+                if (!string.IsNullOrEmpty(Request?.TempResult?.Text))
+                    Request.TempResult.Text = string.Empty;
+
+                Request.TempResult.Text = await _apiService.ProcessRequestAsync(Request);
             }
             catch (Exception ex)
             {
-                Request.TempResult = string.Empty;
+                if (Request?.TempResult != null)
+                    Request.TempResult.Text = string.Empty;
+
                 _errorHandler.DisplayExceptionMessage(ex);
             }
         }
@@ -112,7 +117,7 @@ namespace Restful.RequestsModule.ViewModels
             try
             {
                 // Simulate Saving the Result to the DB //
-                await Task.Delay(500);
+                await Task.Delay(200);
 
                 // Validate the Request Being Saved //
                 if (!string.IsNullOrEmpty(Request?.Name))
@@ -122,7 +127,9 @@ namespace Restful.RequestsModule.ViewModels
             }
             catch (Exception ex)
             {
-                Request.TempResult = string.Empty;
+                if (Request?.TempResult != null)
+                    Request.TempResult.Text = string.Empty;
+
                 _errorHandler.DisplayExceptionMessage(ex);
             }
         }
@@ -140,12 +147,12 @@ namespace Restful.RequestsModule.ViewModels
                 var fullFilePath = _fileExportService.ChooseExportFilePath();
 
                 if (!string.IsNullOrEmpty(fullFilePath))
-                    _fileExportService.ExportJsonStringToFile(Request.TempResult, fullFilePath);
+                    _fileExportService.ExportJsonStringToFile(Request?.TempResult?.Text, fullFilePath);
 
             }
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
         }
-        private bool CanExportButtonClickedExecuted() => !string.IsNullOrEmpty(Request.TempResult);
+        private bool CanExportButtonClickedExecuted() => !string.IsNullOrEmpty(Request?.TempResult?.Text);
         #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ICSharpCode.AvalonEdit.Document;
 using Restful.Core.Models;
 using System;
 using System.Collections.ObjectModel;
@@ -12,6 +13,12 @@ namespace Restful.RequestsModule.Models
         private string _url;
 
         [ObservableProperty]
+        private TextDocument _body;
+
+        [ObservableProperty]
+        private TextDocument _tempResult;
+
+        [ObservableProperty]
         private HttpMethod _httpMethod;
 
         [ObservableProperty]
@@ -19,12 +26,6 @@ namespace Restful.RequestsModule.Models
 
         [ObservableProperty]
         private ObservableCollection<Header> _headers;
-
-        [ObservableProperty]
-        private string _body;
-
-        [ObservableProperty]
-        private string _tempResult;
 
         [ObservableProperty]
         private Response _response;
@@ -36,10 +37,10 @@ namespace Restful.RequestsModule.Models
             {
                 InitializeDefaultHeaders();
                 InitializeDefaultParameters();
+                InitializeTextDocuments();
             }
 
         }
-
         private void InitializeDefaultHeaders()
         {
             Headers = new ObservableCollection<Header>
@@ -53,6 +54,12 @@ namespace Restful.RequestsModule.Models
         private void InitializeDefaultParameters()
         {
             Parameters = new ObservableCollection<Parameter>();
+        }
+
+        private void InitializeTextDocuments()
+        {
+            Body = new TextDocument();
+            TempResult = new TextDocument();
         }
     }
 }
