@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Restful.Core\Restful.Core.csproj" />
     <ProjectReference Include="..\Restful.RequestsModule\Restful.RequestsModule.csproj" />
+    <ProjectReference Include="..\Restful.UserModule\Restful.UserModule.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">

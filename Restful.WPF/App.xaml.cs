@@ -4,6 +4,7 @@ using Prism.Ioc;
 using Prism.Modularity;
 using Restful.Core.Errors;
 using Restful.RequestsModule;
+using Restful.UserModule;
 using Restful.WPF.Config;
 using Restful.WPF.Theme;
 using Restful.WPF.Views;
@@ -33,6 +34,7 @@ namespace Restful.WPF
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             moduleCatalog.AddModule<ModuleRequestsModule>();
+            moduleCatalog.AddModule<ModuleUserModule>();
         }
 
         private void LoadApplicationTheme()
