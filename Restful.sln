@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restful.RequestsModule", "R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restful.UserModule", "Restful.UserModule\Restful.UserModule.csproj", "{C8BE666B-38A3-4405-9743-69460D98FBFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restful.SettingsModule", "Restful.SettingsModule\Restful.SettingsModule.csproj", "{080D247C-3297-4E5D-BAC5-F18539FF7A02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C8BE666B-38A3-4405-9743-69460D98FBFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8BE666B-38A3-4405-9743-69460D98FBFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8BE666B-38A3-4405-9743-69460D98FBFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{080D247C-3297-4E5D-BAC5-F18539FF7A02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{080D247C-3297-4E5D-BAC5-F18539FF7A02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{080D247C-3297-4E5D-BAC5-F18539FF7A02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{080D247C-3297-4E5D-BAC5-F18539FF7A02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 		{A34EEEE7-CBDA-488E-835C-6AB478D7ED3F} = {43813FEF-2D59-4EE9-A9F3-BE3E0B88D654}
 		{2D729403-4697-4BEB-9279-C30AFE3B1784} = {17B0451E-E428-4FAA-83F3-322F0260C16E}
 		{C8BE666B-38A3-4405-9743-69460D98FBFE} = {17B0451E-E428-4FAA-83F3-322F0260C16E}
+		{080D247C-3297-4E5D-BAC5-F18539FF7A02} = {17B0451E-E428-4FAA-83F3-322F0260C16E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F1C62D33-27A3-4EEC-93DC-F2A4E581BBCD}

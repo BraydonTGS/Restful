@@ -2,8 +2,11 @@
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
+using Prism.Regions;
+using Restful.Core.Constant;
 using Restful.Core.Errors;
 using Restful.RequestsModule;
+using Restful.SettingsModule;
 using Restful.UserModule;
 using Restful.WPF.Config;
 using Restful.WPF.Theme;
@@ -31,10 +34,18 @@ namespace Restful.WPF
             RegisterWpfAppServices.RegisterWpfServices(containerRegistry);
         }
 
+        protected override void OnInitialized()
+        {
+            var regionManager = Container.Resolve<IRegionManager>();
+            regionManager.RequestNavigate(Regions.MainContentRegion, nameof(WelcomeView));
+            base.OnInitialized();
+        }
+
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             moduleCatalog.AddModule<ModuleRequestsModule>();
             moduleCatalog.AddModule<ModuleUserModule>();
+            moduleCatalog.AddModule<ModuleSettingsModule>();
         }
 
         private void LoadApplicationTheme()

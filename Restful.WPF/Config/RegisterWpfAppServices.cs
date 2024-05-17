@@ -13,6 +13,7 @@ namespace Restful.WPF.Config
     {
         public static void RegisterWpfServices(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterForNavigation<WelcomeView>();
             containerRegistry.RegisterForNavigation<ComingSoonView>();
 
             containerRegistry.RegisterSingleton<IThemeService, ThemeService>();

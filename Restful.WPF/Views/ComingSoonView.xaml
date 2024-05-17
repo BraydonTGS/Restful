@@ -12,11 +12,10 @@
     mc:Ignorable="d">
     <Grid>
         <TextBlock
-            Margin="5, 5, 120, 5"
+            Margin="5,5,120,5"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             FontSize="75"
-            FontWeight="Bold"
             Text="Coming Soon" />
     </Grid>
 </UserControl>
