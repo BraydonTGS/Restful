@@ -32,7 +32,11 @@ namespace Restful.RequestsModule.Models
         [ObservableProperty]
         private Response _response;
 
-        public Request() { }
+        #region Constructor
+        /// <summary>
+        /// If True - Initialize a Request Object with Default Values
+        /// </summary>
+        /// <param name="initDefault"></param>
         public Request(bool initDefault = false)
         {
             if (initDefault)
@@ -40,9 +44,15 @@ namespace Restful.RequestsModule.Models
                 InitializeDefaultHeaders();
                 InitializeDefaultParameters();
                 InitializeTextDocuments();
+                PropertyChanged += Request_PropertyChanged;
             }
 
         }
+        #endregion
+        #region Initialize Default Request Properties
+        /// <summary>
+        /// Initialize the Request's Default Headers
+        /// </summary>
         private void InitializeDefaultHeaders()
         {
             Headers = new ObservableCollection<Header>
@@ -52,18 +62,29 @@ namespace Restful.RequestsModule.Models
                 new Header("Connection", "keep-alive", true)
             };
         }
+        #endregion
 
+        #region InitializeDefaultParameters
+        /// <summary>
+        /// Initialize the Request's Default Parameters
+        /// </summary>
         private void InitializeDefaultParameters()
         {
             Parameters = new ObservableCollection<Parameter>();
             Parameters.CollectionChanged += Parameters_CollectionChanged;
         }
+        #endregion
 
+        #region InitializeTextDocuments
+        /// <summary>
+        /// Initialize the Request's Default Text Documents
+        /// </summary>
         private void InitializeTextDocuments()
         {
             Body = new TextDocument();
             TempResult = new TextDocument();
         }
+        #endregion
 
         #region Parameters_CollectionChanged
         /// <summary>
@@ -88,10 +109,25 @@ namespace Restful.RequestsModule.Models
             }
 
             var queryParams = Parameters
-                .Where(p => !string.IsNullOrEmpty(p.Key) && !string.IsNullOrEmpty(p.Value))
-                .Select(p => $"{p.Key}={p.Value}");
+                .Where(x => x.Enabled && !string.IsNullOrEmpty(x.Key) && !string.IsNullOrEmpty(x.Value))
+                .Select(x => $"{x.Key}={x.Value}");
 
-            Url = $"{baseUrl}?{string.Join("&", queryParams)}";
+            if (queryParams.Any())
+                Url = $"{baseUrl}?{string.Join("&", queryParams)}";
+        }
+        #endregion
+
+        #region Request_PropertyChanged
+        /// <summary>
+        /// Event that the PropertyChanged is Subscribed to
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Request_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Url))
+            {
+            }
         }
         #endregion
     }
