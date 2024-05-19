@@ -19,7 +19,7 @@ namespace Restful.WPF.Config
             containerRegistry.RegisterSingleton<IThemeService, ThemeService>();
             containerRegistry.RegisterSingleton<IErrorHandler, ErrorHandler>();
             containerRegistry.RegisterSingleton<IFileExportService, FileExportService>();
-     
+
         }
     }
 }

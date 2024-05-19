@@ -16,7 +16,7 @@ namespace Restful.UserModule
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Navigation //
-            containerRegistry.RegisterForNavigation<LoginView, LoginViewModel>();
+            containerRegistry.RegisterForNavigation<LoginWindow, LoginWindowViewModel>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Prism.Commands;
+using Prism.Events;
 using Prism.Regions;
 using Restful.Core.Constant;
 using Restful.Core.Errors;
@@ -21,6 +22,7 @@ namespace Restful.WPF.ViewModels
         public MainWindowViewModel(
             IRegionManager regionManager,
             IThemeService themeService,
+            IEventAggregator eventAggregator,
             IErrorHandler errorHandler) : base(regionManager)
         {
             Title = Constants.ApplicationTitle;
@@ -88,6 +90,5 @@ namespace Restful.WPF.ViewModels
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
         }
         #endregion
-
     }
 }
