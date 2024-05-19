@@ -52,11 +52,11 @@ namespace Restful.RequestsModule.ViewModels
         private void ConfigureDelegateCommands()
         {
             SubmitButtonClicked = new DelegateCommand(
-                (async () => await OnSubmitButtonClickedExecuted()), CanSubmitButtonClickedExecuted)
+                (async () => await OnSubmitButtonClickedAsyncExecuted()), CanSubmitButtonClickedExecuted)
                 .ObservesProperty(() => Request.Url);
 
             SaveButtonClicked = new DelegateCommand(
-                (async () => await OnSaveButtonClickedExecuted()), CanSaveButtonClickedExecuted)
+                (async () => await OnSaveButtonClickedAsyncExecuted()), CanSaveButtonClickedExecuted)
                 .ObservesProperty(() => Request.Name);
 
             if (Request?.TempResult != null)
@@ -87,7 +87,7 @@ namespace Restful.RequestsModule.ViewModels
         /// Command that is Fired when the User Clicks the Submit Button
         /// </summary>
         /// <returns></returns>
-        private async Task OnSubmitButtonClickedExecuted()
+        private async Task OnSubmitButtonClickedAsyncExecuted()
         {
             try
             {
@@ -112,7 +112,7 @@ namespace Restful.RequestsModule.ViewModels
         /// Command that is Fired when the User Clicks Save
         /// </summary>
         /// <returns></returns>
-        private async Task OnSaveButtonClickedExecuted()
+        private async Task OnSaveButtonClickedAsyncExecuted()
         {
             try
             {

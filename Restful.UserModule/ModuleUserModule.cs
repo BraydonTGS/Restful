@@ -1,6 +1,7 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
+using Restful.UserModule.Services;
 using Restful.UserModule.ViewModels;
 using Restful.UserModule.Views;
 
@@ -17,6 +18,9 @@ namespace Restful.UserModule
         {
             // Navigation //
             containerRegistry.RegisterForNavigation<LoginWindow, LoginWindowViewModel>();
+
+            // Services //
+            containerRegistry.RegisterScoped<IAccountService, AccountService>();
         }
     }
 }

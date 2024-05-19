@@ -76,7 +76,7 @@
             mah:TextBoxHelper.ClearTextButton="True"
             mah:TextBoxHelper.Watermark="Enter Username"
             MaxLength="50"
-            Text="{Binding Username, Mode=TwoWay}" />
+            Text="{Binding LoginRequest.Username, Mode=TwoWay}" />
 
         <!--  Password  -->
         <TextBlock
@@ -94,7 +94,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             extensions:PasswordBoxExtension.Attach="True"
-            extensions:PasswordBoxExtension.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            extensions:PasswordBoxExtension.Password="{Binding LoginRequest.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             mah:PasswordBoxHelper.RevealButtonContent="true"
             mah:TextBoxHelper.ClearTextButton="True"
             mah:TextBoxHelper.Watermark="Enter Password"

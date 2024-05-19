@@ -57,7 +57,6 @@ namespace Restful.WPF
             _regionManager = Container.Resolve<IRegionManager>();
             _eventAggregator = Container.Resolve<IEventAggregator>();
             _errorHandler = Container.Resolve<IErrorHandler>();
-            _loginWindow = Container.Resolve<LoginWindow>();
         }
         #endregion
 
@@ -75,6 +74,8 @@ namespace Restful.WPF
         /// </summary>
         protected override void OnInitialized()
         {
+            _loginWindow = Container.Resolve<LoginWindow>();
+
             _eventAggregator
                 .GetEvent<LoginSuccessEvent>()
                 .Subscribe(OnLoginSuccessEventPublished);
@@ -119,10 +120,13 @@ namespace Restful.WPF
         /// <summary>
         /// Event that is Published when the User Login is Successful
         /// </summary>
-        private void OnLoginSuccessEventPublished()
+        private void OnLoginSuccessEventPublished(bool success)
         {
-            _userVerified = true;
-            _loginWindow.Close();
+            if (success)
+            {
+                _userVerified = true;
+                _loginWindow.Close();
+            } 
         }
         #endregion
 

@@ -5,5 +5,5 @@ namespace Restful.Core.Events
     /// <summary>
     /// Login Success Event
     /// </summary>
-    public class LoginSuccessEvent : PubSubEvent { }
+    public class LoginSuccessEvent : PubSubEvent<bool> { }
 }

@@ -1,6 +1,7 @@
 ﻿using Prism.Ioc;
 using Restful.Core.Errors;
 using Restful.Core.Services;
+using Restful.UserModule.Services;
 using Restful.WPF.Theme;
 using Restful.WPF.Views;
 
@@ -19,7 +20,6 @@ namespace Restful.WPF.Config
             containerRegistry.RegisterSingleton<IThemeService, ThemeService>();
             containerRegistry.RegisterSingleton<IErrorHandler, ErrorHandler>();
             containerRegistry.RegisterSingleton<IFileExportService, FileExportService>();
-
         }
     }
 }
