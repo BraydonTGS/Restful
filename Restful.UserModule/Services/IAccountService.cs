@@ -5,6 +5,6 @@ namespace Restful.UserModule.Services
 {
     public interface IAccountService
     {
-        Task<object> LoginAsync(LoginRequest request);
+        Task<LoginResponse> LoginAsync(LoginRequest request);
     }
 }

@@ -56,8 +56,7 @@ namespace Restful.UserModule.ViewModels
         {
             try
             {
-                // Dummy check
-
+                // Attempt to Login the User //
                 var currentUser = await _accountService.LoginAsync(LoginRequest);
                 if (currentUser is not null)
                     _eventAggregator
