@@ -5,6 +5,7 @@ using Prism.Regions;
 using Restful.Core.Constant;
 using Restful.Core.Errors;
 using Restful.Core.Events;
+using Restful.Core.Interfaces;
 using Restful.Core.Models;
 using Restful.Core.ViewModels;
 using Restful.RequestsModule.Models;

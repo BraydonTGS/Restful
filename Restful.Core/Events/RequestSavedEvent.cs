@@ -1,4 +1,5 @@
 ﻿using Prism.Events;
+using Restful.Core.Interfaces;
 using Restful.Core.Models;
 
 namespace Restful.Core.Events

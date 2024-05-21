@@ -1,4 +1,4 @@
-﻿namespace Restful.Core.Services
+﻿namespace Restful.Core.Interfaces
 {
     /// <summary>
     /// Interface to Define Methods for the <see cref="FileExportService"/>

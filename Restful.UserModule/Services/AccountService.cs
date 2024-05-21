@@ -12,11 +12,18 @@ namespace Restful.UserModule.Services
     {
         public async Task<LoginResponse> LoginAsync(LoginRequest request)
         {
-            if(request.Username?.ToLower() == "test user" && request.Password?.ToLower() == "password")
+            if(request.Username?.ToLower() == "test" && request.Password?.ToLower() == "password")
             {
                 // Simulate Loading the User From the DB //
                 await Task.Delay(200);
-                return new LoginResponse(); 
+                return new LoginResponse()
+                {
+                    UserGuid = Guid.NewGuid(),
+                    Username = "Test User", 
+                    Email = "TestUser@gmail.com",
+                    IsSuccessful = true,
+                    StatusCode= 200,
+                }; 
             }
             return null;
         }

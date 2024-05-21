@@ -1,4 +1,4 @@
-﻿namespace Restful.Core.Models
+﻿namespace Restful.Core.Interfaces
 {
     public interface IModel<TKey> { }
 }

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Restful.Core.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
 namespace Restful.Core.Models
