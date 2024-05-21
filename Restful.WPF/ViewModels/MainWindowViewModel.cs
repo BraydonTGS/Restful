@@ -1,8 +1,10 @@
-﻿using Prism.Commands;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
 using Restful.Core.Constant;
 using Restful.Core.Errors;
+using Restful.Core.Interfaces;
 using Restful.Core.ViewModels;
 using Restful.WPF.Theme;
 using System;
@@ -11,9 +13,13 @@ namespace Restful.WPF.ViewModels
 {
     public partial class MainWindowViewModel : RegionViewModelBase
     {
+        private readonly IApplicationUserService _applicationUserService;
         private readonly IThemeService _themeService;
+        private readonly IEventAggregator _eventAggregator;
         private readonly IErrorHandler _errorHandler;
 
+        [ObservableProperty]
+        private string _username;
         public DelegateCommand ThemeButtonClicked { get; set; }
         public DelegateCommand<string> MenuItemClicked { get; set; }
         public DelegateCommand<string> AccentButtonClicked { get; set; }
@@ -21,13 +27,16 @@ namespace Restful.WPF.ViewModels
         #region Constructor
         public MainWindowViewModel(
             IRegionManager regionManager,
+            IApplicationUserService applicationUserService,
             IThemeService themeService,
             IEventAggregator eventAggregator,
             IErrorHandler errorHandler) : base(regionManager)
         {
             Title = Constants.ApplicationTitle;
 
+            _applicationUserService = applicationUserService;
             _themeService = themeService;
+            _eventAggregator = eventAggregator;
             _errorHandler = errorHandler;
 
             ConfigureDelegateCommands();
@@ -43,6 +52,15 @@ namespace Restful.WPF.ViewModels
             MenuItemClicked = new DelegateCommand<string>(OnMenuItemClickedExecuted);
             ThemeButtonClicked = new DelegateCommand(OnThemeButtonClickedExecuted);
             AccentButtonClicked = new DelegateCommand<string>(OnAccentButtonClickedExecuted);
+        }
+        #endregion
+
+        #region OnNavigatedTo
+        /// <inheritdoc/>
+        public override void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            Username = _applicationUserService.GetApplicationUsername();
+            Title = $"{Constants.ApplicationTitle}: {Username}";
         }
         #endregion
 

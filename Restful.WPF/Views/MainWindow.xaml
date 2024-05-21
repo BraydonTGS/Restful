@@ -37,6 +37,8 @@
 
     <!--  Toolbar Items  -->
     <mah:MetroWindow.RightWindowCommands>
+        
+        
         <mah:WindowCommands>
             
             <!--  Save  -->
