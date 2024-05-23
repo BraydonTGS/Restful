@@ -1,15 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ICSharpCode.AvalonEdit.Document;
+using Restful.Core.Interfaces;
 using Restful.Core.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Text;
 using HttpMethod = Restful.Core.Enums.HttpMethod;
 
 namespace Restful.RequestsModule.Models
 {
-    public partial class Request : ModelBase<Guid>
+    public partial class Request : ModelBase<Guid>, IRequest
     {
         [ObservableProperty]
         private string _url;
@@ -87,33 +89,57 @@ namespace Restful.RequestsModule.Models
         #endregion
 
         #region Parameters_CollectionChanged
+        private readonly StringBuilder _urlBuilder = new StringBuilder();
+        private readonly StringBuilder _paramBuilder = new StringBuilder();
         /// <summary>
         /// Parameters Collection is Subscribed to this Event
         /// 
         /// Any Time the Parameters Collection is Updated, This Event Will Trigger
         /// 
         /// Dynamically Update the Request URL Based on the Current Parameters
+        /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Parameters_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+
             if (string.IsNullOrWhiteSpace(Url))
                 return;
 
-            var baseUrl = Url.Split('?')[0];
+            _urlBuilder.Clear();
+            _paramBuilder.Clear();
+
+            _urlBuilder.Append(Url.Split('?')[0]);
+
             if (Parameters == null || Parameters.Count == 0)
             {
-                Url = baseUrl;
+                Url = _urlBuilder.ToString();
                 return;
             }
 
-            var queryParams = Parameters
-                .Where(x => x.Enabled && !string.IsNullOrEmpty(x.Key) && !string.IsNullOrEmpty(x.Value))
-                .Select(x => $"{x.Key}={x.Value}");
+            bool firstParam = true;
+            foreach (var parameter in Parameters)
+            {
+                if (parameter.CanAddToUrl())
+                {
+                    if (!firstParam)
+                        _paramBuilder.Append('&');
 
-            if (queryParams.Any())
-                Url = $"{baseUrl}?{string.Join("&", queryParams)}";
+                    _paramBuilder.Append(parameter.ToString());
+
+                    firstParam = false;
+                }
+            }
+
+            if (_paramBuilder.Length > 0)
+            {
+                _urlBuilder
+                    .Append('?')
+                    .Append(_paramBuilder);
+            }
+
+            Url = _urlBuilder.ToString();
         }
         #endregion
 
@@ -127,6 +153,7 @@ namespace Restful.RequestsModule.Models
         {
             if (e.PropertyName == nameof(Url))
             {
+                //Fire that logic //
             }
         }
         #endregion

@@ -22,5 +22,9 @@ namespace Restful.RequestsModule.Models
             _key = key;
             _value = value;
         }
+       
+        public bool CanAddToUrl() => Enabled && !string.IsNullOrEmpty(Key) && !string.IsNullOrEmpty(Value);
+
+        public override string ToString()=> $"{Key}={Value}";
     }
 }
