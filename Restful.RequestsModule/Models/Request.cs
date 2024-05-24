@@ -5,7 +5,6 @@ using Restful.Core.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Text;
 using HttpMethod = Restful.Core.Enums.HttpMethod;
 
@@ -89,6 +88,7 @@ namespace Restful.RequestsModule.Models
         #endregion
 
         #region Parameters_CollectionChanged
+        private bool _firstParam;
         private readonly StringBuilder _urlBuilder = new StringBuilder();
         private readonly StringBuilder _paramBuilder = new StringBuilder();
         /// <summary>
@@ -118,17 +118,17 @@ namespace Restful.RequestsModule.Models
                 return;
             }
 
-            bool firstParam = true;
+            _firstParam = true;
             foreach (var parameter in Parameters)
             {
                 if (parameter.CanAddToUrl())
                 {
-                    if (!firstParam)
+                    if (!_firstParam)
                         _paramBuilder.Append('&');
 
                     _paramBuilder.Append(parameter.ToString());
 
-                    firstParam = false;
+                    _firstParam = false;
                 }
             }
 
@@ -140,6 +140,7 @@ namespace Restful.RequestsModule.Models
             }
 
             Url = _urlBuilder.ToString();
+            _firstParam = false;
         }
         #endregion
 

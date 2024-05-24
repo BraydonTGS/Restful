@@ -5,7 +5,6 @@ using Prism.Regions;
 using Restful.Core.Errors;
 using Restful.Core.Events;
 using Restful.Core.Interfaces;
-using Restful.Core.Services;
 using Restful.Core.ViewModels;
 using Restful.RequestsModule.Api;
 using Restful.RequestsModule.Models;
@@ -26,6 +25,7 @@ namespace Restful.RequestsModule.ViewModels
         public DelegateCommand SubmitButtonClicked { get; set; }
         public DelegateCommand SaveButtonClicked { get; set; }
         public DelegateCommand ExportButtonClicked { get; set; }
+        public DelegateCommand RefreshButtonClicked { get; set; }
 
         #region Constructor
         public RequestDetailsViewModel(
@@ -63,6 +63,10 @@ namespace Restful.RequestsModule.ViewModels
             if (Request?.TempResult != null)
                 ExportButtonClicked = new DelegateCommand(OnExportButtonClickedExecuted, CanExportButtonClickedExecuted)
                     .ObservesProperty(() => Request.TempResult.Text);
+
+            if (Request?.TempResult != null)
+                RefreshButtonClicked = new DelegateCommand(OnRefreshButtonClickedExecuted, CanRefreshButtonClickedExecuted)
+                .ObservesProperty(() => Request.TempResult.Text);
         }
         #endregion
 
@@ -154,6 +158,18 @@ namespace Restful.RequestsModule.ViewModels
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
         }
         private bool CanExportButtonClickedExecuted() => !string.IsNullOrEmpty(Request?.TempResult?.Text);
+        #endregion
+
+        #region OnRefreshButtonClickedExecuted
+        /// <summary>
+        /// Command that is Executed when the User Clicks Refresh
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        private void OnRefreshButtonClickedExecuted() 
+        {
+            Request.TempResult.Text = string.Empty;
+        }
+        private bool CanRefreshButtonClickedExecuted() => !string.IsNullOrEmpty(Request?.TempResult?.Text);
         #endregion
     }
 }
