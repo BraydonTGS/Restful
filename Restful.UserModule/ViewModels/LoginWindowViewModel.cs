@@ -62,19 +62,18 @@ namespace Restful.UserModule.ViewModels
             {
                 // Attempt to Login the User //
                 var loginResponse = await _accountService.LoginAsync(LoginRequest);
-                if (loginResponse is not null)
-                    if (loginResponse.IsSuccessful)
-                    {
-                        _applicationUserService.SetApplicationUser(
-                            loginResponse.UserGuid, loginResponse.Username, loginResponse.Email);
+                if (loginResponse is not null && loginResponse.IsSuccessful)
+                {
+                    _applicationUserService.SetApplicationUser(
+                        loginResponse.UserGuid, loginResponse.Username, loginResponse.Email);
 
-                        _eventAggregator
-                         .GetEvent<LoginSuccessEvent>()
-                         .Publish(true);
-                    }
+                    _eventAggregator
+                     .GetEvent<LoginSuccessEvent>()
+                     .Publish(true);
+                }
 
-                    else
-                        MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                else
+                    MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
 

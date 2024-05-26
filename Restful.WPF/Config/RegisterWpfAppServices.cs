@@ -3,6 +3,7 @@ using Restful.Core.Errors;
 using Restful.Core.Interfaces;
 using Restful.Core.Services;
 using Restful.WPF.Theme;
+using Restful.WPF.ViewModels;
 using Restful.WPF.Views;
 
 namespace Restful.WPF.Config
@@ -14,9 +15,9 @@ namespace Restful.WPF.Config
     {
         public static void RegisterWpfServices(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<WelcomeView>();
             containerRegistry.RegisterForNavigation<ComingSoonView>();
-
+            containerRegistry.RegisterForNavigation<WelcomeView, WelcomeViewModel>();
+       
             containerRegistry.RegisterSingleton<IThemeService, ThemeService>();
             containerRegistry.RegisterSingleton<IErrorHandler, ErrorHandler>();
             containerRegistry.RegisterSingleton<IFileExportService, FileExportService>();

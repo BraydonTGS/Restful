@@ -23,17 +23,17 @@
 
     <TabControl SelectedIndex="2" Style="{DynamicResource MahApps.Styles.TabControl.Animated}">
         <!--  Parameters  -->
-        <TabItem Header="Parameters">
+        <mah:MetroTabItem Header="Parameters">
             <controls:ParametersTabControl />
-        </TabItem>
+        </mah:MetroTabItem>
 
         <!--  Headers  -->
-        <TabItem Header="Headers">
+        <mah:MetroTabItem Header="Headers">
             <controls:HeadersTabControl />
-        </TabItem>
+        </mah:MetroTabItem>
 
         <!--  Requests  -->
-        <TabItem Header="Request">
+        <mah:MetroTabItem Header="Request">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -171,11 +171,11 @@
                     VerticalScrollBarVisibility="Visible"
                     WordWrap="True" />
             </Grid>
-        </TabItem>
+        </mah:MetroTabItem>
 
         <!--  Body  -->
-        <TabItem Header="Body">
+        <mah:MetroTabItem Header="Body">
             <controls:BodyTabControl />
-        </TabItem>
+        </mah:MetroTabItem>
     </TabControl>
 </UserControl>
