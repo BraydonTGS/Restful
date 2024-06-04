@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 namespace Restful.RequestsModule.Api
 {
     /// <summary>
-    /// Api Service
+    /// Request Api Service
     /// </summary>
-    public class ApiService : IApiService
+    public class RequestApiService : IRequestApiService
     {
         private readonly HttpClient _client;
 
-        public ApiService(HttpClient client) => _client = client;
+        public RequestApiService(HttpClient client) => _client = client;
 
         #region ProcessRequestAsync
         /// <summary>

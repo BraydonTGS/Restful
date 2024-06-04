@@ -15,7 +15,7 @@ namespace Restful.RequestsModule.ViewModels
 {
     public partial class RequestDetailsViewModel : RegionViewModelBase
     {
-        private readonly IApiService _apiService;
+        private readonly IRequestApiService _apiService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IFileExportService _fileExportService;
         private readonly IErrorHandler _errorHandler;
@@ -30,7 +30,7 @@ namespace Restful.RequestsModule.ViewModels
         #region Constructor
         public RequestDetailsViewModel(
             IRegionManager regionManager,
-            IApiService apiService,
+            IRequestApiService apiService,
             IEventAggregator eventAggregator,
             IFileExportService fileExportService,
             IErrorHandler errorHandler) : base(regionManager)

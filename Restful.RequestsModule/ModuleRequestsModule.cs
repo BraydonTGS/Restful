@@ -29,7 +29,7 @@ namespace Restful.RequestsModule
 
             // Services //
             containerRegistry.RegisterScoped<HttpClient>();
-            containerRegistry.RegisterScoped<IApiService, ApiService>();
+            containerRegistry.RegisterScoped<IRequestApiService, RequestApiService>();
         }
     }
 }
