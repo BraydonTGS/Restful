@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Restful.RequestsModule.Models
+namespace Restful.Core.Requests.Models
 {
     public partial class Header : ObservableObject
     {
@@ -8,13 +8,13 @@ namespace Restful.RequestsModule.Models
         private bool _enabled;
 
         [ObservableProperty]
-        private string _key;
+        private string _key = string.Empty;
 
         [ObservableProperty]
-        private string _value;
+        private string _value = string.Empty;
 
         [ObservableProperty]
-        private string _description;
+        private string _description = string.Empty;
 
         public Header() { }
         public Header(string key, string value, bool enabled = false)

@@ -15,9 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{344C027F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restful.RequestsModule", "Restful.RequestsModule\Restful.RequestsModule.csproj", "{2D729403-4697-4BEB-9279-C30AFE3B1784}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restful.UserModule", "Restful.UserModule\Restful.UserModule.csproj", "{C8BE666B-38A3-4405-9743-69460D98FBFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restful.UserModule", "Restful.UserModule\Restful.UserModule.csproj", "{C8BE666B-38A3-4405-9743-69460D98FBFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restful.SettingsModule", "Restful.SettingsModule\Restful.SettingsModule.csproj", "{080D247C-3297-4E5D-BAC5-F18539FF7A02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restful.SettingsModule", "Restful.SettingsModule\Restful.SettingsModule.csproj", "{080D247C-3297-4E5D-BAC5-F18539FF7A02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

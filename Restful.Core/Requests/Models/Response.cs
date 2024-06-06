@@ -1,13 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Restful.Core.Models;
-using System;
+using Restful.Core.Base;
 
-namespace Restful.RequestsModule.Models
+namespace Restful.Core.Requests.Models
 {
     public partial class Response : ModelBase<Guid>
     {
         [ObservableProperty]
-        private string _result;
+        private string? _result;
         public Guid RequestId { get; set; }
     }
 }

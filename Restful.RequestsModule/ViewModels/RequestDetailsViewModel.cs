@@ -4,10 +4,10 @@ using Prism.Events;
 using Prism.Regions;
 using Restful.Core.Errors;
 using Restful.Core.Events;
-using Restful.Core.Interfaces;
+using Restful.Core.Files;
+using Restful.Core.Requests;
+using Restful.Core.Requests.Models;
 using Restful.Core.ViewModels;
-using Restful.RequestsModule.Api;
-using Restful.RequestsModule.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -15,7 +15,7 @@ namespace Restful.RequestsModule.ViewModels
 {
     public partial class RequestDetailsViewModel : RegionViewModelBase
     {
-        private readonly IApiService _apiService;
+        private readonly IRequestApiService _apiService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IFileExportService _fileExportService;
         private readonly IErrorHandler _errorHandler;
@@ -30,7 +30,7 @@ namespace Restful.RequestsModule.ViewModels
         #region Constructor
         public RequestDetailsViewModel(
             IRegionManager regionManager,
-            IApiService apiService,
+            IRequestApiService apiService,
             IEventAggregator eventAggregator,
             IFileExportService fileExportService,
             IErrorHandler errorHandler) : base(regionManager)
@@ -165,7 +165,7 @@ namespace Restful.RequestsModule.ViewModels
         /// Command that is Executed when the User Clicks Refresh
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        private void OnRefreshButtonClickedExecuted() 
+        private void OnRefreshButtonClickedExecuted()
         {
             Request.TempResult.Text = string.Empty;
         }

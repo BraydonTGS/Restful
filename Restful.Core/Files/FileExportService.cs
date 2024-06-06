@@ -1,9 +1,8 @@
-﻿using Restful.Core.Interfaces;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Restful.Core.Services
+namespace Restful.Core.Files
 {
     /// <summary>
     /// File Export Service
@@ -19,7 +18,6 @@ namespace Restful.Core.Services
         {
             try
             {
-
                 SaveFileDialog saveFileDialog = new SaveFileDialog
                 {
                     Title = "Save File",

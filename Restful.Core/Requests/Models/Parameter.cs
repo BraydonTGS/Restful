@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Restful.RequestsModule.Models
+namespace Restful.Core.Requests.Models
 {
     public partial class Parameter : ObservableObject
     {
@@ -8,13 +8,13 @@ namespace Restful.RequestsModule.Models
         private bool _enabled;
 
         [ObservableProperty]
-        private string _key;
+        private string _key = string.Empty;
 
         [ObservableProperty]
-        private string _value;
+        private string _value = string.Empty;
 
         [ObservableProperty]
-        private string _description;
+        private string _description = string.Empty;
         public Parameter() { }
 
         public Parameter(string key, string value)
@@ -22,9 +22,9 @@ namespace Restful.RequestsModule.Models
             _key = key;
             _value = value;
         }
-       
+
         public bool CanAddToUrl() => Enabled && !string.IsNullOrEmpty(Key) && !string.IsNullOrEmpty(Value);
 
-        public override string ToString()=> $"{Key}={Value}";
+        public override string ToString() => $"{Key}={Value}";
     }
 }

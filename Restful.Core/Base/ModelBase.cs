@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Restful.Core.Interfaces;
-using System.ComponentModel.DataAnnotations;
 
-namespace Restful.Core.Models
+namespace Restful.Core.Base
 {
     /// <summary>
     /// Base Model Class where you specify the type of Id

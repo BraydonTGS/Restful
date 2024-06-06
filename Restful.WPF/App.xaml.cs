@@ -4,9 +4,10 @@ using Prism.Events;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
+using Restful.Core.Config;
+using Restful.Core.Events;
 using Restful.Core.Constant;
 using Restful.Core.Errors;
-using Restful.Core.Events;
 using Restful.RequestsModule;
 using Restful.SettingsModule;
 using Restful.UserModule;
@@ -100,6 +101,7 @@ namespace Restful.WPF
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             RegisterWpfAppServices.RegisterWpfServices(containerRegistry);
+            RegisterCoreAppServices.RegisterCoreServices(containerRegistry);
         }
         #endregion
 
@@ -126,7 +128,7 @@ namespace Restful.WPF
             {
                 _userVerified = true;
                 _loginWindow.Close();
-            } 
+            }
         }
         #endregion
 

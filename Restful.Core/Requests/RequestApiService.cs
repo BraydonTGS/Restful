@@ -1,19 +1,17 @@
 ﻿using Newtonsoft.Json;
-using Restful.RequestsModule.Models;
-using System;
+using Restful.Core.Requests.Models;
 using System.Net.Http;
-using System.Threading.Tasks;
 
-namespace Restful.RequestsModule.Api
+namespace Restful.Core.Requests
 {
     /// <summary>
-    /// Api Service
+    /// Request Api Service
     /// </summary>
-    public class ApiService : IApiService
+    public class RequestApiService : IRequestApiService
     {
         private readonly HttpClient _client;
 
-        public ApiService(HttpClient client) => _client = client;
+        public RequestApiService(HttpClient client) => _client = client;
 
         #region ProcessRequestAsync
         /// <summary>
@@ -50,9 +48,10 @@ namespace Restful.RequestsModule.Api
             {
                 var httpRequestMessage = new HttpRequestMessage(new HttpMethod(request.HttpMethod.ToString()), request.Url);
 
-                foreach (var header in request.Headers)
-                    if (header.Enabled)
-                        httpRequestMessage.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                if (request?.Headers is not null)
+                    foreach (var header in request.Headers)
+                        if (header.Enabled)
+                            httpRequestMessage.Headers.TryAddWithoutValidation(header.Key, header.Value);
 
                 return httpRequestMessage;
             }

@@ -1,5 +1,4 @@
-﻿using ControlzEx.Standard;
-using Prism.Regions;
+﻿using Prism.Regions;
 using Restful.Core.Constant;
 using Restful.Core.Errors;
 using Restful.Core.Extensions;

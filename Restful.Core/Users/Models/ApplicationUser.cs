@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Restful.Core.Base;
 
-namespace Restful.Core.Models
+namespace Restful.Core.Users.Models
 {
     /// <summary>
     /// Application's Current User

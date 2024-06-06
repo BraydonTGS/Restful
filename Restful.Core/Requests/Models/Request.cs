@@ -1,37 +1,35 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ICSharpCode.AvalonEdit.Document;
-using Restful.Core.Interfaces;
-using Restful.Core.Models;
-using System;
+using Restful.Core.Base;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Text;
 using HttpMethod = Restful.Core.Enums.HttpMethod;
 
-namespace Restful.RequestsModule.Models
+namespace Restful.Core.Requests.Models
 {
-    public partial class Request : ModelBase<Guid>, IRequest
+    public partial class Request : ModelBase<Guid>
     {
         [ObservableProperty]
-        private string _url;
+        private string? _url;
 
         [ObservableProperty]
-        private TextDocument _body;
+        private TextDocument? _body;
 
         [ObservableProperty]
-        private TextDocument _tempResult;
+        private TextDocument? _tempResult;
 
         [ObservableProperty]
         private HttpMethod _httpMethod;
 
         [ObservableProperty]
-        private ObservableCollection<Parameter> _parameters;
+        private ObservableCollection<Parameter>? _parameters;
 
         [ObservableProperty]
-        private ObservableCollection<Header> _headers;
+        private ObservableCollection<Header>? _headers;
 
         [ObservableProperty]
-        private Response _response;
+        private Response? _response;
 
         #region Constructor
         /// <summary>
@@ -50,6 +48,7 @@ namespace Restful.RequestsModule.Models
 
         }
         #endregion
+
         #region Initialize Default Request Properties
         /// <summary>
         /// Initialize the Request's Default Headers
@@ -101,7 +100,7 @@ namespace Restful.RequestsModule.Models
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Parameters_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void Parameters_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
 
             if (string.IsNullOrWhiteSpace(Url))
@@ -150,7 +149,7 @@ namespace Restful.RequestsModule.Models
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Request_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void Request_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(Url))
             {

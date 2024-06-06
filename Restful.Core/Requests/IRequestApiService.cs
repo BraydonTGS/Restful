@@ -1,16 +1,14 @@
-﻿using Restful.RequestsModule.Models;
+﻿using Restful.Core.Requests.Models;
 using System.Net.Http;
-using System.Threading.Tasks;
 
-namespace Restful.RequestsModule.Api
+namespace Restful.Core.Requests
 {
     /// <summary>
-    /// IApiService
+    /// IRequestApiService
     /// </summary>
-    public interface IApiService
+    public interface IRequestApiService
     {
         Task<string> ProcessRequestAsync(Request request);
         Task<string> ExecuteHttpRequestAsync(HttpRequestMessage requestMessage);
     }
 }
- 
