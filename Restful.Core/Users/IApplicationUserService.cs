@@ -1,6 +1,6 @@
-﻿using Restful.Core.Models;
+﻿using Restful.Core.Users.Models;
 
-namespace Restful.Core.Interfaces
+namespace Restful.Core.Users
 {
     public interface IApplicationUserService
     {

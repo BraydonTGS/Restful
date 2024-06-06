@@ -3,6 +3,9 @@ using System.Windows.Data;
 
 namespace Restful.Core.Converters
 {
+    /// <summary>
+    /// String to Enum Converter
+    /// </summary>
     public class StringToEnumConverter : IValueConverter
     {
         public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)

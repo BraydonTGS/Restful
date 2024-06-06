@@ -1,8 +1,7 @@
-﻿using Restful.RequestsModule.Models;
+﻿using Restful.Core.Requests.Models;
 using System.Net.Http;
-using System.Threading.Tasks;
 
-namespace Restful.RequestsModule.Api
+namespace Restful.Core.Requests
 {
     /// <summary>
     /// IRequestApiService
@@ -13,4 +12,3 @@ namespace Restful.RequestsModule.Api
         Task<string> ExecuteHttpRequestAsync(HttpRequestMessage requestMessage);
     }
 }
- 

@@ -1,9 +1,6 @@
-﻿using Restful.Core.Interfaces;
-using System;
-
-namespace Restful.UserModule.Models
+﻿namespace Restful.Core.Login.Models
 {
-    public class LoginResponse : IResponse
+    public class LoginResponse
     {
         public string AccessToken { get; set; } = string.Empty;
         public Guid UserGuid { get; set; }

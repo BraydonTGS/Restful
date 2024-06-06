@@ -2,7 +2,6 @@
 using Prism.Modularity;
 using Prism.Regions;
 using Restful.Core.Constant;
-using Restful.RequestsModule.Api;
 using Restful.RequestsModule.ViewModels;
 using Restful.RequestsModule.Views;
 using System.Net.Http;
@@ -26,10 +25,6 @@ namespace Restful.RequestsModule
             containerRegistry.RegisterForNavigation<RequestsView, RequestsViewModel>();
             containerRegistry.RegisterForNavigation<RequestsTreeView, RequestsTreeViewModel>();
             containerRegistry.RegisterForNavigation<RequestDetailsView, RequestDetailsViewModel>();
-
-            // Services //
-            containerRegistry.RegisterScoped<HttpClient>();
-            containerRegistry.RegisterScoped<IRequestApiService, RequestApiService>();
         }
     }
 }

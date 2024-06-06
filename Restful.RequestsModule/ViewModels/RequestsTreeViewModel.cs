@@ -2,13 +2,12 @@
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
+using Restful.Core.Base;
 using Restful.Core.Constant;
 using Restful.Core.Errors;
 using Restful.Core.Events;
-using Restful.Core.Interfaces;
-using Restful.Core.Models;
+using Restful.Core.Requests.Models;
 using Restful.Core.ViewModels;
-using Restful.RequestsModule.Models;
 using Restful.RequestsModule.Views;
 using System;
 using System.Collections.ObjectModel;

@@ -1,12 +1,10 @@
-﻿using Restful.UserModule.Models;
-using System;
-using System.Threading.Tasks;
+﻿using Restful.Core.Login.Models;
 
-namespace Restful.UserModule.Services
+namespace Restful.Core.Login
 {
-    public class AccountService : IAccountService
+    public class LoginService : ILoginService
     {
-        public async Task<LoginResponse> LoginAsync(LoginRequest request)
+        public async Task<LoginResponse?> LoginAsync(LoginRequest request)
         {
             if (request.Username?.ToLower() == "admin" && request.Password?.ToLower() == "password")
             {

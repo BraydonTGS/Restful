@@ -4,10 +4,10 @@ using Prism.Events;
 using Prism.Regions;
 using Restful.Core.Errors;
 using Restful.Core.Events;
-using Restful.Core.Interfaces;
+using Restful.Core.Files;
+using Restful.Core.Requests;
+using Restful.Core.Requests.Models;
 using Restful.Core.ViewModels;
-using Restful.RequestsModule.Api;
-using Restful.RequestsModule.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -165,7 +165,7 @@ namespace Restful.RequestsModule.ViewModels
         /// Command that is Executed when the User Clicks Refresh
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        private void OnRefreshButtonClickedExecuted() 
+        private void OnRefreshButtonClickedExecuted()
         {
             Request.TempResult.Text = string.Empty;
         }

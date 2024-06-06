@@ -3,10 +3,10 @@ using Prism.Commands;
 using Prism.Events;
 using Restful.Core.Errors;
 using Restful.Core.Events;
-using Restful.Core.Interfaces;
+using Restful.Core.Login;
+using Restful.Core.Login.Models;
+using Restful.Core.Users;
 using Restful.Core.ViewModels;
-using Restful.UserModule.Models;
-using Restful.UserModule.Services;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,7 +16,7 @@ namespace Restful.UserModule.ViewModels
 {
     public partial class LoginWindowViewModel : ViewModelBase
     {
-        private readonly IAccountService _accountService;
+        private readonly ILoginService _accountService;
         private readonly IApplicationUserService _applicationUserService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IErrorHandler _errorHandler;
@@ -28,7 +28,7 @@ namespace Restful.UserModule.ViewModels
         public DelegateCommand CreateNewUserCommand { get; set; }
         public DelegateCommand ResetPasswordCommand { get; set; }
         public LoginWindowViewModel(
-            IAccountService accountService,
+            ILoginService accountService,
             IApplicationUserService applicationUserService,
             IEventAggregator eventAggregator,
             IErrorHandler errorHandler)
