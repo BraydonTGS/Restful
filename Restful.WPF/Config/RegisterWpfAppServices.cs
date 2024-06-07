@@ -1,5 +1,4 @@
 ﻿using Prism.Ioc;
-using Restful.Core.Errors;
 using Restful.WPF.Theme;
 using Restful.WPF.ViewModels;
 using Restful.WPF.Views;

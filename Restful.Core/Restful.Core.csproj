@@ -14,4 +14,8 @@
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Restful.Constants\Restful.Global.csproj" />
+  </ItemGroup>
+
 </Project>

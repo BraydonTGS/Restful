@@ -4,7 +4,7 @@ using Restful.Core.Base;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Text;
-using HttpMethod = Restful.Core.Enums.HttpMethod;
+using HttpMethod = Restful.Global.Enums.HttpMethod;
 
 namespace Restful.Core.Requests.Models
 {

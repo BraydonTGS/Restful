@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Restful.Core.Enums
+namespace Restful.Global.Enums
 {
     public enum HttpMethod
     {

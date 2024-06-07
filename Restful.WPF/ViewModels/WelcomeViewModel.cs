@@ -1,9 +1,7 @@
 ﻿using Prism.Regions;
-using Restful.Core.Constant;
 using Restful.Core.Errors;
 using Restful.Core.Extensions;
 using Restful.Core.ViewModels;
-using Restful.RequestsModule.Views;
 using System;
 using System.Threading.Tasks;
 

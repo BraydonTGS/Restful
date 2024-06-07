@@ -2,10 +2,10 @@
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
-using Restful.Core.Users;
-using Restful.Core.Constant;
 using Restful.Core.Errors;
+using Restful.Core.Users;
 using Restful.Core.ViewModels;
+using Restful.Global.Constant;
 using Restful.WPF.Theme;
 using System;
 

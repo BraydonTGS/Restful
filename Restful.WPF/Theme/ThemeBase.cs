@@ -1,5 +1,4 @@
-﻿using Restful.Core.Constant;
-
+﻿using Restful.Global.Constant;
 namespace Restful.WPF.Theme
 {
     public static class ThemeBase
