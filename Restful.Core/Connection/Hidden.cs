@@ -4,9 +4,9 @@
     {
         public static string GetConnectionString(bool isProd = true)
         {
-            if (isProd) return "Data Source=Restful.db";
+            if (isProd) return "Data Source=./Database/RestfulProd.db";
 
-            else return "Data Source=RestfulTest.db";
+            else return "Data Source=./Database/RestfulTest.db";
         }
     }
 }
