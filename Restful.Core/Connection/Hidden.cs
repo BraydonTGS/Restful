@@ -2,7 +2,7 @@
 {
     public class Hidden
     {
-        public static string GetConnectionString(bool isProd = true)
+        public static string GetConnectionString(bool isProd = false)
         {
             if (isProd) return "Data Source=./Database/RestfulProd.db";
 

@@ -23,7 +23,7 @@ namespace Restful.Core.Context
         {
             if (!optionsBuilder.IsConfigured)
                 optionsBuilder
-                    .UseSqlite(Hidden.GetConnectionString(false));
+                    .UseSqlite(Hidden.GetConnectionString());
         }
 
         // Configure Fluent API //

@@ -5,6 +5,7 @@ using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 using Restful.Core.Config;
+using Restful.Core.Database;
 using Restful.Core.Errors;
 using Restful.Core.Events;
 using Restful.Global.Constant;
@@ -13,6 +14,7 @@ using Restful.SettingsModule;
 using Restful.UserModule;
 using Restful.UserModule.Views;
 using Restful.WPF.Config;
+using Restful.WPF.Properties;
 using Restful.WPF.Theme;
 using Restful.WPF.Views;
 using System;
@@ -41,9 +43,12 @@ namespace Restful.WPF
         {
             // Handle non-UI thread exceptions
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            Settings.Default.IsProd = false;
+            Settings.Default.AddMigration = false;
 
-            LoadAppResources();
+            LoadAppShellResources();
             LoadApplicationTheme();
+            EnsureDatabaseIsCreated();
 
             return Container.Resolve<MainWindow>();
         }
@@ -53,11 +58,23 @@ namespace Restful.WPF
         /// <summary>
         /// Load any Dependencies that the App Class Needs
         /// </summary>
-        private void LoadAppResources()
+        private void LoadAppShellResources()
         {
             _regionManager = Container.Resolve<IRegionManager>();
             _eventAggregator = Container.Resolve<IEventAggregator>();
             _errorHandler = Container.Resolve<IErrorHandler>();
+        }
+        #endregion
+
+        #region EnsureDatabaseIsCreated
+        /// <summary>
+        /// Ensure the Database is Created and Migrations are applied
+        /// </summary>
+        private void EnsureDatabaseIsCreated()
+        {
+            var databaseManager = Container.Resolve<IDatabaseManager>();
+            if (databaseManager != null)
+                databaseManager.InitializeDatabase(isProd: Settings.Default.IsProd, addMigration: Settings.Default.AddMigration);
         }
         #endregion
 

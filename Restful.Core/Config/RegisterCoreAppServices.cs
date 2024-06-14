@@ -1,4 +1,7 @@
-﻿using Prism.Ioc;
+﻿using Microsoft.EntityFrameworkCore;
+using Prism.Ioc;
+using Restful.Core.Context;
+using Restful.Core.Database;
 using Restful.Core.Errors;
 using Restful.Core.Files;
 using Restful.Core.Login;
@@ -15,10 +18,14 @@ namespace Restful.Core.Config
     {
         public static void RegisterCoreServices(IContainerRegistry containerRegistry)
         {
+            // Register DbContext Factory //
+            containerRegistry.Register<IDbContextFactory<RestfulDbContext>, RestfulDbContextFactory>();
+
             // Register Services //
             containerRegistry.RegisterSingleton<IErrorHandler, ErrorHandler>();
             containerRegistry.RegisterSingleton<IApplicationUserService, ApplicationUserService>();
             containerRegistry.RegisterSingleton<IFileExportService, FileExportService>();
+            containerRegistry.RegisterSingleton<IDatabaseManager, DatabaseManager>();
 
 
             containerRegistry.RegisterScoped<HttpClient>();

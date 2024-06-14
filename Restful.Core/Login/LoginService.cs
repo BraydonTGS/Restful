@@ -1,9 +1,16 @@
-﻿using Restful.Core.Login.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Restful.Core.Context;
+using Restful.Core.Login.Models;
 
 namespace Restful.Core.Login
 {
     public class LoginService : ILoginService
     {
+        private readonly IDbContextFactory<RestfulDbContext> _contextFactory;
+        public LoginService(IDbContextFactory<RestfulDbContext> contextFactory)
+        {
+           _contextFactory = contextFactory;
+        }
         public async Task<LoginResponse?> LoginAsync(LoginRequest request)
         {
             if (request.Username?.ToLower() == "admin" && request.Password?.ToLower() == "password")

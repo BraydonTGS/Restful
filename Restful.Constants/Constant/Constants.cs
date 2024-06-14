@@ -7,6 +7,12 @@
         public const string Default = "Default";
         #endregion
 
+        #region Database
+        public const string DbDirectory = "Database";
+        public const string ProdDb = "RestfulProd.db";
+        public const string TestDb = "RestfulTest.db";
+        #endregion
+
         #region Theme
         public const string Light = "Light";
         public const string Dark = "Dark";
