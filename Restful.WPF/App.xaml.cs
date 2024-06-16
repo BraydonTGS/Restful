@@ -43,8 +43,6 @@ namespace Restful.WPF
         {
             // Handle non-UI thread exceptions
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            Settings.Default.IsProd = false;
-            Settings.Default.AddMigration = false;
 
             LoadAppShellResources();
             LoadApplicationTheme();
@@ -72,6 +70,15 @@ namespace Restful.WPF
         /// </summary>
         private void EnsureDatabaseIsCreated()
         {
+#if DEBUG
+            Settings.Default.IsProd = false;
+
+#endif
+#if RELEASE
+            Settings.Default.IsProd = true;
+#endif
+
+            Settings.Default.AddMigration = true;
             var databaseManager = Container.Resolve<IDatabaseManager>();
             if (databaseManager != null)
                 databaseManager.InitializeDatabase(isProd: Settings.Default.IsProd, addMigration: Settings.Default.AddMigration);

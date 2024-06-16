@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Restful.Core.Context;
-using Restful.Global.Constant;
 using Restful.Global.Exceptions;
 using System.IO;
 
@@ -40,8 +39,10 @@ namespace Restful.Core.Database
             {
                 _applyMigrations = applyMigrations;
 
-                if (isProd) { _databaseName = Constants.ProdDb; } else { _databaseName = Constants.TestDb; }
-                _databasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Constants.DbDirectory, Constants.TestDb);
+                if (isProd)
+                    _databasePath = DatabaseInfo.ProdDb;
+                else
+                    _databasePath = DatabaseInfo.TestDb;
 
                 EnsureDatabaseDirectoryExists();
                 EnsureDatabaseCreated();
@@ -63,9 +64,7 @@ namespace Restful.Core.Database
             var directoryPath = Path.GetDirectoryName(_databasePath);
             if (!string.IsNullOrEmpty(directoryPath))
                 if (!Directory.Exists(directoryPath))
-                {
                     Directory.CreateDirectory(directoryPath);
-                }
         }
         #endregion
 
@@ -75,20 +74,10 @@ namespace Restful.Core.Database
         /// </summary>
         private void EnsureDatabaseCreated()
         {
+            using var context = _contextFactory.CreateDbContext();
 
-            if (!File.Exists(_databasePath))
-            {
-                using var context = _contextFactory.CreateDbContext();
-                context.Database.EnsureCreated();
-            }
-            else
-            {
-                if (_applyMigrations)
-                {
-                    using var context = _contextFactory.CreateDbContext();
-                    context.Database.Migrate();
-                }
-            }
+            if (!File.Exists(_databasePath) || _applyMigrations)
+                context.Database.Migrate();
         }
         #endregion
     }

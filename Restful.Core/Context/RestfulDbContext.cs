@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Restful.Core.Connection;
+using Restful.Core.Database;
 using Restful.Entity.Entities;
 
 namespace Restful.Core.Context
@@ -22,8 +22,15 @@ namespace Restful.Core.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder
-                    .UseSqlite(Hidden.GetConnectionString());
+            {
+#if DEBUG
+                optionsBuilder.UseSqlite(DatabaseInfo.TestDbConnection);
+
+#endif
+#if RELEASE
+               optionsBuilder.UseSqlite(DatabaseInfo.ProdDbConnection);
+#endif
+            }
         }
 
         // Configure Fluent API //

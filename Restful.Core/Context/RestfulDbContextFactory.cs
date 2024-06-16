@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Restful.Core.Connection;
+using Restful.Core.Database;
 
 namespace Restful.Core.Context
 {
@@ -11,7 +11,14 @@ namespace Restful.Core.Context
         public RestfulDbContext CreateDbContext()
         {
             var optionsBuilder = new DbContextOptionsBuilder<RestfulDbContext>();
-            optionsBuilder.UseSqlite(Hidden.GetConnectionString());
+
+#if DEBUG
+            optionsBuilder.UseSqlite(DatabaseInfo.TestDbConnection);
+
+#endif
+#if RELEASE
+            optionsBuilder.UseSqlite(DatabaseInfo.ProdDbConnection);
+#endif         
             return new RestfulDbContext(optionsBuilder.Options);
         }
     }
