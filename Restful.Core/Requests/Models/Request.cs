@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ICSharpCode.AvalonEdit.Document;
 using Restful.Core.Base;
+using Restful.Entity.Entities;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Text;
@@ -30,6 +31,8 @@ namespace Restful.Core.Requests.Models
 
         [ObservableProperty]
         private Response? _response;
+
+        public Guid CollectionId { get; set; }
 
         #region Constructor
         /// <summary>
