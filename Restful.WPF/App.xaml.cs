@@ -70,18 +70,9 @@ namespace Restful.WPF
         /// </summary>
         private void EnsureDatabaseIsCreated()
         {
-#if DEBUG
-            Settings.Default.IsProd = false;
-
-#endif
-#if RELEASE
-            Settings.Default.IsProd = true;
-#endif
-
-            Settings.Default.AddMigration = true;
             var databaseManager = Container.Resolve<IDatabaseManager>();
             if (databaseManager != null)
-                databaseManager.InitializeDatabase(isProd: Settings.Default.IsProd, addMigration: Settings.Default.AddMigration);
+                databaseManager.InitializeDatabase();
         }
         #endregion
 
@@ -125,7 +116,7 @@ namespace Restful.WPF
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             RegisterWpfAppServices.RegisterWpfServices(containerRegistry);
-            RegisterCoreAppServices.RegisterCoreServices(containerRegistry);
+            RegisterCoreAppServices.RegisterCoreServices(containerRegistry, Settings.Default.DVDb);
         }
         #endregion
 

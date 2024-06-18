@@ -37,25 +37,25 @@ namespace Restful.WPF.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool AddMigration {
+        [global::System.Configuration.DefaultSettingValueAttribute("RestfulProd.db")]
+        public string ProdDb {
             get {
-                return ((bool)(this["AddMigration"]));
+                return ((string)(this["ProdDb"]));
             }
             set {
-                this["AddMigration"] = value;
+                this["ProdDb"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsProd {
+        [global::System.Configuration.DefaultSettingValueAttribute("RestfulDV.db")]
+        public string DVDb {
             get {
-                return ((bool)(this["IsProd"]));
+                return ((string)(this["DVDb"]));
             }
             set {
-                this["IsProd"] = value;
+                this["DVDb"] = value;
             }
         }
     }

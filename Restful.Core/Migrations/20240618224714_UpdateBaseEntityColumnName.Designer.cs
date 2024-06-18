@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restful.Core.Context;
 
@@ -10,9 +11,11 @@ using Restful.Core.Context;
 namespace Restful.Core.Migrations
 {
     [DbContext(typeof(RestfulDbContext))]
-    partial class RestfulDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240618224714_UpdateBaseEntityColumnName")]
+    partial class UpdateBaseEntityColumnName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.6");

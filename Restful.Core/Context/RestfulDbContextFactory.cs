@@ -8,17 +8,17 @@ namespace Restful.Core.Context
     /// </summary>
     public class RestfulDbContextFactory : IDbContextFactory<RestfulDbContext>
     {
+        private readonly string _dbName;
+        public RestfulDbContextFactory(string dbName)
+        {
+            _dbName = dbName;
+        }
         public RestfulDbContext CreateDbContext()
         {
             var optionsBuilder = new DbContextOptionsBuilder<RestfulDbContext>();
 
-#if DEBUG
-            optionsBuilder.UseSqlite(DatabaseInfo.TestDbConnection);
+            optionsBuilder.UseSqlite($"Data Source={DatabaseInfo.DbDirectory}{_dbName}");
 
-#endif
-#if RELEASE
-            optionsBuilder.UseSqlite(DatabaseInfo.ProdDbConnection);
-#endif         
             return new RestfulDbContext(optionsBuilder.Options);
         }
     }

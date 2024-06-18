@@ -10,10 +10,6 @@ namespace Restful.Core.Database
     /// </summary>
     public class DatabaseManager : IDatabaseManager
     {
-        private bool _isProd;
-        private bool _applyMigrations;
-        private string _databaseName = string.Empty;
-        private string _databasePath = string.Empty;
         private readonly IDbContextFactory<RestfulDbContext> _contextFactory;
 
         public DatabaseManager(IDbContextFactory<RestfulDbContext> contextFactory)
@@ -33,17 +29,10 @@ namespace Restful.Core.Database
         /// <param name="isProd"></param>
         /// <param name="applyMigrations"></param>
         /// <exception cref="InitializeDatabaseException"></exception>
-        public void InitializeDatabase(bool isProd, bool applyMigrations)
+        public void InitializeDatabase()
         {
             try
             {
-                _applyMigrations = applyMigrations;
-
-                if (isProd)
-                    _databasePath = DatabaseInfo.ProdDb;
-                else
-                    _databasePath = DatabaseInfo.TestDb;
-
                 EnsureDatabaseDirectoryExists();
                 EnsureDatabaseCreated();
 
@@ -61,7 +50,7 @@ namespace Restful.Core.Database
         /// </summary>
         private void EnsureDatabaseDirectoryExists()
         {
-            var directoryPath = Path.GetDirectoryName(_databasePath);
+            var directoryPath = Path.GetDirectoryName(DatabaseInfo.DbDirectory);
             if (!string.IsNullOrEmpty(directoryPath))
                 if (!Directory.Exists(directoryPath))
                     Directory.CreateDirectory(directoryPath);
@@ -76,8 +65,7 @@ namespace Restful.Core.Database
         {
             using var context = _contextFactory.CreateDbContext();
 
-            if (!File.Exists(_databasePath) || _applyMigrations)
-                context.Database.Migrate();
+            context.Database.Migrate();
         }
         #endregion
     }

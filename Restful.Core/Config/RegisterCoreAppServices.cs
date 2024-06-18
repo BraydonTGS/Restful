@@ -20,13 +20,13 @@ namespace Restful.Core.Config
     /// </summary>
     public static class RegisterCoreAppServices
     {
-        public static void RegisterCoreServices(IContainerRegistry containerRegistry)
+        public static void RegisterCoreServices(IContainerRegistry containerRegistry, string dbName)
         {
             // Http Client //
             containerRegistry.RegisterScoped<HttpClient>();
 
             // Register DbContext Factory //
-            containerRegistry.Register<IDbContextFactory<RestfulDbContext>, RestfulDbContextFactory>();
+            containerRegistry.Register(typeof(IDbContextFactory<RestfulDbContext>), _ => new RestfulDbContextFactory(dbName));
 
             // Mappers //
             containerRegistry.RegisterSingleton<IMapper<Request, RequestEntity>, RequestMapper>();

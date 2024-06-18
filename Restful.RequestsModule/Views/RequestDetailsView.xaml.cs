@@ -1,7 +1,4 @@
-﻿using ICSharpCode.AvalonEdit.Highlighting;
-using System.Linq;
-using System.Windows.Controls;
-using System.Windows.Media;
+﻿using System.Windows.Controls;
 
 namespace Restful.RequestsModule.Views
 {
@@ -30,7 +27,6 @@ namespace Restful.RequestsModule.Views
             //    // Reapply the highlighting definition to ensure the update takes effect
             //    responseTextBox.SyntaxHighlighting = highlight;
             //}
-
         }
     }
 }
