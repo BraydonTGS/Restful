@@ -1,14 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ICSharpCode.AvalonEdit.Document;
 using Restful.Core.Base;
-using Restful.Entity.Entities;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Text;
 using HttpMethod = Restful.Global.Enums.HttpMethod;
 
 namespace Restful.Core.Requests.Models
 {
+    [DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
     public partial class Request : ModelBase<Guid>
     {
         [ObservableProperty]
@@ -160,5 +161,7 @@ namespace Restful.Core.Requests.Models
             }
         }
         #endregion
+
+        private string GetDebuggerDisplay() => $"Request: {Name}";
     }
 }

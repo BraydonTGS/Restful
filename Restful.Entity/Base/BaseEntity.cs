@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Restful.Entity.Base
 {
@@ -9,9 +10,10 @@ namespace Restful.Entity.Base
     public abstract class BaseEntity<TKey> : IEntity
     {
         [Key]
+        [NotNull]
         [Required]
         [Column("Id")]
-        public required TKey Id { get; set; }
+        public TKey? Id { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsDirty { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
