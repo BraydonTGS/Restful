@@ -16,17 +16,19 @@ namespace Restful.Core.Base
         private readonly IDbContextFactory<RestfulDbContext> _contextFactory;
         #endregion
 
+        #region Constructor
         public BaseRepository(IDbContextFactory<RestfulDbContext> contextFactory)
         {
             _contextFactory = contextFactory ?? throw new ArgumentNullException(nameof(contextFactory));
         }
+        #endregion
 
         #region GetAllAsync
         /// <summary>
         /// Retrieves all entities of the specified type asynchronously.
         /// </summary>
         /// <returns>A collection of entities or null if none are found.</returns>
-        public virtual async Task<IEnumerable<TEntity>?> GetAllAsync()
+        public virtual async Task<ICollection<TEntity>?> GetAllAsync()
         {
             using var context = await _contextFactory.CreateDbContextAsync();
 

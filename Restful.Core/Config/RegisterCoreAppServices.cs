@@ -5,6 +5,7 @@ using Restful.Core.Context;
 using Restful.Core.Database;
 using Restful.Core.Errors;
 using Restful.Core.Files;
+using Restful.Core.Logging;
 using Restful.Core.Login;
 using Restful.Core.Requests;
 using Restful.Core.Requests.Models;
@@ -40,7 +41,11 @@ namespace Restful.Core.Config
             containerRegistry.RegisterSingleton<IDatabaseManager, DatabaseManager>();
 
             // Repository //
-            containerRegistry.RegisterScoped<RequestRepository>();
+            containerRegistry.RegisterScoped<IRequestRepository, RequestRepository>();
+            containerRegistry.RegisterScoped<IRequestBL, RequestBL>();
+
+            // Logging //
+            LoggingConfig.ConfigureLogging(containerRegistry);
 
         }
     }

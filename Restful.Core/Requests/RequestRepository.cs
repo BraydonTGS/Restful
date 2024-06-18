@@ -5,7 +5,7 @@ using Restful.Entity.Entities;
 
 namespace Restful.Core.Requests
 {
-    public class RequestRepository : BaseRepository<RequestEntity, Guid>
+    public class RequestRepository : BaseRepository<RequestEntity, Guid>, IRequestRepository
     {
         private readonly IDbContextFactory<RestfulDbContext> _contextFactory;
         public RequestRepository(IDbContextFactory<RestfulDbContext> contextFactory) : base(contextFactory)

@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restful.SettingsModule", "R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restful.Global", "Restful.Constants\Restful.Global.csproj", "{8AFE6947-88FD-44C9-B8C5-BB4EDE8B3F07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restful.Entity", "Restful.Entity\Restful.Entity.csproj", "{0D4DF6A5-E231-4D2A-A30F-E120DDB98BD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restful.Entity", "Restful.Entity\Restful.Entity.csproj", "{0D4DF6A5-E231-4D2A-A30F-E120DDB98BD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restful.Core.Tests", "Restful.Core.Tests\Restful.Core.Tests.csproj", "{C1722014-7804-49E9-9A28-5EC4342171BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{0D4DF6A5-E231-4D2A-A30F-E120DDB98BD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D4DF6A5-E231-4D2A-A30F-E120DDB98BD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D4DF6A5-E231-4D2A-A30F-E120DDB98BD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1722014-7804-49E9-9A28-5EC4342171BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1722014-7804-49E9-9A28-5EC4342171BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1722014-7804-49E9-9A28-5EC4342171BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1722014-7804-49E9-9A28-5EC4342171BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{080D247C-3297-4E5D-BAC5-F18539FF7A02} = {17B0451E-E428-4FAA-83F3-322F0260C16E}
 		{8AFE6947-88FD-44C9-B8C5-BB4EDE8B3F07} = {43813FEF-2D59-4EE9-A9F3-BE3E0B88D654}
 		{0D4DF6A5-E231-4D2A-A30F-E120DDB98BD0} = {43813FEF-2D59-4EE9-A9F3-BE3E0B88D654}
+		{C1722014-7804-49E9-9A28-5EC4342171BE} = {344C027F-BF18-4BB7-9689-E073B4010053}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F1C62D33-27A3-4EEC-93DC-F2A4E581BBCD}
