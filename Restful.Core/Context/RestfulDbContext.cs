@@ -23,7 +23,7 @@ namespace Restful.Core.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlite($"Data Source={DatabaseInfo.DbDirectory}RestfulTesting.db");
+                optionsBuilder.UseSqlite($"Data Source={DatabaseInfo.DbDirectory}RestfulDebug.db");
             }
         }
 

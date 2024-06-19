@@ -16,7 +16,7 @@ namespace Restful.Core.Requests
         public override RequestEntity Map(Request model)
         {
             var entity = new RequestEntity();
-
+            entity.CollectionId = model.CollectionId;
             return entity;
         }
     }

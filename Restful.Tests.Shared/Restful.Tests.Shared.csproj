@@ -15,9 +15,11 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
     <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
+    <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Restful.Constants\Restful.Global.csproj" />
     <ProjectReference Include="..\Restful.Core\Restful.Core.csproj" />
   </ItemGroup>
 
