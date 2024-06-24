@@ -2,7 +2,7 @@
 using Restful.Core.Base;
 using System.Diagnostics;
 
-namespace Restful.Core.Requests.Models
+namespace Restful.Core.Headers.Models
 {
     [DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
     public partial class Header : ModelBase<Guid>

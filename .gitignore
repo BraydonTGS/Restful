@@ -484,3 +484,4 @@ $RECYCLE.BIN/
 *.swp
 /Restful.Core/Database/RestfulProd.db
 /Restful.Core/Database/RestfulTest.db
+/Restful.Core/RestfulDbContext.dgml

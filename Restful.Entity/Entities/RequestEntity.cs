@@ -18,7 +18,7 @@ namespace Restful.Entity.Entities
         public string Name { get; set; } = string.Empty;
 
         [Column("Url")]
-        public string Url { get; set; } = string.Empty;
+        public string? Url { get; set; }
 
         [Column("Body")]
         public string Body { get; set; } = string.Empty;
@@ -31,9 +31,14 @@ namespace Restful.Entity.Entities
         public HttpMethod HttpMethod { get; set; }
 
         [ForeignKey(nameof(CollectionEntity))]
-        public Guid CollectionId { get; set; }
+        public Guid? CollectionId { get; set; }
+
+        [ForeignKey(nameof(UserEntity))]
+        public Guid? UserId { get; set; }
 
         public CollectionEntity? CollectionEntity { get; set; }
+
+        public UserEntity? UserEntity { get; set; }
 
         public ICollection<HeaderEntity>? HeaderEntities { get; set; }
 

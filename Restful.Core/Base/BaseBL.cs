@@ -14,8 +14,8 @@ namespace Restful.Core.Base
         where TEntity : BaseEntity<TKey>
     {
         private readonly IBaseRepository<TEntity, TKey> _repository;
-        private readonly IMapper<TModel, TEntity> _mapper;
-        private readonly ILogger _log;
+        protected readonly IMapper<TModel, TEntity> _mapper;
+        protected readonly ILogger _log;
 
         public BaseBL(
             IBaseRepository<TEntity, TKey> repository,

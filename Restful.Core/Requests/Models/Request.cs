@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ICSharpCode.AvalonEdit.Document;
 using Restful.Core.Base;
+using Restful.Core.Headers.Models;
+using Restful.Core.Parameters.Models;
+using Restful.Core.Responses.Models;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -33,7 +36,7 @@ namespace Restful.Core.Requests.Models
         [ObservableProperty]
         private Response? _response;
 
-        public Guid CollectionId { get; set; }
+        public Guid? CollectionId { get; set; }
 
         #region Constructor
         /// <summary>

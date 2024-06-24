@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restful.Core.Context;
 
@@ -10,9 +11,11 @@ using Restful.Core.Context;
 namespace Restful.Core.Migrations
 {
     [DbContext(typeof(RestfulDbContext))]
-    partial class RestfulDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240622122308_CollectionFkNullable")]
+    partial class CollectionFkNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
@@ -263,14 +266,9 @@ namespace Restful.Core.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("Url");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CollectionId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Requests");
                 });
@@ -420,13 +418,7 @@ namespace Restful.Core.Migrations
                         .WithMany("Requests")
                         .HasForeignKey("CollectionId");
 
-                    b.HasOne("Restful.Entity.Entities.UserEntity", "UserEntity")
-                        .WithMany("RequestEntities")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("CollectionEntity");
-
-                    b.Navigation("UserEntity");
                 });
 
             modelBuilder.Entity("Restful.Entity.Entities.ResponseEntity", b =>
@@ -455,8 +447,6 @@ namespace Restful.Core.Migrations
             modelBuilder.Entity("Restful.Entity.Entities.UserEntity", b =>
                 {
                     b.Navigation("CollectionEntities");
-
-                    b.Navigation("RequestEntities");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,14 +4,14 @@ using Restful.Core.Login.Models;
 
 namespace Restful.Core.Login
 {
-    public class LoginService : ILoginService
+    public class LoginBL : ILoginBL
     {
         private readonly IDbContextFactory<RestfulDbContext> _contextFactory;
-        public LoginService(IDbContextFactory<RestfulDbContext> contextFactory)
+        public LoginBL(IDbContextFactory<RestfulDbContext> contextFactory)
         {
            _contextFactory = contextFactory;
         }
-        public async Task<LoginResponse?> LoginAsync(LoginRequest request)
+        public async Task<LoginResponse?> LoginUserAsync(LoginRequest request)
         {
             if (request.Username?.ToLower() == "admin" && request.Password?.ToLower() == "password")
             {

@@ -6,5 +6,7 @@ namespace Restful.Core.Requests
 {
     public interface IRequestBL : IBaseBL<Request, RequestEntity, Guid>
     {
+        public Task<ICollection<Request>> GetAllRequestsByCollectionIdAsync(Guid collectionId);
+        Task<ICollection<Request>> GetAllRequestsByUserIdAsync(Guid userId);
     }
 }

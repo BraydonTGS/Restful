@@ -24,10 +24,10 @@ namespace Restful.Tests.Shared.Base
         public TestBase()
         {
             var containerExtension = new DryIocContainerExtension();
-            RegisterTestServices(containerExtension, seed: true);
+            RegisterTestServices(containerExtension);
             _containerProvider = containerExtension;
         }
-        public static IContainerRegistry RegisterTestServices(IContainerRegistry containerRegistry, bool seed = false)
+        public static IContainerRegistry RegisterTestServices(IContainerRegistry containerRegistry)
         {
             // Http Client //
             containerRegistry.RegisterScoped<HttpClient>();
@@ -39,7 +39,7 @@ namespace Restful.Tests.Shared.Base
             containerRegistry.RegisterSingleton<IMapper<Request, RequestEntity>, RequestMapper>();
 
             // Register Business Services //
-            containerRegistry.RegisterScoped<ILoginService, LoginService>();
+            containerRegistry.RegisterScoped<ILoginBL, LoginBL>();
             containerRegistry.RegisterScoped<IRequestApiService, RequestApiService>();
 
             containerRegistry.RegisterSingleton<IErrorHandler, ErrorHandler>();
@@ -53,9 +53,6 @@ namespace Restful.Tests.Shared.Base
 
             // Logging //
             LoggingConfig.ConfigureLogging(containerRegistry);
-
-            if (seed)
-                containerRegistry.RegisterScoped<DatabaseSeeder>();
 
             return containerRegistry;
 

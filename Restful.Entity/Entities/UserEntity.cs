@@ -35,6 +35,8 @@ namespace Restful.Entity.Entities
 
         public ICollection<CollectionEntity>? CollectionEntities { get; set; }
 
+        public ICollection<RequestEntity>? RequestEntities { get; set; }
+
         private string GetDebuggerDisplay()
         {
             return $"FirstName: {FirstName}, LastName: {LastName}";

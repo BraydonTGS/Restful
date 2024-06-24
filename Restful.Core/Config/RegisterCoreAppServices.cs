@@ -32,7 +32,7 @@ namespace Restful.Core.Config
             containerRegistry.RegisterSingleton<IMapper<Request, RequestEntity>, RequestMapper>();
 
             // Register Business Services //
-            containerRegistry.RegisterScoped<ILoginService, LoginService>();
+            containerRegistry.RegisterScoped<ILoginBL, LoginBL>();
             containerRegistry.RegisterScoped<IRequestApiService, RequestApiService>();
 
             containerRegistry.RegisterSingleton<IErrorHandler, ErrorHandler>();
