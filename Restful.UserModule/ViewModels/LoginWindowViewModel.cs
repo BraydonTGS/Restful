@@ -6,6 +6,7 @@ using Restful.Core.Events;
 using Restful.Core.Login;
 using Restful.Core.Login.Models;
 using Restful.Core.Users;
+using Restful.Core.Users.Models;
 using Restful.Core.ViewModels;
 using System;
 using System.Threading.Tasks;
@@ -66,7 +67,7 @@ namespace Restful.UserModule.ViewModels
                 if (loginResponse is not null && loginResponse.IsSuccessful)
                 {
                     _applicationUserService.SetApplicationUser(
-                        loginResponse.UserGuid, loginResponse.Username, loginResponse.Email);
+                        loginResponse.User.Id, loginResponse.User.Username, loginResponse.User.Email);
 
                     _eventAggregator
                      .GetEvent<LoginSuccessEvent>()

@@ -13,18 +13,22 @@ namespace Restful.Core.Login
         }
         public async Task<LoginResponse?> LoginUserAsync(LoginRequest request)
         {
-            if (request.Username?.ToLower() == "admin" && request.Password?.ToLower() == "password")
+            if (request.Username?.ToLower().Trim() == "admin" && request.Password?.ToLower().Trim() == "password")
             {
                 // Simulate Loading the User From the DB //
                 await Task.Delay(200);
                 return new LoginResponse()
                 {
-                    UserGuid = Guid.NewGuid(),
-                    Username = "ADMIN",
-                    Email = "RestfulAdmin@gmail.com",
+                    User = new Users.Models.User()
+                    {
+                        Id = Guid.NewGuid(),
+                        Username = "ADMIN",
+                        Email = "RestfulAdmin@gmail.com",
+                    },
                     IsSuccessful = true,
-                    StatusCode = 200,
                 };
+
+                // Login the User //
             }
             return null;
         }
