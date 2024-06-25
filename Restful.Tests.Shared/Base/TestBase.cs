@@ -8,6 +8,8 @@ using Restful.Core.Errors;
 using Restful.Core.Files;
 using Restful.Core.Logging;
 using Restful.Core.Login;
+using Restful.Core.Passwords.Model;
+using Restful.Core.Passwords;
 using Restful.Core.Requests;
 using Restful.Core.Requests.Models;
 using Restful.Core.Users;
@@ -41,6 +43,7 @@ namespace Restful.Tests.Shared.Base
             // Register Business Services //
             containerRegistry.RegisterScoped<ILoginBL, LoginBL>();
             containerRegistry.RegisterScoped<IRequestApiService, RequestApiService>();
+            containerRegistry.Register<IPasswordHasher<Password>, PasswordHasher>();
 
             containerRegistry.RegisterSingleton<IErrorHandler, ErrorHandler>();
             containerRegistry.RegisterSingleton<IApplicationUserService, ApplicationUserService>();
