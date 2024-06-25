@@ -5,5 +5,11 @@
     <Setting Name="Theme" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="ProdDb" Type="System.String" Scope="User">
+      <Value Profile="(Default)">RestfulProd.db</Value>
+    </Setting>
+    <Setting Name="DVDb" Type="System.String" Scope="User">
+      <Value Profile="(Default)">RestfulDV.db</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

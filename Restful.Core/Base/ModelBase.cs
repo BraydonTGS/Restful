@@ -20,5 +20,7 @@ namespace Restful.Core.Base
         [ObservableProperty]
         private bool _isDirty;
 
+        [ObservableProperty]
+        private bool _isDeleted;
     }
 }

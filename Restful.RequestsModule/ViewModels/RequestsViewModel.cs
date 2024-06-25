@@ -1,10 +1,14 @@
 ﻿using Prism.Regions;
-using Restful.Core.Constant;
 using Restful.Core.Errors;
 using Restful.Core.Extensions;
+using Restful.Core.Requests;
+using Restful.Core.Requests.Models;
+using Restful.Core.Users;
 using Restful.Core.ViewModels;
+using Restful.Global.Constant;
 using Restful.RequestsModule.Views;
 using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 
@@ -13,13 +17,23 @@ namespace Restful.RequestsModule.ViewModels
     public partial class RequestsViewModel : RegionViewModelBase
     {
         private readonly IErrorHandler _errorHandler;
+        private readonly IRequestBL _requestBL;
+        private readonly IApplicationUserService _applicationUserService;
+
+        private Guid _collectionId;
+        public ObservableCollection<Request> _requests { get; set; }
 
         #region Constructor
         public RequestsViewModel(
             IRegionManager regionManager,
-            IErrorHandler errorHandler) : base(regionManager)
+            IErrorHandler errorHandler,
+            IRequestBL requestBL,
+            IApplicationUserService applicationUserService) : base(regionManager)
         {
             _errorHandler = errorHandler;
+            _requestBL = requestBL;
+            _applicationUserService = applicationUserService;
+
         }
         #endregion
 
@@ -27,9 +41,15 @@ namespace Restful.RequestsModule.ViewModels
         /// <inheritdoc/>
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-            // Load all of the Requests for the Current User //
-            LoadRequestsAsync()
-                .AwaitTask(TaskCompleted, HandleException);
+            try
+            {
+                // Pull out the Collection ID //
+                if (_requests is null || _requests.Count == 0)
+                    LoadRequestsAsync()
+                        .AwaitTask(TaskCompleted, HandleException);
+            }
+            catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
+
         }
         #endregion
 
@@ -42,9 +62,14 @@ namespace Restful.RequestsModule.ViewModels
         {
             try
             {
+                _requests = new ObservableCollection<Request>();
                 if (IsBusy) return;
                 IsBusy = true;
-                await Task.Delay(3000);
+                if (_collectionId != Guid.Empty)
+                    _requests = await _requestBL.GetAllRequestsByCollectionIdAsync(_collectionId) as ObservableCollection<Request>;
+                else
+                    _requests = await _requestBL
+                        .GetAllRequestsByUserIdAsync(_applicationUserService.GetApplicationUserGuid()) as ObservableCollection<Request>;
             }
             catch (Exception ex)
             {

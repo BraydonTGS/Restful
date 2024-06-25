@@ -1,10 +1,9 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
-using Restful.Core.Constant;
+using Restful.Global.Constant;
 using Restful.RequestsModule.ViewModels;
 using Restful.RequestsModule.Views;
-using System.Net.Http;
 
 namespace Restful.RequestsModule
 {

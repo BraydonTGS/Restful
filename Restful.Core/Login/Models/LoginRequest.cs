@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Restful.Core.Requests.Models;
 
 namespace Restful.Core.Login.Models
 {

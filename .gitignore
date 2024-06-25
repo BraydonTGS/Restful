@@ -482,3 +482,6 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+/Restful.Core/Database/RestfulProd.db
+/Restful.Core/Database/RestfulTest.db
+/Restful.Core/RestfulDbContext.dgml

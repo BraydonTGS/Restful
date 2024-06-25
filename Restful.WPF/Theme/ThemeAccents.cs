@@ -1,4 +1,4 @@
-﻿using Restful.Core.Constant;
+﻿using Restful.Global.Constant;
 using System.Collections.Generic;
 
 namespace Restful.WPF.Theme

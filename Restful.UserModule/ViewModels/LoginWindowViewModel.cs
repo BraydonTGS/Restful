@@ -6,6 +6,7 @@ using Restful.Core.Events;
 using Restful.Core.Login;
 using Restful.Core.Login.Models;
 using Restful.Core.Users;
+using Restful.Core.Users.Models;
 using Restful.Core.ViewModels;
 using System;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Restful.UserModule.ViewModels
 {
     public partial class LoginWindowViewModel : ViewModelBase
     {
-        private readonly ILoginService _accountService;
+        private readonly ILoginBL _loginBL;
         private readonly IApplicationUserService _applicationUserService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IErrorHandler _errorHandler;
@@ -28,13 +29,13 @@ namespace Restful.UserModule.ViewModels
         public DelegateCommand CreateNewUserCommand { get; set; }
         public DelegateCommand ResetPasswordCommand { get; set; }
         public LoginWindowViewModel(
-            ILoginService accountService,
+            ILoginBL loginBL,
             IApplicationUserService applicationUserService,
             IEventAggregator eventAggregator,
             IErrorHandler errorHandler)
         {
 
-            _accountService = accountService;
+            _loginBL = loginBL;
             _applicationUserService = applicationUserService;
             _eventAggregator = eventAggregator;
             _errorHandler = errorHandler;
@@ -61,11 +62,12 @@ namespace Restful.UserModule.ViewModels
             try
             {
                 // Attempt to Login the User //
-                var loginResponse = await _accountService.LoginAsync(LoginRequest);
+                // responses 
+                var loginResponse = await _loginBL.LoginUserAsync(LoginRequest);
                 if (loginResponse is not null && loginResponse.IsSuccessful)
                 {
                     _applicationUserService.SetApplicationUser(
-                        loginResponse.UserGuid, loginResponse.Username, loginResponse.Email);
+                        loginResponse.User.Id, loginResponse.User.Username, loginResponse.User.Email);
 
                     _eventAggregator
                      .GetEvent<LoginSuccessEvent>()
