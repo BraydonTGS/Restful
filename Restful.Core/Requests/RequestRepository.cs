@@ -5,6 +5,9 @@ using Restful.Entity.Entities;
 
 namespace Restful.Core.Requests
 {
+    /// <summary>
+    /// Request Repository
+    /// </summary>
     public class RequestRepository : BaseRepository<RequestEntity, Guid>, IRequestRepository
     {
         private readonly IDbContextFactory<RestfulDbContext> _contextFactory;
@@ -15,8 +18,7 @@ namespace Restful.Core.Requests
 
         #region GetAllRequestsByCollectionIdAsync
         /// <summary>
-        /// Get all of the Requests for the Specified Collection
-        /// where the Request's CollectionId is equal to the Id of the Given Collection. 
+        /// Get all of the Requests for the Specified Collection where the Request's CollectionId is equal to the Id of the Given Collection. 
         /// 
         /// Do Not Include any Requests that are soft deleted. 
         /// 
