@@ -9,7 +9,7 @@ namespace Restful.Core.Base
     /// <typeparam name="TKey">The type of the entity's primary key.</typeparam>
     public interface IBaseRepository<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {
-        public Task<ICollection<TEntity>?> GetAllAsync();
+        public Task<ICollection<TEntity>> GetAllAsync();
         public Task<TEntity?> GetByIdAsync(TKey id);
         public Task<TEntity?> CreateAsync(TEntity entity);
         public Task<TEntity?> UpdateAsync(TEntity entity);

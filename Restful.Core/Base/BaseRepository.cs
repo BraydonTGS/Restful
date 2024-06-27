@@ -28,7 +28,7 @@ namespace Restful.Core.Base
         /// Retrieves all entities of the specified type asynchronously.
         /// </summary>
         /// <returns>A collection of entities or null if none are found.</returns>
-        public virtual async Task<ICollection<TEntity>?> GetAllAsync()
+        public virtual async Task<ICollection<TEntity>> GetAllAsync()
         {
             using var context = await _contextFactory.CreateDbContextAsync();
 

@@ -16,22 +16,69 @@ namespace Restful.Core.Requests
             _requestRepository = requestRepository ?? throw new ArgumentNullException(nameof(requestRepository));
         }
 
+        #region GetAllRequestsByCollectionIdAsync
+        /// <summary>
+        /// Query Requests from the RequestRepository for the Specified Collection Id
+        /// </summary>
+        /// <param name="collectionId"></param>
+        /// <returns></returns>
         public async Task<ICollection<Request>> GetAllRequestsByCollectionIdAsync(Guid collectionId)
         {
-            var entities = await _requestRepository.GetAllRequestsByCollectionIdAsync(collectionId);
+            _log.Information($"Starting GetAllRequestsByCollectionIdAsync");
+            try
+            {
+                var entities = await _requestRepository.GetAllRequestsByCollectionIdAsync(collectionId);
 
-            var requests = _mapper.Map(entities);
+                if (entities.Count is 0)
+                {
+                    _log.Warning($"No Requests Found with the Specified Collection Id");
+                    return [];
+                }
 
-            return requests;
+                var requests = _mapper.Map(entities);
+
+                _log.Information($"Completed GetAllRequestsByCollectionIdAsync. Found the Requests for the Specified Collection Id");
+                return requests;
+            }
+            catch (Exception ex)
+            {
+                _log.Error($"Error in GetAllRequestsByCollectionIdAsync with Message {ex.Message}");
+                throw;
+            }
         }
+        #endregion
 
+        #region GetAllRequestsByUserIdAsync
+        /// <summary>
+        /// Query Requests from the RequestRepository for the Specified User Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public async Task<ICollection<Request>> GetAllRequestsByUserIdAsync(Guid userId)
         {
-            var entities = await _requestRepository.GetAllRequestsByUserIdAsync(userId);
+            _log.Information($"Starting GetAllRequestsByUserIdAsync");
+            try
+            {
+                var entities = await _requestRepository.GetAllRequestsByUserIdAsync(userId);
 
-            var requests = _mapper.Map(entities);
+                if (entities.Count is 0)
+                {
+                    _log.Warning($"No Requests Found with the Specified User Id");
+                    return [];
+                }
 
-            return requests;
+                var requests = _mapper.Map(entities);
+
+                _log.Information($"Completed GetAllRequestsByUserIdAsync. Found the Requests for the Specified User Id");
+                return requests;
+            }
+            catch (Exception ex)
+            {
+                _log.Error($"Error in GetAllRequestsByUserIdAsync with Message {ex.Message}");
+                throw;
+            }
         }
+        #endregion
+
     }
 }

@@ -39,6 +39,7 @@ namespace Restful.Core.Requests
         {
             var entity = new RequestEntity
             {
+                Id = model.Id,
                 CollectionId = model.CollectionId,
                 Name = model.Name,
                 Description = model.Description,

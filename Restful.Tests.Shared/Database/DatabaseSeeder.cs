@@ -23,6 +23,7 @@ namespace Restful.Tests.Shared.Database
                 UserName = "Sweet_Teeth",
                 Email = "BraydonSutherland@gmail.com",
             };
+
             await context.Users.AddAsync(user);
 
             var collection = new CollectionEntity()
@@ -35,7 +36,7 @@ namespace Restful.Tests.Shared.Database
 
             await context.AddAsync(collection);
 
-            var request = new RequestEntity()
+            var requestOne = new RequestEntity()
             {
                 Name = "GetAllCharacters",
                 Description = "Get All LOTR Characters",
@@ -44,10 +45,21 @@ namespace Restful.Tests.Shared.Database
                 CollectionId = collection.Id
             };
 
-            await context.AddAsync(request);
+            var requestTwo = new RequestEntity()
+            {
+                Name = "GetAllBooks",
+                Description = "Get All LOTR Books",
+                HttpMethod = Global.Enums.HttpMethod.GET,
+                Url = @"https://the-one-api.dev/v2/books",
+                UserId = user.Id
+            };
+
+
+            await context.AddAsync(requestOne);
+            await context.AddAsync(requestTwo);
 
             _userId = user.Id;
-            _requestId = request.Id;
+            _requestId = requestOne.Id;
             _collectionGuid = collection.Id;
 
             await context.SaveChangesAsync();
