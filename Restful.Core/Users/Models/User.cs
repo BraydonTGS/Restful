@@ -11,6 +11,7 @@ namespace Restful.Core.Users.Models
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;
+        public string TempPassword { get; set; } = string.Empty;
         private string GetDebuggerDisplay() => $"FullName: {FirstName} {LastName}";
     }
 }

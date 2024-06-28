@@ -214,7 +214,6 @@ namespace Restful.Core.Base
         }
         #endregion
 
-
         #region RestoreAsync
         /// <summary>
         /// Restores a Soft-Deleted Model by setting the IsDeleted flag to false.

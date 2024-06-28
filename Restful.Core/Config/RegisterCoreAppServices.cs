@@ -32,6 +32,7 @@ namespace Restful.Core.Config
 
             // Mappers //
             containerRegistry.RegisterSingleton<IMapper<Request, RequestEntity>, RequestMapper>();
+            containerRegistry.RegisterSingleton<IMapper<Password, PasswordEntity>, PasswordMapper>();
 
             // Register Business Services //
             containerRegistry.RegisterScoped<ILoginBL, LoginBL>();
@@ -45,7 +46,11 @@ namespace Restful.Core.Config
 
             // Repository //
             containerRegistry.RegisterScoped<IRequestRepository, RequestRepository>();
+            containerRegistry.RegisterScoped<IPasswordRepository, PasswordRepository>();
+
+            // BL //
             containerRegistry.RegisterScoped<IRequestBL, RequestBL>();
+            containerRegistry.RegisterScoped<IPasswordBL, PasswordBL>();
 
             // Logging //
             LoggingConfig.ConfigureLogging(containerRegistry);

@@ -26,6 +26,15 @@ namespace Restful.Entity.Entities
 
         public UserEntity? User { get; set; }
 
+        public PasswordEntity() { }
+
+        public PasswordEntity(Guid userId, byte[] hash, byte[] salt)
+        {
+            UserId = userId;
+            Hash = hash;
+            Salt = salt;
+        }
+
         private string GetDebuggerDisplay() => $"Salt: {Salt} & Hash: {Hash}";
     }
 }
