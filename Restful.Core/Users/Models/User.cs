@@ -1,6 +1,5 @@
 ﻿using Restful.Core.Base;
 using System.Diagnostics;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Restful.Core.Users.Models
 {

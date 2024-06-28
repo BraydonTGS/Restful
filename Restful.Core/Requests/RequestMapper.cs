@@ -22,6 +22,7 @@ namespace Restful.Core.Requests
                 Description = entity.Description,
                 Url = entity.Url,
                 HttpMethod = entity.HttpMethod,
+                IsDeleted = entity.IsDeleted,
                 IsDirty = entity.IsDirty
             };
 
@@ -45,6 +46,7 @@ namespace Restful.Core.Requests
                 Description = model.Description,
                 Url = model.Url,
                 HttpMethod = model.HttpMethod,
+                IsDeleted = model.IsDeleted,
                 IsDirty = model.IsDirty
             };
 

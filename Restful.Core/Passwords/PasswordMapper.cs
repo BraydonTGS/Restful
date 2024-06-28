@@ -20,6 +20,8 @@ namespace Restful.Core.Passwords
                 Hash = entity.Hash,
                 Salt = entity.Salt,
                 UserId = entity.UserId,
+                IsDeleted = entity.IsDeleted,
+                IsDirty = entity.IsDirty,
             };
 
             return model;
@@ -36,6 +38,8 @@ namespace Restful.Core.Passwords
                 Hash = model.Hash,
                 Salt = model.Salt,
                 UserId = model.UserId,
+                IsDeleted = model.IsDeleted,
+                IsDirty = model.IsDirty,
             };
 
             return entity;

@@ -13,6 +13,7 @@ using Restful.Core.Passwords.Model;
 using Restful.Core.Requests;
 using Restful.Core.Requests.Models;
 using Restful.Core.Users;
+using Restful.Core.Users.Models;
 using Restful.Entity.Entities;
 using Restful.Tests.Shared.Context;
 
@@ -39,6 +40,7 @@ namespace Restful.Tests.Shared.Base
             // Mappers //
             containerRegistry.RegisterSingleton<IMapper<Request, RequestEntity>, RequestMapper>();
             containerRegistry.RegisterSingleton<IMapper<Password, PasswordEntity>, PasswordMapper>();   
+            containerRegistry.RegisterSingleton<IMapper<User, UserEntity>, UserMapper>();
 
             // Register Business Services //
             containerRegistry.RegisterScoped<ILoginBL, LoginBL>();
@@ -53,10 +55,12 @@ namespace Restful.Tests.Shared.Base
             // Repository //
             containerRegistry.RegisterScoped<IRequestRepository, RequestRepository>();
             containerRegistry.RegisterScoped<IPasswordRepository, PasswordRepository>();
+            containerRegistry.RegisterScoped<IUserRepository, UserRepository>();
 
             // BL //
             containerRegistry.RegisterScoped<IRequestBL, RequestBL>();
             containerRegistry.RegisterScoped<IPasswordBL, PasswordBL>();
+            containerRegistry.RegisterScoped<IUserBL, UserBL>();
 
             // Logging //
             LoggingConfig.ConfigureLogging(containerRegistry);
