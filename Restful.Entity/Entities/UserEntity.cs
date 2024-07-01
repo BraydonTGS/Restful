@@ -14,16 +14,19 @@ namespace Restful.Entity.Entities
     {
         [Required]
         [Column("FirstName")]
+        [MinLength(1)]
         [MaxLength(100)]
         public string FirstName { get; set; } = string.Empty;
 
         [Required]
         [Column("LastName")]
+        [MinLength(1)]
         [MaxLength(150)]
         public string LastName { get; set; } = string.Empty;
 
         [Required]
         [Column("Email")]
+        [MinLength(6)]
         [MaxLength(250)]
         public string Email { get; set; } = string.Empty;
 

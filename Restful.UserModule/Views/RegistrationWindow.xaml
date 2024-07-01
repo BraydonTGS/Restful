@@ -81,7 +81,7 @@
             mah:TextBoxHelper.ClearTextButton="True"
             mah:TextBoxHelper.Watermark="Enter First Name"
             MaxLength="50"
-            Text="{Binding RegistrationRequest.FirstName, Mode=TwoWay}" />
+            Text="{Binding RegistrationRequest.FirstName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
         <!--  Last Name  -->
         <TextBlock
@@ -101,7 +101,7 @@
             mah:TextBoxHelper.ClearTextButton="True"
             mah:TextBoxHelper.Watermark="Enter Last Name"
             MaxLength="50"
-            Text="{Binding RegistrationRequest.LastName, Mode=TwoWay}" />
+            Text="{Binding RegistrationRequest.LastName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
         <!--  Email  -->
         <TextBlock
@@ -121,7 +121,7 @@
             mah:TextBoxHelper.ClearTextButton="True"
             mah:TextBoxHelper.Watermark="Enter Email"
             MaxLength="50"
-            Text="{Binding RegistrationRequest.Email, Mode=TwoWay}" />
+            Text="{Binding RegistrationRequest.Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
         <!--  Username  -->
         <TextBlock
@@ -141,7 +141,7 @@
             mah:TextBoxHelper.ClearTextButton="True"
             mah:TextBoxHelper.Watermark="Enter Username"
             MaxLength="50"
-            Text="{Binding RegistrationRequest.Username, Mode=TwoWay}" />
+            Text="{Binding RegistrationRequest.Username, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
         <!--  Password  -->
         <TextBlock
@@ -194,7 +194,6 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
             Orientation="Horizontal">
-
 
             <!--  Cancel Button  -->
             <Button

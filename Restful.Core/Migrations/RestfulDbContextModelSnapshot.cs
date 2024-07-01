@@ -56,7 +56,7 @@ namespace Restful.Core.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Collections");
+                    b.ToTable("Collections", (string)null);
                 });
 
             modelBuilder.Entity("Restful.Entity.Entities.HeaderEntity", b =>
@@ -108,7 +108,7 @@ namespace Restful.Core.Migrations
 
                     b.HasIndex("RequestId");
 
-                    b.ToTable("Headers");
+                    b.ToTable("Headers", (string)null);
                 });
 
             modelBuilder.Entity("Restful.Entity.Entities.ParameterEntity", b =>
@@ -160,7 +160,7 @@ namespace Restful.Core.Migrations
 
                     b.HasIndex("RequestId");
 
-                    b.ToTable("Parameters");
+                    b.ToTable("Parameters", (string)null);
                 });
 
             modelBuilder.Entity("Restful.Entity.Entities.PasswordEntity", b =>
@@ -207,7 +207,7 @@ namespace Restful.Core.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Passwords");
+                    b.ToTable("Passwords", (string)null);
                 });
 
             modelBuilder.Entity("Restful.Entity.Entities.RequestEntity", b =>
@@ -272,7 +272,7 @@ namespace Restful.Core.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Requests");
+                    b.ToTable("Requests", (string)null);
                 });
 
             modelBuilder.Entity("Restful.Entity.Entities.ResponseEntity", b =>
@@ -312,7 +312,7 @@ namespace Restful.Core.Migrations
 
                     b.HasIndex("RequestId");
 
-                    b.ToTable("Results");
+                    b.ToTable("Results", (string)null);
                 });
 
             modelBuilder.Entity("Restful.Entity.Entities.UserEntity", b =>
@@ -367,7 +367,7 @@ namespace Restful.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Restful.Entity.Entities.CollectionEntity", b =>

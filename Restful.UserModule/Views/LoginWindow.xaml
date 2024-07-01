@@ -76,7 +76,7 @@
             mah:TextBoxHelper.ClearTextButton="True"
             mah:TextBoxHelper.Watermark="Enter Username"
             MaxLength="50"
-            Text="{Binding LoginRequest.Username, Mode=TwoWay}" />
+            Text="{Binding LoginRequest.Username, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
         <!--  Password  -->
         <TextBlock
@@ -107,7 +107,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Orientation="Horizontal">
-            
+
             <!--  Login Button  -->
             <Button
                 Grid.Row="2"

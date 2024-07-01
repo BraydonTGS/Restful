@@ -85,9 +85,7 @@ namespace Restful.UserModule.ViewModels
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
         }
 
-        private bool CanLoginUserCommandExecuted()
-            => !string.IsNullOrEmpty(LoginRequest.Username)
-            && !string.IsNullOrEmpty(LoginRequest.Password);
+        private bool CanLoginUserCommandExecuted() => LoginRequest.IsValid();
 
         private void OnCreateNewUserCommandExecuted() 
         {

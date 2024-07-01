@@ -110,6 +110,7 @@ namespace Restful.WPF
                     .Publish();
 
                 _regionManager.RequestNavigate(Regions.MainContentRegion, nameof(WelcomeView));
+
                 base.OnInitialized();
             }
             else
