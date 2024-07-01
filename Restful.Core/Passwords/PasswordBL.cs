@@ -30,19 +30,19 @@ namespace Restful.Core.Passwords
         /// <param name="userId"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public async Task<Password?> CreatePasswordForUserAsync(Guid userId, string password)
+        public async Task<Password?> CreatePasswordForUserAsync(Guid userId, string tempPassword)
         {
             _log.Information($"Starting CreatePasswordForUserAsync");
             try
             {
-                var (hash, salt) = _passwordHasher.HashPassword(password);
+                var (hash, salt) = _passwordHasher.HashPassword(tempPassword);
 
-                var dto = new Password(salt, hash);
+                var password = new Password(salt, hash);
 
                 if (userId != Guid.Empty)
-                    dto.UserId = userId;
+                    password.UserId = userId;
 
-                var entity = _mapper.Map(dto);
+                var entity = _mapper.Map(password);
 
                 entity = await _passwordRepository.CreateAsync(entity);
 
@@ -52,10 +52,10 @@ namespace Restful.Core.Passwords
                     return null;
                 }
 
-                dto = _mapper.Map(entity);
+                password = _mapper.Map(entity);
 
                 _log.Information($"Completed CreatePasswordForUserAsync. Hashed, Created and Mapped the User's Password Successfully");
-                return dto;
+                return password;
             }
             catch (Exception ex)
             {
@@ -85,9 +85,9 @@ namespace Restful.Core.Passwords
                     return PasswordVerificationResults.Failed;
                 }
 
-                var dto = _mapper.Map(entity);
+                var model = _mapper.Map(entity);
 
-                var results = _passwordHasher.VerifyHashedPassword(dto, providedPassword);
+                var results = _passwordHasher.VerifyHashedPassword(model, providedPassword);
 
                 _log.Information($"Completed VerifyUserPasswordAsync with Results: {results}");
                 return results;

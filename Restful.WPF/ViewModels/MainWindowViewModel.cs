@@ -3,6 +3,7 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
 using Restful.Core.Errors;
+using Restful.Core.Events;
 using Restful.Core.Users;
 using Restful.Core.ViewModels;
 using Restful.Global.Constant;
@@ -40,6 +41,10 @@ namespace Restful.WPF.ViewModels
             _errorHandler = errorHandler;
 
             ConfigureDelegateCommands();
+
+            _eventAggregator
+                .GetEvent<SetUsernameEvent>()
+                .Subscribe(OnSetUsernameEventPublished);
         }
         #endregion
 
@@ -52,15 +57,6 @@ namespace Restful.WPF.ViewModels
             MenuItemClicked = new DelegateCommand<string>(OnMenuItemClickedExecuted);
             ThemeButtonClicked = new DelegateCommand(OnThemeButtonClickedExecuted);
             AccentButtonClicked = new DelegateCommand<string>(OnAccentButtonClickedExecuted);
-        }
-        #endregion
-
-        #region OnNavigatedTo
-        /// <inheritdoc/>
-        public override void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            Username = _applicationUserService.GetApplicationUsername();
-            Title = $"{Constants.ApplicationTitle}: {Username}";
         }
         #endregion
 
@@ -106,6 +102,19 @@ namespace Restful.WPF.ViewModels
                 _themeService.ChangeApplicationAccent(str);
             }
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
+        }
+        #endregion
+
+        #region OnSetUsernameEventPublished
+        /// <summary>
+        /// Event that is Triggered when the User Login in Successful
+        /// 
+        /// We set the Application Title + Username
+        /// </summary>
+        private void OnSetUsernameEventPublished()
+        {
+            Username = _applicationUserService.GetApplicationUsername();
+            Title = $"{Constants.ApplicationTitle} - {Username}";
         }
         #endregion
     }

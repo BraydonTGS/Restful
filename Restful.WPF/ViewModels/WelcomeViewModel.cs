@@ -2,6 +2,8 @@
 using Restful.Core.Errors;
 using Restful.Core.Extensions;
 using Restful.Core.ViewModels;
+using Restful.Global.Constant;
+using Restful.WPF.Views;
 using System;
 using System.Threading.Tasks;
 

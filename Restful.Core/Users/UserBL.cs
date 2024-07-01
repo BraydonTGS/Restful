@@ -85,5 +85,37 @@ namespace Restful.Core.Users
             }
         }
         #endregion
+
+        #region GetUserByUsernameAsync
+        /// <summary>
+        /// Get the User by the Specified Username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public async Task<User?> GetUserByUsernameAsync(string username)
+        {
+            _log.Information($"Starting GetUserByUsernameAsync");
+            try
+            {
+                var entity = await _userRepository.GetUserByUsernameAsync(username);
+
+                if (entity == null)
+                {
+                    _log.Warning($"No Username Exists for the Specified User.");
+                    return null;
+                }
+
+                var model = _mapper.Map(entity);
+                _log.Information($"Completed GetUserByUsernameAsync. Successfully retrieved the Specified User with Username: {username}");
+
+                return model;
+            }
+            catch (Exception ex)
+            {
+                _log.Error($"Exception in GetUserByUsernameAsync with Message: {ex.Message}.");
+                throw;
+            }
+        }
+        #endregion
     }
 }

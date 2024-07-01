@@ -6,5 +6,6 @@ namespace Restful.Core.Users
     public interface IUserRepository : IBaseRepository<UserEntity, Guid>
     {
         Task<UserEntity?> GetUserByEmailAsync(string email);
+        Task<UserEntity?> GetUserByUsernameAsync(string username);
     }
 }

@@ -1,36 +1,73 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Restful.Core.Context;
+﻿using Restful.Core.Base;
 using Restful.Core.Login.Models;
+using Restful.Core.Passwords;
+using Restful.Core.Users;
+using Restful.Core.Users.Models;
+using Restful.Entity.Entities;
+using Restful.Global.Enums;
+using Restful.Global.Exceptions;
+using Serilog;
 
 namespace Restful.Core.Login
 {
     public class LoginBL : ILoginBL
     {
-        private readonly IDbContextFactory<RestfulDbContext> _contextFactory;
-        public LoginBL(IDbContextFactory<RestfulDbContext> contextFactory)
+        private readonly IUserBL _userBL;
+        private readonly IPasswordBL _passwordBL;
+        private readonly IMapper<User, UserEntity> _mapper;
+        private readonly ILogger _log;
+
+        public LoginBL(
+            IUserBL userBL,
+            IPasswordBL passwordBL,
+            ILogger logger,
+            IMapper<User, UserEntity> mapper)
         {
-           _contextFactory = contextFactory;
+            _userBL = userBL ?? throw new ArgumentNullException(nameof(userBL));
+            _passwordBL = passwordBL ?? throw new ArgumentNullException(nameof(passwordBL));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _log = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        #region LoginUserAsync
+        /// <summary>
+        /// Attempt to Login the Specified User
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         public async Task<LoginResponse?> LoginUserAsync(LoginRequest request)
         {
-            if (request.Username?.ToLower().Trim() == "admin" && request.Password?.ToLower().Trim() == "password")
+            _log.Information($"Starting LoginUserAsync for the Specified User.");
+            try
             {
-                // Simulate Loading the User From the DB //
-                await Task.Delay(200);
-                return new LoginResponse()
-                {
-                    User = new Users.Models.User()
-                    {
-                        Id = Guid.NewGuid(),
-                        Username = "ADMIN",
-                        Email = "RestfulAdmin@gmail.com",
-                    },
-                    IsSuccessful = true,
-                };
+                var user = await _userBL.GetUserByUsernameAsync(request.Username);
 
-                // Login the User //
+                if (user is null)
+                {
+                    _log.Warning($"No User Found for with the Specified Username");
+                    return null;
+                }
+
+                var success = await _passwordBL.VerifyUserPasswordAsync(user.Id, request.Password);
+
+                if (success == PasswordVerificationResults.Failed)
+                {
+                    _log.Warning($"Password Verification Failure for the Specified User with the Email: {user.Email}");
+                    throw new InvalidPasswordException($"Password Verification Failure for the Specified User");
+                }
+
+                var response = new LoginResponse(user, true);
+                if (response is not null)
+                    _log.Information($"Completed LoginUserAsync. Successfully Verified and Mapped the Specified User with the Email: {user.Email}.");
+
+                return response;
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error($"Error in LoginUserAsync with Message {ex.Message}");
+                throw;
+            }
         }
+        #endregion
     }
 }

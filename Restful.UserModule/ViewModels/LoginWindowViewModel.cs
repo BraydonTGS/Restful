@@ -5,9 +5,11 @@ using Restful.Core.Errors;
 using Restful.Core.Events;
 using Restful.Core.Login;
 using Restful.Core.Login.Models;
+using Restful.Core.Registration;
 using Restful.Core.Users;
 using Restful.Core.Users.Models;
 using Restful.Core.ViewModels;
+using Restful.Global.Exceptions;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -75,11 +77,13 @@ namespace Restful.UserModule.ViewModels
                 }
 
                 else
-                    MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Username Not Found", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (InvalidPasswordException) 
+            { 
+                MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
-
-
         }
 
         private bool CanLoginUserCommandExecuted()

@@ -14,6 +14,44 @@ namespace Restful.Core.Users
             _contextFactory = contextFactory;
         }
 
+        #region CreateAsync - Override
+        /// <summary>
+        /// When Creating a New User, Ensure that the Email Does not already Exist in the Database
+        /// 
+        /// If so, Throw an EmailAlreadyRegisteredException
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public override async Task<UserEntity?> CreateAsync(UserEntity user)
+        {
+            using var context = await _contextFactory.CreateDbContextAsync();
+
+            // Check if an email for the user already exists
+            bool emailIsRegistered = await context
+                .Set<UserEntity>()
+                .AnyAsync(x => x.Email == user.Email);
+
+            if (emailIsRegistered)
+                throw new EmailAlreadyRegisteredException($"The Specified Email is already Registered");
+
+            bool usernameIsRegistered = await context
+                .Set<UserEntity>()
+                .AnyAsync(x => x.UserName == user.UserName);
+
+            if (usernameIsRegistered)
+                throw new UsernameAlreadyRegisteredException($"The Specified Username is already Registered");
+
+            var newEntry = await context
+                .Set<UserEntity>()
+                .AddAsync(user);
+
+            await context.SaveChangesAsync();
+
+            return newEntry.Entity;
+        }
+        #endregion
+
         #region GetUserByEmailAsync
         /// <summary>
         /// Get the User by Email - There can only be One Unique Email in the Database
@@ -31,32 +69,21 @@ namespace Restful.Core.Users
         }
         #endregion
 
-        #region CreateAsync - Override
+        #region GetUserByUsernameAsync
         /// <summary>
-        /// When Creating a New User, Ensure that the Email Does not already Exist in the Database
-        /// 
-        /// If so, Throw an EmailAlreadyRegisteredException
-        /// 
+        /// Get the User by Username - There can only be One Unique Username in the Database
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public override async Task<UserEntity?> CreateAsync(UserEntity user)
+        public async Task<UserEntity?> GetUserByUsernameAsync(string username)
         {
             using var context = await _contextFactory.CreateDbContextAsync();
 
-            // Check if an email for the user already exists
-            bool emailIsRegistered = await context.Set<UserEntity>().AnyAsync(x => x.Email == user.Email);
+            var result = await context.Set<UserEntity>()
+                .FirstOrDefaultAsync(x => x.UserName == username && !x.IsDeleted);
 
-            if (emailIsRegistered)
-                throw new EmailAlreadyRegisteredException($"The Specified Email is already Registered");
-
-            var newEntry = await context.Set<UserEntity>().AddAsync(user);
-
-            await context.SaveChangesAsync();
-
-            return newEntry.Entity;
+            return result;
         }
         #endregion
-
     }
 }

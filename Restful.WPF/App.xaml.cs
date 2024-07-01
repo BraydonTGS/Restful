@@ -20,6 +20,7 @@ using Restful.WPF.Views;
 using System;
 using System.Windows;
 
+
 namespace Restful.WPF
 {
     /// <summary>
@@ -100,6 +101,14 @@ namespace Restful.WPF
 
             if (_userVerified)
             {
+                _eventAggregator
+                    .GetEvent<LoginSuccessEvent>()
+                    .Unsubscribe(OnLoginSuccessEventPublished);
+
+                _eventAggregator
+                    .GetEvent<SetUsernameEvent>()
+                    .Publish();
+
                 _regionManager.RequestNavigate(Regions.MainContentRegion, nameof(WelcomeView));
                 base.OnInitialized();
             }
