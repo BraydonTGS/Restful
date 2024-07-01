@@ -5,11 +5,10 @@ using Restful.Core.Errors;
 using Restful.Core.Events;
 using Restful.Core.Login;
 using Restful.Core.Login.Models;
-using Restful.Core.Registration;
 using Restful.Core.Users;
-using Restful.Core.Users.Models;
 using Restful.Core.ViewModels;
 using Restful.Global.Exceptions;
+using Restful.UserModule.Views;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -55,7 +54,7 @@ namespace Restful.UserModule.ViewModels
                 .ObservesProperty(() => LoginRequest.Username)
                 .ObservesProperty(() => LoginRequest.Password);
 
-            CreateNewUserCommand = new DelegateCommand(OnCreateNewUserCommandExecuted, CanExecute);
+            CreateNewUserCommand = new DelegateCommand(OnCreateNewUserCommandExecuted);
             ResetPasswordCommand = new DelegateCommand(OnResetPasswordCommandExecuted, CanExecute);
         }
 
@@ -79,8 +78,8 @@ namespace Restful.UserModule.ViewModels
                 else
                     MessageBox.Show("Username Not Found", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (InvalidPasswordException) 
-            { 
+            catch (InvalidPasswordException)
+            {
                 MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
@@ -90,7 +89,11 @@ namespace Restful.UserModule.ViewModels
             => !string.IsNullOrEmpty(LoginRequest.Username)
             && !string.IsNullOrEmpty(LoginRequest.Password);
 
-        private void OnCreateNewUserCommandExecuted() { }
+        private void OnCreateNewUserCommandExecuted() 
+        {
+            RegistrationWindow registrationWindow = new RegistrationWindow();
+            registrationWindow.ShowDialog();
+        }
 
         private void OnResetPasswordCommandExecuted() { }
 

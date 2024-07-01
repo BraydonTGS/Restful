@@ -1,9 +1,10 @@
-﻿using Restful.Core.Users.Models;
+﻿using Restful.Core.Registration.Models;
+using Restful.Core.Users.Models;
 
 namespace Restful.Core.Registration
 {
     public interface IRegistrationBL
     {
-        Task<User?> RegisterNewUserAsync(User user);
+        Task<RegistrationResponse> RegisterNewUserAsync(RegistrationRequest registrationRequest);
     }
 }

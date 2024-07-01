@@ -151,7 +151,9 @@ namespace Restful.WPF
             if (success)
             {
                 _userVerified = true;
-                _loginWindow.Close();
+
+                if (_loginWindow is not null)
+                    _loginWindow.Close();
             }
         }
         #endregion

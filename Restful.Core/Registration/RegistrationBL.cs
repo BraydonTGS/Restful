@@ -1,4 +1,5 @@
 ﻿using Restful.Core.Passwords;
+using Restful.Core.Registration.Models;
 using Restful.Core.Users;
 using Restful.Core.Users.Models;
 using Serilog;
@@ -32,25 +33,34 @@ namespace Restful.Core.Registration
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public async Task<User?> RegisterNewUserAsync(User user)
+        public async Task<RegistrationResponse> RegisterNewUserAsync(RegistrationRequest registrationRequest)
         {
             _log.Information($"Starting RegisterNewUserAsync for the New User.");
             try
             {
-                if (user is null) return null;
 
-                var model = await _userBL.CreateAsync(user);
+                var model = new User(
+                    registrationRequest.FirstName,
+                    registrationRequest.LastName,
+                    registrationRequest.Email,
+                    registrationRequest.Username,
+                    registrationRequest.Password);
+
+                model = await _userBL.CreateAsync(model);
 
                 if (model is null)
                 {
-                    _log.Warning($"Unable to Register the New User with the UserName: {user.Username}");
-                    return null;
+                    _log.Warning($"Unable to Register the New User with the UserName: {registrationRequest.Username}");
+                    return new RegistrationResponse(false, "Unable to Register the New User");
                 }
 
-                await _passwordBL.CreatePasswordForUserAsync(model.Id, user.TempPassword);
+                await _passwordBL.CreatePasswordForUserAsync(model.Id, registrationRequest.Password);
 
                 _log.Information($"Successfully Registered the New User!");
-                return model;
+
+                var response = new RegistrationResponse(model, true);
+
+                return response;
             }
             catch (Exception ex)
             {

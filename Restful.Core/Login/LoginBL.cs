@@ -33,7 +33,7 @@ namespace Restful.Core.Login
         /// <summary>
         /// Attempt to Login the Specified User
         /// </summary>
-        /// <param name="dto"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
         public async Task<LoginResponse?> LoginUserAsync(LoginRequest request)
         {
@@ -52,13 +52,12 @@ namespace Restful.Core.Login
 
                 if (success == PasswordVerificationResults.Failed)
                 {
-                    _log.Warning($"Password Verification Failure for the Specified User with the Email: {user.Email}");
+                    _log.Warning($"Password Verification Failure for the Specified User with the Username: {user.Username}");
                     throw new InvalidPasswordException($"Password Verification Failure for the Specified User");
                 }
 
                 var response = new LoginResponse(user, true);
-                if (response is not null)
-                    _log.Information($"Completed LoginUserAsync. Successfully Verified and Mapped the Specified User with the Email: {user.Email}.");
+                _log.Information($"Completed LoginUserAsync. Successfully Verified and Mapped the Specified User with the Username: {user.Username}.");
 
                 return response;
             }

@@ -40,7 +40,6 @@ namespace Restful.Core.Users
                 IsDirty =model.IsDirty,
             };
 
-
             return entity;
         }
         #endregion
