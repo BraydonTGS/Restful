@@ -18,6 +18,7 @@ namespace Restful.Core.Requests
             {
                 Id = entity.Id,
                 CollectionId = entity.CollectionId,
+                UserId = entity.UserId,
                 Name = entity.Name,
                 Description = entity.Description,
                 Url = entity.Url,
@@ -42,6 +43,7 @@ namespace Restful.Core.Requests
             {
                 Id = model.Id,
                 CollectionId = model.CollectionId,
+                UserId = model.UserId,
                 Name = model.Name,
                 Description = model.Description,
                 Url = model.Url,

@@ -7,6 +7,7 @@ using Restful.Core.Events;
 using Restful.Core.Files;
 using Restful.Core.Requests;
 using Restful.Core.Requests.Models;
+using Restful.Core.Users;
 using Restful.Core.ViewModels;
 using System;
 using System.Threading.Tasks;
@@ -15,7 +16,9 @@ namespace Restful.RequestsModule.ViewModels
 {
     public partial class RequestDetailsViewModel : RegionViewModelBase
     {
+        private readonly IRequestBL _requestBL;
         private readonly IRequestApiService _apiService;
+        private readonly IApplicationUserService _applicationUserService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IFileExportService _fileExportService;
         private readonly IErrorHandler _errorHandler;
@@ -30,12 +33,16 @@ namespace Restful.RequestsModule.ViewModels
         #region Constructor
         public RequestDetailsViewModel(
             IRegionManager regionManager,
+            IRequestBL requestBL,
             IRequestApiService apiService,
+            IApplicationUserService applicationUserService,
             IEventAggregator eventAggregator,
             IFileExportService fileExportService,
             IErrorHandler errorHandler) : base(regionManager)
         {
+            _requestBL = requestBL;
             _apiService = apiService;
+            _applicationUserService = applicationUserService;
             _eventAggregator = eventAggregator;
             _fileExportService = fileExportService;
             _errorHandler = errorHandler;
@@ -121,14 +128,11 @@ namespace Restful.RequestsModule.ViewModels
         {
             try
             {
-                // Simulate Saving the Result to the DB //
-                await Task.Delay(200);
+                Request.UserId = _applicationUserService.GetApplicationUserGuid();
 
-                // Validate the Request Being Saved //
-                if (!string.IsNullOrEmpty(Request?.Name))
-                    _eventAggregator
-                        .GetEvent<RequestSavedEvent>()
-                        .Publish(Request);
+                await _requestBL.CreateAsync(Request);
+
+                _eventAggregator.GetEvent<RequestSavedEvent>().Publish(Request);
             }
             catch (Exception ex)
             {

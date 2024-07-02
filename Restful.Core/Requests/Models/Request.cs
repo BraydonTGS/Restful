@@ -38,6 +38,8 @@ namespace Restful.Core.Requests.Models
 
         public Guid? CollectionId { get; set; }
 
+        public Guid? UserId { get; set; }
+
         #region Constructor
         /// <summary>
         /// If True - Initialize a Request Object with Default Values
