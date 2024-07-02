@@ -9,6 +9,12 @@ namespace Restful.Core.Login.Models
         public User? User { get; set; }
 
         public LoginResponse() { }
+
+        public LoginResponse(bool isSuccessful, string errorMessage = "")
+        {
+            IsSuccessful = isSuccessful;
+            ErrorMessage = errorMessage;
+        }
         public LoginResponse(User user, bool isSuccessful, string errorMessage = "")
         {
             User = user;

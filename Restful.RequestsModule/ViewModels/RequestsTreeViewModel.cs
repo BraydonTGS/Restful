@@ -46,7 +46,18 @@ namespace Restful.RequestsModule.ViewModels
 
         #region OnNavigatedTo
         /// <inheritdoc/>
-        public override void OnNavigatedTo(NavigationContext navigationContext) { }
+        public override void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            try
+            {
+                if (navigationContext.Parameters.TryGetValue(NavigationKeys.RequestsKey, out ObservableCollection<Request> requests))
+                {
+                    Requests = requests;
+                    if (requests is null) Requests = [];
+                }
+            }
+            catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
+        }
         #endregion
 
         #region OnRequestItemClicked

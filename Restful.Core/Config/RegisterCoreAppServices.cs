@@ -7,9 +7,13 @@ using Restful.Core.Errors;
 using Restful.Core.Files;
 using Restful.Core.Logging;
 using Restful.Core.Login;
+using Restful.Core.Passwords;
+using Restful.Core.Passwords.Model;
+using Restful.Core.Registration;
 using Restful.Core.Requests;
 using Restful.Core.Requests.Models;
 using Restful.Core.Users;
+using Restful.Core.Users.Models;
 using Restful.Entity.Entities;
 using System.Net.Http;
 
@@ -30,10 +34,12 @@ namespace Restful.Core.Config
 
             // Mappers //
             containerRegistry.RegisterSingleton<IMapper<Request, RequestEntity>, RequestMapper>();
+            containerRegistry.RegisterSingleton<IMapper<Password, PasswordEntity>, PasswordMapper>();
+            containerRegistry.RegisterScoped<IMapper<User, UserEntity>, UserMapper>();  
 
             // Register Business Services //
-            containerRegistry.RegisterScoped<ILoginBL, LoginBL>();
             containerRegistry.RegisterScoped<IRequestApiService, RequestApiService>();
+            containerRegistry.Register<IPasswordHasher<Password>, PasswordHasher>();
 
             containerRegistry.RegisterSingleton<IErrorHandler, ErrorHandler>();
             containerRegistry.RegisterSingleton<IApplicationUserService, ApplicationUserService>();
@@ -42,7 +48,15 @@ namespace Restful.Core.Config
 
             // Repository //
             containerRegistry.RegisterScoped<IRequestRepository, RequestRepository>();
+            containerRegistry.RegisterScoped<IPasswordRepository, PasswordRepository>();
+            containerRegistry.RegisterScoped<IUserRepository, UserRepository>();
+
+            // BL //
             containerRegistry.RegisterScoped<IRequestBL, RequestBL>();
+            containerRegistry.RegisterScoped<IPasswordBL, PasswordBL>();
+            containerRegistry.RegisterScoped<IUserBL, UserBL>();
+            containerRegistry.RegisterScoped<ILoginBL, LoginBL>();
+            containerRegistry.RegisterScoped<IRegistrationBL, RegistrationBL>();
 
             // Logging //
             LoggingConfig.ConfigureLogging(containerRegistry);
