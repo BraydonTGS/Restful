@@ -89,11 +89,8 @@ namespace Restful.UserModule.ViewModels
             }
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
         }
-
         private bool CanRegisterNewUserCommandExecuted() => RegistrationRequest.IsValid();
 
-        private void OnCancelRegistrationCommandExecuted()
-        {
-        }
+        private void OnCancelRegistrationCommandExecuted() { CloseApplicationWindow(typeof(RegistrationWindow)); }
     }
 }

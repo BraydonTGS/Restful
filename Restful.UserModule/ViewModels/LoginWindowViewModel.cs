@@ -65,7 +65,7 @@ namespace Restful.UserModule.ViewModels
                 // Attempt to Login the User //
                 // responses 
                 var loginResponse = await _loginBL.LoginUserAsync(LoginRequest);
-                if (loginResponse is not null && loginResponse.IsSuccessful)
+                if (loginResponse.IsSuccessful)
                 {
                     _applicationUserService.SetApplicationUser(
                         loginResponse.User.Id, loginResponse.User.Username, loginResponse.User.Email);
@@ -76,18 +76,18 @@ namespace Restful.UserModule.ViewModels
                 }
 
                 else
-                    MessageBox.Show("Username Not Found", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"{loginResponse.ErrorMessage}", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (InvalidPasswordException)
+            catch (InvalidPasswordException ex)
             {
-                MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error: {ex.Message}.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
         }
 
         private bool CanLoginUserCommandExecuted() => LoginRequest.IsValid();
 
-        private void OnCreateNewUserCommandExecuted() 
+        private void OnCreateNewUserCommandExecuted()
         {
             RegistrationWindow registrationWindow = new RegistrationWindow();
             registrationWindow.ShowDialog();

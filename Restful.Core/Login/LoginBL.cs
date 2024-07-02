@@ -35,7 +35,7 @@ namespace Restful.Core.Login
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<LoginResponse?> LoginUserAsync(LoginRequest request)
+        public async Task<LoginResponse> LoginUserAsync(LoginRequest request)
         {
             _log.Information($"Starting LoginUserAsync for the Specified User.");
             try
@@ -44,8 +44,8 @@ namespace Restful.Core.Login
 
                 if (user is null)
                 {
-                    _log.Warning($"No User Found for with the Specified Username");
-                    return null;
+                    _log.Warning($"No User Found for with the Specified Username: {request.Username}");
+                    return new LoginResponse(false, $"No User Found for with the Specified Username: {request.Username}");
                 }
 
                 var success = await _passwordBL.VerifyUserPasswordAsync(user.Id, request.Password);

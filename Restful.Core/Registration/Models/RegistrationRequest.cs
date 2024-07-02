@@ -46,10 +46,31 @@ namespace Restful.Core.Registration.Models
         [MinLength(8, ErrorMessage = "Confirm Password must be at least 8 characters.")]
         [MaxLength(50, ErrorMessage = "Confirm Password cannot exceed 50 characters.")]
         [Required(ErrorMessage = "Confirm Password is required.")]
+        [CustomValidation(typeof(RegistrationRequest), nameof(ValidatePassword))]
         private string _confirmPassword = string.Empty;
 
         public RegistrationRequest() { ValidateAllProperties(); }
 
-        public bool IsValid() => !HasErrors && Password == ConfirmPassword;
+        public bool IsValid() => !HasErrors;
+
+        #region ValidatePassword
+        /// <summary>
+        /// Ensure the Password and the Confirm Password Are Equal
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static ValidationResult? ValidatePassword(string name, ValidationContext context)
+        {
+            var instance = (RegistrationRequest)context.ObjectInstance;
+            bool isValid = instance.Password == instance.ConfirmPassword;
+
+            if (isValid)
+                return ValidationResult.Success;
+
+            return new ValidationResult("The Provided Passwords Must Match.");
+        }
+        #endregion
+
     }
 }
