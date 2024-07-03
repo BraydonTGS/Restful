@@ -57,6 +57,7 @@ namespace Restful.Core.Config
             containerRegistry.RegisterScoped<IUserBL, UserBL>();
             containerRegistry.RegisterScoped<ILoginBL, LoginBL>();
             containerRegistry.RegisterScoped<IRegistrationBL, RegistrationBL>();
+            containerRegistry.RegisterScoped<IRequestUpsertBL, RequestUpsertBL>();
 
             // Logging //
             LoggingConfig.ConfigureLogging(containerRegistry);

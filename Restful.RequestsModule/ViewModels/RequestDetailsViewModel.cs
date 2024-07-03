@@ -130,7 +130,11 @@ namespace Restful.RequestsModule.ViewModels
             {
                 Request.UserId = _applicationUserService.GetApplicationUserGuid();
 
-                await _requestBL.CreateAsync(Request);
+                // Upsert - When Ready //
+                if (Request.Id == Guid.Empty)
+                    await _requestBL.CreateAsync(Request);
+                else
+                    await _requestBL.UpdateAsync(Request);
 
                 _eventAggregator.GetEvent<RequestSavedEvent>().Publish(Request);
             }

@@ -27,6 +27,8 @@ namespace Restful.UserModule.ViewModels
 
         public DelegateCommand RegisterNewUserCommand { get; set; }
         public DelegateCommand CancelRegistrationCommand { get; set; }
+
+        #region Constructor
         public RegistrationWindowViewModel(
             IRegistrationBL registrationBL,
             IApplicationUserService applicationUserService,
@@ -43,7 +45,12 @@ namespace Restful.UserModule.ViewModels
 
             ConfigureDelegateCommands();
         }
+        #endregion
 
+        #region ConfigureDelegateCommands
+        /// <summary>
+        /// Configure the Delegate Commands
+        /// </summary>
         private void ConfigureDelegateCommands()
         {
             RegisterNewUserCommand = new DelegateCommand(
@@ -58,11 +65,23 @@ namespace Restful.UserModule.ViewModels
 
             CancelRegistrationCommand = new DelegateCommand(OnCancelRegistrationCommandExecuted);
         }
+        #endregion
 
+        #region OnRegisterNewUserCommandExecuted
+        /// <summary>
+        /// Command that is Fired when the User Submits their Registration Info
+        /// 
+        /// Can only execute when Registration Request Validation is Met
+        /// </summary>
+        /// <returns></returns>
         private async Task OnRegisterNewUserCommandExecuted()
         {
             try
             {
+                if (IsBusy) return;
+
+                IsBusy = true;
+
                 // Attempt to Register a New User //
                 var registrationResponse = await _registrationBL.RegisterNewUserAsync(RegistrationRequest);
 
@@ -75,22 +94,33 @@ namespace Restful.UserModule.ViewModels
                     CloseApplicationWindow(typeof(RegistrationWindow));
 
                     // User is Created so Publish a Successful Login Event //
-                    _eventAggregator
-                     .GetEvent<LoginSuccessEvent>()
-                     .Publish(true);
+                    _eventAggregator.GetEvent<LoginSuccessEvent>().Publish(true);
+                }
+                else
+                {
+                    MessageBox.Show("Could not Register New User", "Registration Failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
-                else
-                    MessageBox.Show("Could not Register New User", "Registration Failed", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (InvalidPasswordException)
             {
                 MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
+            catch (Exception ex)
+            {
+                _errorHandler.DisplayExceptionMessage(ex);
+            }
+            finally { IsBusy = false; }
         }
         private bool CanRegisterNewUserCommandExecuted() => RegistrationRequest.IsValid();
+        #endregion
 
+
+        #region 
+        /// <summary>
+        /// Command that is Fired when the User Cancels the Registration Process
+        /// </summary>
         private void OnCancelRegistrationCommandExecuted() { CloseApplicationWindow(typeof(RegistrationWindow)); }
+        #endregion
     }
 }

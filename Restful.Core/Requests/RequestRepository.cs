@@ -2,6 +2,7 @@
 using Restful.Core.Base;
 using Restful.Core.Context;
 using Restful.Entity.Entities;
+using Restful.Global.Exceptions;
 
 namespace Restful.Core.Requests
 {
@@ -57,6 +58,31 @@ namespace Restful.Core.Requests
                 .ToListAsync();
 
             return results;
+        }
+        #endregion
+
+        #region CreateAsync - Override
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="PasswordAlreadyExistsException"></exception>
+        public override async Task<RequestEntity?> CreateAsync(RequestEntity request)
+        {
+            using var context = await _contextFactory.CreateDbContextAsync();
+
+            // Check if a password for the user already exists
+            bool requestExists = await context.Requests.AnyAsync(p => p.Name == request.Name);
+
+            if (requestExists)
+                throw new RequestAlreadyExistsException("A Request With the Specified Name Already Exists.");
+
+            var newEntry = await context.Requests.AddAsync(request);
+
+            await context.SaveChangesAsync();
+
+            return newEntry.Entity;
         }
         #endregion
     }
