@@ -17,20 +17,23 @@ using Restful.WPF.Config;
 using Restful.WPF.Properties;
 using Restful.WPF.Theme;
 using Restful.WPF.Views;
+using Serilog;
 using System;
 using System.Windows;
-
 
 namespace Restful.WPF
 {
     /// <summary>
     /// Interaction logic for App.xaml
+    /// 
+    /// dotnet publish -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
     /// </summary>
     public partial class App : PrismApplication
     {
         private IRegionManager _regionManager;
         private IEventAggregator _eventAggregator;
         private IErrorHandler _errorHandler;
+        private ILogger _log;
 
         private bool _userVerified = false;
         private LoginWindow _loginWindow;
@@ -46,8 +49,14 @@ namespace Restful.WPF
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             LoadAppShellResources();
+
+            _log.Information($"Starting Restful Application");
+
             LoadApplicationTheme();
+
             EnsureDatabaseIsCreated();
+
+            _log.Information($"Resolving the Prism Main Window and Creating Shell");
 
             return Container.Resolve<MainWindow>();
         }
@@ -62,6 +71,7 @@ namespace Restful.WPF
             _regionManager = Container.Resolve<IRegionManager>();
             _eventAggregator = Container.Resolve<IEventAggregator>();
             _errorHandler = Container.Resolve<IErrorHandler>();
+            _log = Container.Resolve<ILogger>();
         }
         #endregion
 
@@ -71,9 +81,12 @@ namespace Restful.WPF
         /// </summary>
         private void EnsureDatabaseIsCreated()
         {
+            _log.Information($"Ensure the Database is Property Created with Name: {Settings.Default.ProdDb}");
             var databaseManager = Container.Resolve<IDatabaseManager>();
             if (databaseManager != null)
                 databaseManager.InitializeDatabase();
+
+            _log.Information($"Successfully Ensured the Database was Created and Migrations Applied");
         }
         #endregion
 
@@ -126,7 +139,7 @@ namespace Restful.WPF
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             RegisterWpfAppServices.RegisterWpfServices(containerRegistry);
-            RegisterCoreAppServices.RegisterCoreServices(containerRegistry, Settings.Default.DVDb);
+            RegisterCoreAppServices.RegisterCoreServices(containerRegistry, Settings.Default.ProdDb);
         }
         #endregion
 
@@ -165,9 +178,15 @@ namespace Restful.WPF
         /// </summary>
         private void LoadApplicationTheme()
         {
+            _log.Information("Setting Application Theme");
+
             var themeService = Container.Resolve<IThemeService>();
+
             var savedTheme = themeService.LoadCurrentThemeSettings();
+
             ThemeManager.Current.ChangeTheme(this, savedTheme);
+
+            _log.Information($"Application Theme Set: {savedTheme}");
         }
         #endregion
 
@@ -179,7 +198,9 @@ namespace Restful.WPF
         /// <param name="e"></param>
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            _errorHandler.DisplayExceptionMessage(e.ExceptionObject as Exception, "Unhandled Exception Triggered!");
+            var exception = e.ExceptionObject as Exception;
+            _log.Error($"CurrentDomain_UnhandledException with Message: {exception.Message}");
+            _errorHandler.DisplayExceptionMessage(exception, "Unhandled Exception Triggered!");
         }
         #endregion
     }

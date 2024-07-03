@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Restful.Core.Context;
 using Restful.Global.Exceptions;
+using Serilog;
 using System.IO;
 
 namespace Restful.Core.Database
@@ -11,10 +12,14 @@ namespace Restful.Core.Database
     public class DatabaseManager : IDatabaseManager
     {
         private readonly IDbContextFactory<RestfulDbContext> _contextFactory;
+        private readonly ILogger _log;
 
-        public DatabaseManager(IDbContextFactory<RestfulDbContext> contextFactory)
+        public DatabaseManager(
+            IDbContextFactory<RestfulDbContext> contextFactory,
+            ILogger log)
         {
             _contextFactory = contextFactory;
+            _log = log;
         }
 
         #region InitializeDatabase
@@ -50,10 +55,22 @@ namespace Restful.Core.Database
         /// </summary>
         private void EnsureDatabaseDirectoryExists()
         {
-            var directoryPath = Path.GetDirectoryName(DatabaseInfo.DbDirectory);
-            if (!string.IsNullOrEmpty(directoryPath))
-                if (!Directory.Exists(directoryPath))
-                    Directory.CreateDirectory(directoryPath);
+            _log.Information($"Starting EnsureDatabaseDirectoryExists");
+            try
+            {
+                _log.Information($"Get the Directory Name and Ensure It Exists");
+                var directoryPath = Path.GetDirectoryName(DatabaseInfo.DbDirectory);
+                if (!string.IsNullOrEmpty(directoryPath))
+                    if (!Directory.Exists(directoryPath))
+                        Directory.CreateDirectory(directoryPath);
+
+                _log.Information("Successfully Ensured the Database Directory Exists");
+            }
+            catch (Exception ex) 
+            {
+                _log.Error($"Error Ensuring the Database Directory Exists with Message: {ex.Message}");
+                throw;
+            }
         }
         #endregion
 
@@ -63,9 +80,22 @@ namespace Restful.Core.Database
         /// </summary>
         private void EnsureDatabaseCreated()
         {
-            using var context = _contextFactory.CreateDbContext();
+            _log.Information("Starting EnsureDatabaseCreated");
+            try
+            {
+                _log.Information("Ensure the Database is Created - Create the DB Context");
+                using var context = _contextFactory.CreateDbContext();
 
-            context.Database.Migrate();
+                _log.Information($"Context has been Established, Created Database and Apply Migrations");
+                context.Database.Migrate();
+
+                _log.Information($"Ensure Database Created Success and Migrations Applied");
+            }
+            catch (Exception ex)
+            {
+                _log.Error($"Error Ensuring the Database Exists and Applying Migrations with Message: {ex.Message}");
+                throw;
+            }
         }
         #endregion
     }
