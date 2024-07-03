@@ -1,4 +1,5 @@
 ﻿using Restful.Core.Login.Models;
+using Restful.Core.Registration.Models;
 using Restful.Core.Requests.Models;
 using Restful.Core.Users.Models;
 
@@ -56,14 +57,12 @@ namespace Restful.Tests.Shared.Database
         #endregion
 
         #region GenerateLoginRequest
-        public static LoginRequest GenerateLoginRequest()
+        public static LoginRequest GenerateLoginRequest(string username, string password)
         {
             var loginRequest = new LoginRequest()
             {
-
-                Email = "BraydonTGS@gmail.com",
-                Password = "MonkeyDBanana",
-                Username = "Geomatics"
+                Password = password,
+                Username = username
             };
             return loginRequest;
         }
@@ -74,12 +73,24 @@ namespace Restful.Tests.Shared.Database
         {
             var loginRequest = new LoginRequest()
             {
-                Email = "RedRain@gmail.com",
                 Username = "RedxRain",
                 Password = "YodaIsMyMentor"
             };
             return loginRequest;
         }
         #endregion
+
+        public static RegistrationRequest GenerateRegistrationRequest()
+        {
+            return new RegistrationRequest()
+            {
+                FirstName = "Braydon",
+                LastName = "Sutherland",
+                Email = "BraydonTGS@gmail.com",
+                Password = "MonkeyDBanana",
+                ConfirmPassword = "MonkeyDBanana",
+                Username = "Geomatics"
+            };
+        }
     }
 }

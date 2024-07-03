@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.ApplicationServices;
 using Prism.Ioc;
 using Restful.Core.Context;
 using Restful.Core.Login;
+using Restful.Core.Registration;
 using Restful.Global.Exceptions;
 using Restful.Tests.Shared.Base;
 using Restful.Tests.Shared.Database;
@@ -11,12 +13,13 @@ namespace Restful.Core.Tests.LoginBLTests
     [TestClass]
     public class LoginBLTests : TestBase
     {
-
-        private readonly ILoginBL _requestBL;
+        private readonly ILoginBL _loginBL;
+        private readonly IRegistrationBL _registrationBL;  
         private readonly IDbContextFactory<RestfulDbContext> _dbContextFactory;
         public LoginBLTests()
         {
-            _requestBL = _containerProvider.Resolve<ILoginBL>();
+            _loginBL = _containerProvider.Resolve<ILoginBL>();
+            _registrationBL = _containerProvider.Resolve<IRegistrationBL>();
             _dbContextFactory = _containerProvider.Resolve<IDbContextFactory<RestfulDbContext>>();
         }
 
@@ -29,19 +32,21 @@ namespace Restful.Core.Tests.LoginBLTests
         [TestMethod]
         public async Task LoginCurrentUserAsync_Success()
         {
-            //var newUser = ModelCreationHelper.GenerateUser();
+            var registrationRequest = ModelCreationHelper.GenerateRegistrationRequest();
 
-            //newUser = await _registrationBL.RegisterNewUserAsync(newUser);
+            var registrationResponse = await _registrationBL.RegisterNewUserAsync(registrationRequest);
 
-            //Assert.IsNotNull(newUser);
+            Assert.IsNotNull(registrationResponse);
+            Assert.IsTrue(registrationResponse.IsSuccessful);
+            Assert.IsNotNull(registrationResponse.User);
 
-            //newUser.TempPassword = "MonkeyDBanana";
+            registrationResponse.User.TempPassword = "MonkeyDBanana";
 
-            //var response = await _loginBL.LoginUserAsync(ModelCreationHelper.GenerateLoginRequestDto());
+            var loginResponse = await _loginBL.LoginUserAsync(ModelCreationHelper.GenerateLoginRequest(registrationResponse.User.Username, registrationResponse.User.TempPassword));
 
-            //Assert.IsNotNull(response);
-            //Assert.IsNotNull(response.User);
-            //Assert.AreEqual(string.Empty, response.User.TempPassword);
+            Assert.IsNotNull(loginResponse);
+            Assert.IsNotNull(loginResponse.User);
+            Assert.AreEqual(string.Empty, loginResponse.User.TempPassword);
         }
 
         [TestMethod]
@@ -50,16 +55,19 @@ namespace Restful.Core.Tests.LoginBLTests
             InvalidPasswordException? passwordException = null;
             try
             {
-                //var newUser = ModelCreationHelper.GenerateUserDto();
+                var registrationRequest = ModelCreationHelper.GenerateRegistrationRequest();
 
-                //newUser = await _registrationBL.RegisterNewUserAsync(newUser);
+                var registrationResponse = await _registrationBL.RegisterNewUserAsync(registrationRequest);
 
-                //Assert.IsNotNull(newUser);
+                Assert.IsNotNull(registrationResponse);
+                Assert.IsTrue(registrationResponse.IsSuccessful);
+                Assert.IsNotNull(registrationResponse.User);
 
-                //var loginRequestDto = ModelCreationHelper.GenerateLoginRequestDto();
-                //loginRequestDto.TempPassword = "BananaDMonkey";
+                registrationResponse.User.TempPassword = "MonkeyDBanana";
 
-                //var response = await _loginBL.LoginUserAsync(loginRequestDto);
+                var loginRequestDto = ModelCreationHelper.GenerateLoginRequest(registrationResponse.User.Username, "BananaDMonkey");
+
+                var response = await _loginBL.LoginUserAsync(loginRequestDto);
             }
             catch (InvalidPasswordException ex)
             {
