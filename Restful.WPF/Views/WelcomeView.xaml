@@ -13,7 +13,10 @@
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
     <TabControl Style="{DynamicResource MahApps.Styles.TabControl.Animated}">
-        <mah:MetroTabItem CloseButtonEnabled="True" Header="Notifications">
+        <mah:MetroTabItem
+            CloseButtonEnabled="True"
+            CloseTabCommand="{Binding CloseNotificationsTabCommand}"
+            Header="Notifications">
             <controls:NotificationsTabControl />
         </mah:MetroTabItem>
     </TabControl>

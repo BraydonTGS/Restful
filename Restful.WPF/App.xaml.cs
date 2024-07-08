@@ -10,6 +10,7 @@ using Restful.Core.Errors;
 using Restful.Core.Events;
 using Restful.Global.Constant;
 using Restful.RequestsModule;
+using Restful.RequestsModule.Views;
 using Restful.SettingsModule;
 using Restful.UserModule;
 using Restful.UserModule.Views;
@@ -26,6 +27,7 @@ namespace Restful.WPF
     /// <summary>
     /// Interaction logic for App.xaml
     /// 
+    /// Publish Command - Self Contained and Include all Libraries
     /// dotnet publish -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
     /// </summary>
     public partial class App : PrismApplication
@@ -81,7 +83,7 @@ namespace Restful.WPF
         /// </summary>
         private void EnsureDatabaseIsCreated()
         {
-            _log.Information($"Ensure the Database is Property Created with Name: {Settings.Default.ProdDb}");
+            _log.Information($"Ensure the Database is Property Created with Name: {Settings.Default.DVDb}");
             var databaseManager = Container.Resolve<IDatabaseManager>();
             if (databaseManager != null)
                 databaseManager.InitializeDatabase();
@@ -122,7 +124,10 @@ namespace Restful.WPF
                     .GetEvent<SetUsernameEvent>()
                     .Publish();
 
-                _regionManager.RequestNavigate(Regions.MainContentRegion, nameof(WelcomeView));
+                if (!Settings.Default.NotificationWindowClosed)
+                    _regionManager.RequestNavigate(Regions.MainContentRegion, nameof(WelcomeView));
+                else
+                    _regionManager.RequestNavigate(Regions.MainContentRegion, nameof(RequestsView));
 
                 base.OnInitialized();
             }
