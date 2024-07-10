@@ -125,12 +125,11 @@ namespace Restful.WPF.ViewModels
 
                 var psi = new ProcessStartInfo()
                 {
-                    FileName = "powershell.exe",
+                    FileName = Constants.Powershell,
                     UseShellExecute = true,
                 };
                 
                 Process.Start(psi);
-
             }
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
             finally { IsBusy = false; } 

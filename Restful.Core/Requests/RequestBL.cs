@@ -5,6 +5,9 @@ using Serilog;
 
 namespace Restful.Core.Requests
 {
+    /// <summary>
+    /// Request BL
+    /// </summary>
     public class RequestBL : BaseBL<Request, RequestEntity, Guid>, IRequestBL
     {
         private readonly IRequestRepository _requestRepository;

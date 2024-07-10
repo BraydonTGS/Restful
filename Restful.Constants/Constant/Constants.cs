@@ -5,6 +5,8 @@
         #region Application
         public const string ApplicationTitle = "Restful";
         public const string Default = "Default";
+
+        public const string Powershell = "powershell.exe";
         #endregion
 
         #region Theme
