@@ -21,6 +21,7 @@ using Restful.WPF.Views;
 using Serilog;
 using System;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace Restful.WPF
 {

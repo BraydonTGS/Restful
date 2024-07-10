@@ -46,7 +46,7 @@
                         Label="Collections"
                         Tag="ComingSoonView" />
                     <mah:HamburgerMenuGlyphItem
-                        Command="{Binding MenuItemClicked}"
+                        Command="{Binding LaunchTerminalCommand}"
                         CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                         Glyph="&#xE756;"
                         Label="Terminal"

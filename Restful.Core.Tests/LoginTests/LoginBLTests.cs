@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic.ApplicationServices;
 using Prism.Ioc;
 using Restful.Core.Context;
 using Restful.Core.Login;
@@ -8,13 +7,13 @@ using Restful.Global.Exceptions;
 using Restful.Tests.Shared.Base;
 using Restful.Tests.Shared.Database;
 
-namespace Restful.Core.Tests.LoginBLTests
+namespace Restful.Core.Tests.LoginTests
 {
     [TestClass]
     public class LoginBLTests : TestBase
     {
         private readonly ILoginBL _loginBL;
-        private readonly IRegistrationBL _registrationBL;  
+        private readonly IRegistrationBL _registrationBL;
         private readonly IDbContextFactory<RestfulDbContext> _dbContextFactory;
         public LoginBLTests()
         {

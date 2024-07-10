@@ -9,6 +9,7 @@ using Restful.Core.ViewModels;
 using Restful.Global.Constant;
 using Restful.WPF.Theme;
 using System;
+using System.Diagnostics;
 
 namespace Restful.WPF.ViewModels
 {
@@ -24,6 +25,8 @@ namespace Restful.WPF.ViewModels
         public DelegateCommand ThemeButtonClicked { get; set; }
         public DelegateCommand<string> MenuItemClicked { get; set; }
         public DelegateCommand<string> AccentButtonClicked { get; set; }
+
+        public DelegateCommand LaunchTerminalCommand { get; set; }
 
         #region Constructor
         public MainWindowViewModel(
@@ -57,6 +60,7 @@ namespace Restful.WPF.ViewModels
             MenuItemClicked = new DelegateCommand<string>(OnMenuItemClickedExecuted);
             ThemeButtonClicked = new DelegateCommand(OnThemeButtonClickedExecuted);
             AccentButtonClicked = new DelegateCommand<string>(OnAccentButtonClickedExecuted);
+            LaunchTerminalCommand = new DelegateCommand(OnLaunchTerminalCommandExecuted);
         }
         #endregion
 
@@ -102,6 +106,34 @@ namespace Restful.WPF.ViewModels
                 _themeService.ChangeApplicationAccent(str);
             }
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
+        }
+        #endregion
+
+        #region OnLaunchTerminalCommandExecuted
+        /// <summary>
+        /// Command that is executed when the User Clicks the Terminal Button
+        /// 
+        /// Open Powershell
+        /// </summary>
+        private void OnLaunchTerminalCommandExecuted()
+        {
+            try
+            {
+                if (IsBusy) return;
+
+                IsBusy = true;
+
+                var psi = new ProcessStartInfo()
+                {
+                    FileName = "powershell.exe",
+                    UseShellExecute = true,
+                };
+                
+                Process.Start(psi);
+
+            }
+            catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
+            finally { IsBusy = false; } 
         }
         #endregion
 
