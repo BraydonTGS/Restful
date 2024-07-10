@@ -2,7 +2,5 @@
 
 namespace Restful.Core.Tests.RegistrationTests
 {
-    public class RegistrationBLTests : TestBase
-    {
-    }
+    public class RegistrationBLTests : TestBase { }
 }

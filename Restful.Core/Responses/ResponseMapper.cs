@@ -1,23 +1,22 @@
 ﻿using Restful.Core.Base;
-using Restful.Core.Headers.Models;
+using Restful.Core.Responses.Models;
 using Restful.Entity.Entities;
+using System.Drawing;
 
-namespace Restful.Core.Headers
+namespace Restful.Core.Responses
 {
     /// <summary>
-    /// Header Mapper - Responsible for Mapping/Reverse Mapping Header Model's to Header Entities 
+    /// Response Mapper - Responsible for Mapping/Reverse Mapping Response Model's to Response Entities 
     /// </summary>
-    public class HeaderMapper : BaseMapper<Header, HeaderEntity>
+    public class ResponseMapper : BaseMapper<Response, ResponseEntity>
     {
         #region Map to Model 
-        public override Header Map(HeaderEntity entity)
+        public override Response Map(ResponseEntity entity)
         {
-            var model = new Header()
+            var model = new Response()
             {
                 Id = entity.Id,
-                Key = entity.Key,
-                Value = entity.Value,
-                Enabled = entity.Enabled,
+                Result = entity.Result,
                 RequestId = entity.RequestId,
                 Description = entity.Description,
                 IsDeleted = entity.IsDeleted,
@@ -28,14 +27,12 @@ namespace Restful.Core.Headers
         #endregion
 
         #region Map to Entity
-        public override HeaderEntity Map(Header model)
+        public override ResponseEntity Map(Response model)
         {
-            var entity = new HeaderEntity()
+            var entity = new ResponseEntity()
             {
                 Id = model.Id,
-                Key = model.Key,
-                Value = model.Value,
-                Enabled = model.Enabled,
+                Result = model.Result,
                 RequestId = model.RequestId,
                 Description = model.Description,
                 IsDeleted = model.IsDeleted,

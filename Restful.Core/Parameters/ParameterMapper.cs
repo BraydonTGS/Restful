@@ -4,7 +4,10 @@ using Restful.Entity.Entities;
 
 namespace Restful.Core.Parameters
 {
-    internal class ParameterMapper : BaseMapper<Parameter, ParameterEntity>
+    /// <summary>
+    /// Parameter Mapper - Responsible for Mapping/Reverse Mapping Parameter Model's to Parameter Entities 
+    /// </summary>
+    public class ParameterMapper : BaseMapper<Parameter, ParameterEntity>
     {
         #region Map to Model 
         public override Parameter Map(ParameterEntity entity)
@@ -17,6 +20,7 @@ namespace Restful.Core.Parameters
                 Enabled = entity.Enabled,
                 RequestId = entity.RequestId,
                 Description = entity.Description,
+                IsDeleted = entity.IsDeleted,
             };
 
             return model;
@@ -34,6 +38,7 @@ namespace Restful.Core.Parameters
                 Enabled = model.Enabled,
                 RequestId = model.RequestId,
                 Description = model.Description,
+                IsDeleted= model.IsDeleted,
             };
 
             return entity;
