@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using Restful.Core.Context;
 using Restful.Core.Passwords;
 using Restful.Core.Passwords.Model;
@@ -14,12 +15,14 @@ namespace Restful.Tests.Shared.Database
         private static Guid _requestId;
         private static Guid _collectionId;
         private static Guid _headerId;
+        private static Guid _parameterId;
 
         public static Guid GetUserId() => _userId;
         public static Guid GetSecondUserId() => _secondUserId;
         public static Guid GetRequestId() => _requestId;
         public static Guid GetCollectionId() => _collectionId;
         public static Guid GetHeaderId() => _headerId;
+        public static Guid GetParameterId() => _parameterId;
 
         public static async Task Seed(
             IDbContextFactory<RestfulDbContext> contextFactory)
@@ -54,6 +57,14 @@ namespace Restful.Tests.Shared.Database
             await context.AddAsync(headerTwo);
             await context.AddAsync(headerThree);
 
+            // Parameters //
+            ParameterEntity parameterOne, parameterTwo, parameterThree;
+            GenerateParameterEntities(requestOne.Id, out  parameterOne, out parameterTwo, out parameterThree);
+
+            await context.AddAsync(parameterOne);
+            await context.AddAsync(parameterTwo);
+            await context.AddAsync(parameterThree);
+
             // Password //
             PasswordEntity password;
             GeneratePasswordEntity(user.Id, out password);
@@ -66,6 +77,7 @@ namespace Restful.Tests.Shared.Database
             _requestId = requestOne.Id;
             _collectionId = collection.Id;
             _headerId = headerOne.Id;
+            _parameterId = parameterOne.Id;
 
             // Save Changes //
             await context.SaveChangesAsync();
@@ -174,6 +186,35 @@ namespace Restful.Tests.Shared.Database
             {
                 Key = "Connection",
                 Value = "keep-alive",
+                Enabled = true,
+                RequestId = requestId
+            };
+        }
+
+        private static void GenerateParameterEntities(
+            Guid requestId,
+            out ParameterEntity parameterOne,
+            out ParameterEntity parameterTwo,
+            out ParameterEntity parameterThree)
+        {
+            parameterOne = new ParameterEntity()
+            {
+                Key = "Id",
+                Value = "1251",
+                Enabled = true,
+                RequestId = requestId
+            };
+            parameterTwo = new ParameterEntity()
+            {
+                Key = "Name",
+                Value = "Frodo",
+                Enabled = true,
+                RequestId = requestId
+            };
+            parameterThree = new ParameterEntity()
+            {
+                Key = "Book",
+                Value = "ReturnOfTheKing",
                 Enabled = true,
                 RequestId = requestId
             };

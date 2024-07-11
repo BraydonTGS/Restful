@@ -1,4 +1,6 @@
-﻿using Restful.Core.Login.Models;
+﻿using Restful.Core.Headers.Models;
+using Restful.Core.Login.Models;
+using Restful.Core.Parameters.Models;
 using Restful.Core.Registration.Models;
 using Restful.Core.Requests.Models;
 using Restful.Core.Users.Models;
@@ -21,6 +23,36 @@ namespace Restful.Tests.Shared.Database
             };
 
             return request;
+        }
+        #endregion
+
+        #region GenerateHeader
+        public static Header GenerateHeader()
+        {
+            var header = new Header()
+            {
+                Key = "Content-Type",
+                Value = "application/json",
+                Enabled = true,
+                RequestId = DatabaseSeeder.GetRequestId()
+            };
+
+            return header;
+        }
+        #endregion
+
+        #region GenerateParameter
+        public static Parameter GenerateParameter()
+        {
+            var parameter = new Parameter()
+            {
+                Key = "Id",
+                Value = "134",
+                Enabled = true,
+                RequestId = DatabaseSeeder.GetRequestId()
+            };
+
+            return parameter;
         }
         #endregion
 
@@ -80,6 +112,7 @@ namespace Restful.Tests.Shared.Database
         }
         #endregion
 
+        #region GenerateRegistrationRequest
         public static RegistrationRequest GenerateRegistrationRequest()
         {
             return new RegistrationRequest()
@@ -92,5 +125,6 @@ namespace Restful.Tests.Shared.Database
                 Username = "Geomatics"
             };
         }
+        #endregion
     }
 }
