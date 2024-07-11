@@ -16,7 +16,7 @@ namespace Restful.Core.Requests
             IMapper<Request, RequestEntity> mapper,
             ILogger log) : base(requestRepository, mapper, log)
         {
-            _requestRepository = requestRepository ?? throw new ArgumentNullException(nameof(requestRepository));
+            _requestRepository = requestRepository ?? throw new ArgumentNullException(nameof(IRequestRepository));
         }
 
         #region GetAllRequestsByCollectionIdAsync

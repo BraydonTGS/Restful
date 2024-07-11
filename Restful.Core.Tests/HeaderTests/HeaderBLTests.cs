@@ -41,6 +41,14 @@ namespace Restful.Core.Tests.HeaderTests
         }
 
         [TestMethod]
+        public async Task GetAllHeadersByRequestIdAsync_Success()
+        {
+            var results = await _headerBL.GetAllHeadersByRequestIdAsync(DatabaseSeeder.GetRequestId());
+
+            Assert.AreEqual(3, results.Count());
+        }
+
+        [TestMethod]
         public async Task GetHeaderByIdAsync_Success()
         {
             var header = await _headerBL.GetByIdAsync(DatabaseSeeder.GetHeaderId());

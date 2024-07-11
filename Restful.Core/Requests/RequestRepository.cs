@@ -25,7 +25,7 @@ namespace Restful.Core.Requests
         /// 
         /// </summary>
         /// <param name="collectionId"></param>
-        /// <returns>A Collection of Requests for the Specified User</returns>
+        /// <returns>A Collection of Requests for the Specified Collection</returns>
         public async Task<ICollection<RequestEntity>> GetAllRequestsByCollectionIdAsync(Guid collectionId)
         {
             using var context = await _contextFactory.CreateDbContextAsync();
