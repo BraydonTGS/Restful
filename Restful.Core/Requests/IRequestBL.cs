@@ -8,5 +8,6 @@ namespace Restful.Core.Requests
     {
         public Task<ICollection<Request>> GetAllRequestsByCollectionIdAsync(Guid collectionId);
         Task<ICollection<Request>> GetAllRequestsByUserIdAsync(Guid userId);
+        Task<ICollection<Request>> GetAllRequestsByUserIdIncludeHeadersAndParametersAsync(Guid userId);
     }
 }

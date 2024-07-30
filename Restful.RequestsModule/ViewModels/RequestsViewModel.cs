@@ -52,7 +52,7 @@ namespace Restful.RequestsModule.ViewModels
                 {
                     LoadRequestsAsync().AwaitTask(TaskCompleted, HandleException);
                 }
-              
+
             }
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
 
@@ -83,7 +83,8 @@ namespace Restful.RequestsModule.ViewModels
                 else
                 {
                     _requests = await _requestBL
-                        .GetAllRequestsByUserIdAsync(_applicationUserService.GetApplicationUserGuid()) as ObservableCollection<Request>;
+                        .GetAllRequestsByUserIdIncludeHeadersAndParametersAsync(
+                        _applicationUserService.GetApplicationUserGuid()) as ObservableCollection<Request>;
                 }
 
             }
@@ -117,7 +118,7 @@ namespace Restful.RequestsModule.ViewModels
         /// </summary>
         private void NavigateToRequestsTree()
         {
-            var parameters = new NavigationParameters { {NavigationKeys.RequestsKey, _requests } };
+            var parameters = new NavigationParameters { { NavigationKeys.RequestsKey, _requests } };
 
             RequestNavigate(Regions.RequestsTreeRegion, nameof(RequestsTreeView), parameters);
         }

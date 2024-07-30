@@ -21,13 +21,13 @@
             VerticalAlignment="Center"
             FontSize="20"
             Text="Add Request Body:" />
-        <!--  Response Text Area  -->
+
+        <!--  Body Text Area  -->
         <avalonEdit:TextEditor
             x:Name="bodyTextBox"
             Grid.Row="1"
             Margin="5"
             VerticalAlignment="Top"
-            Background="White"
             Document="{Binding Path=Request.Body, UpdateSourceTrigger=PropertyChanged}"
             FontWeight="Bold"
             ShowLineNumbers="True"

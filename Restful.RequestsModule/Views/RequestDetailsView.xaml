@@ -161,7 +161,6 @@
                     Grid.ColumnSpan="3"
                     Margin="5"
                     VerticalAlignment="Top"
-                    Background="White"
                     Document="{Binding Path=Request.TempResult}"
                     FontWeight="Bold"
                     IsReadOnly="True"
