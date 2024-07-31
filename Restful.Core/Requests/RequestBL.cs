@@ -91,7 +91,6 @@ namespace Restful.Core.Requests
         }
         #endregion
 
-
         #region GetAllRequestsByUserIdIncludeHeadersAndParametersAsync
         /// <summary>
         /// Query Requests from the RequestRepository for the Specified User Id
@@ -114,9 +113,14 @@ namespace Restful.Core.Requests
                         var headers = await _headerBL.GetAllHeadersByRequestIdAsync(request.Id);
                         if (headers.Count > 0)
                             foreach (var header in headers)
-                                request?.Headers?.Add(header);
+                                request.Headers?.Add(header);
 
                         // Params //
+                        var parameters = await _parameterBL.GetAllParametersByRequestIdAsync(request.Id);
+                        if (parameters.Count > 0)
+                            foreach (var parameter in parameters)
+                                request.Parameters?.Add(parameter);
+
                     }
 
                 return requests;
@@ -129,5 +133,52 @@ namespace Restful.Core.Requests
         }
         #endregion
 
+        #region CreateAsync - Override
+        public override async Task<Request?> CreateAsync(Request model)
+        {
+            _log.Information($"Starting CreateAsync for the Specified Request.");
+            try
+            {
+                var entity = _mapper.Map(model);
+                if (entity == null)
+                {
+                    _log.Warning($"Unable to Map Request to RequestEntity.");
+                    return null;
+                }
+
+                var createdEntity = await _requestRepository.CreateAsync(entity);
+                if (createdEntity == null)
+                {
+                    _log.Warning($"Failed to create RequestEntity in Database.");
+                    return null;
+                }
+
+                var resultModel = _mapper.Map(createdEntity);
+         
+                _log.Information($"Check for Request Headers & Parameters and add to the Database.");
+                if (resultModel.Headers != null)
+                    foreach (var header in resultModel.Headers.Where(x => !x.IsDefault))
+                    {
+                        header.RequestId = resultModel.Id;
+                        await _headerBL.CreateAsync(header);
+                    }
+
+                if (resultModel.Parameters != null)
+                    foreach (var parameter in resultModel.Parameters)
+                    {
+                        parameter.RequestId = resultModel.Id;
+                        await _parameterBL.CreateAsync(parameter);
+                    }
+
+                _log.Information($"Completed CreateAsync for the Specified Request. RequestEntity Creation and Mapping Successful.");
+                return resultModel;
+            }
+            catch (Exception ex)
+            {
+                _log.Error($"Exception in CreateAsync for the Specified Request with Message: {ex.Message}.");
+                throw;
+            }
+        }
+        #endregion
     }
 }

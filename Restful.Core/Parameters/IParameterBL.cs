@@ -4,5 +4,8 @@ using Restful.Entity.Entities;
 
 namespace Restful.Core.Parameters
 {
-    public interface IParameterBL : IBaseBL<Parameter, ParameterEntity, Guid> { }
+    public interface IParameterBL : IBaseBL<Parameter, ParameterEntity, Guid>
+    {
+        Task<ICollection<Parameter>> GetAllParametersByRequestIdAsync(Guid requestId);
+    }
 }

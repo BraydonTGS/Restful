@@ -22,5 +22,8 @@ namespace Restful.Core.Base
 
         [ObservableProperty]
         private bool _isDeleted;
+
+        [ObservableProperty]
+        private bool _isDefault;
     }
 }

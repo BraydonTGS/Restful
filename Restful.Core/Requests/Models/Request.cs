@@ -66,9 +66,9 @@ namespace Restful.Core.Requests.Models
         {
             Headers = new ObservableCollection<Header>
             {
-                new Header("Content-Type", "application/json", true),
-                new Header("Accept", "*/*", true),
-                new Header("Connection", "keep-alive", true)
+                new Header("Content-Type", "application/json", true, true),
+                new Header("Accept", "*/*", true, true),
+                new Header("Connection", "keep-alive", true, true)
             };
         }
         #endregion

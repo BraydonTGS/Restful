@@ -51,6 +51,14 @@ namespace Restful.Core.Tests.ParameterTests
         }
 
         [TestMethod]
+        public async Task GetAllParametersByRequestIdAsync_Success()
+        {
+            var results = await _parameterBL.GetAllParametersByRequestIdAsync(DatabaseSeeder.GetRequestId());
+
+            Assert.AreEqual(3, results.Count());
+        }
+
+        [TestMethod]
         public async Task CreateParameterAsync_Success()
         {
             var parameter = ModelCreationHelper.GenerateParameter();
