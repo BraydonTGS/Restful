@@ -37,19 +37,8 @@
 
     <!--  Toolbar Items  -->
     <mah:MetroWindow.RightWindowCommands>
-        
+
         <mah:WindowCommands>
-            
-            <!--  Save  -->
-            <Button ToolTip="Save">
-                <iconPacks:PackIconModern
-                    Width="20"
-                    Height="20"
-                    Margin="4"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Kind="Save" />
-            </Button>
             
             <!--  Theme Button  -->
             <Button Command="{Binding ThemeButtonClicked}" ToolTip="Change Theme">
@@ -61,7 +50,7 @@
                     VerticalAlignment="Center"
                     Kind="Lightbulb" />
             </Button>
-            
+
             <!--  Accent Button  -->
             <mah:DropDownButton
                 x:Name="AccentSelector"

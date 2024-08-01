@@ -125,10 +125,7 @@ namespace Restful.WPF
                     .GetEvent<SetUsernameEvent>()
                     .Publish();
 
-                if (!Settings.Default.NotificationWindowClosed)
-                    _regionManager.RequestNavigate(Regions.MainContentRegion, nameof(WelcomeView));
-                else
-                    _regionManager.RequestNavigate(Regions.MainContentRegion, nameof(RequestsView));
+                _regionManager.RequestNavigate(Regions.MainContentRegion, nameof(RequestsView));
 
                 base.OnInitialized();
             }

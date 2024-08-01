@@ -25,8 +25,8 @@ namespace Restful.WPF.ViewModels
         public DelegateCommand ThemeButtonClicked { get; set; }
         public DelegateCommand<string> MenuItemClicked { get; set; }
         public DelegateCommand<string> AccentButtonClicked { get; set; }
-
         public DelegateCommand LaunchTerminalCommand { get; set; }
+        public DelegateCommand LogoutCommand { get; set; }
 
         #region Constructor
         public MainWindowViewModel(
@@ -61,6 +61,7 @@ namespace Restful.WPF.ViewModels
             ThemeButtonClicked = new DelegateCommand(OnThemeButtonClickedExecuted);
             AccentButtonClicked = new DelegateCommand<string>(OnAccentButtonClickedExecuted);
             LaunchTerminalCommand = new DelegateCommand(OnLaunchTerminalCommandExecuted);
+            LogoutCommand = new DelegateCommand(OnLogoutCommandExecuted);
         }
         #endregion
 
@@ -112,8 +113,6 @@ namespace Restful.WPF.ViewModels
         #region OnLaunchTerminalCommandExecuted
         /// <summary>
         /// Command that is executed when the User Clicks the Terminal Button
-        /// 
-        /// Open Powershell
         /// </summary>
         private void OnLaunchTerminalCommandExecuted()
         {
@@ -136,6 +135,27 @@ namespace Restful.WPF.ViewModels
         }
         #endregion
 
+        #region OnLogoutCommandExecuted
+        /// <summary>
+        /// Command that is Executed when the User Logouts of the Application
+        /// 
+        /// Re-Start the Application and Shutdown the Current Application that is running
+        /// </summary>
+        private void OnLogoutCommandExecuted()
+        {
+            try
+            {
+                if (IsBusy) return;
+                IsBusy = true;
+                System.Windows.Forms.Application.Restart();
+                System.Windows.Application.Current.Shutdown();
+
+            }
+            catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
+            finally { IsBusy = false; }
+        }
+        #endregion
+        
         #region OnSetUsernameEventPublished
         /// <summary>
         /// Event that is Triggered when the User Login in Successful

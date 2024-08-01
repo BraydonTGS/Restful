@@ -50,7 +50,7 @@
                         CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                         Glyph="&#xE756;"
                         Label="Terminal"
-                        Tag="ComingSoonView" />
+                        Tag="Terminal" />
                     <!--<mah:HamburgerMenuGlyphItem
                         Command="{Binding MenuItemClicked}"
                         CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
@@ -74,11 +74,11 @@
             <mah:HamburgerMenu.OptionsItemsSource>
                 <mah:HamburgerMenuItemCollection>
                     <mah:HamburgerMenuGlyphItem
-                        Command="{Binding MenuItemClicked}"
+                        Command="{Binding LogoutCommand}"
                         CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
                         Glyph="&#xE748;"
-                        Label="Switch User"
-                        Tag="ComingSoonView" />
+                        Label="Logout"
+                        Tag="Logout" />
                     <!--<mah:HamburgerMenuGlyphItem
                         Command="{Binding MenuItemClicked}"
                         CommandParameter="{Binding Tag, RelativeSource={RelativeSource Self}}"
