@@ -10,6 +10,7 @@ using Restful.Core.Requests.Models;
 using Restful.Core.Users;
 using Restful.Core.ViewModels;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Restful.RequestsModule.ViewModels
@@ -29,6 +30,7 @@ namespace Restful.RequestsModule.ViewModels
         public DelegateCommand SaveButtonClicked { get; set; }
         public DelegateCommand ExportButtonClicked { get; set; }
         public DelegateCommand RefreshButtonClicked { get; set; }
+        public DelegateCommand DeleteButtonClicked { get; set; }
 
         #region Constructor
         public RequestDetailsViewModel(
@@ -74,6 +76,8 @@ namespace Restful.RequestsModule.ViewModels
             if (Request?.TempResult != null)
                 RefreshButtonClicked = new DelegateCommand(OnRefreshButtonClickedExecuted, CanRefreshButtonClickedExecuted)
                 .ObservesProperty(() => Request.TempResult.Text);
+
+            DeleteButtonClicked = new DelegateCommand(async () => await OnDeleteButtonClickedExecuted());
         }
         #endregion
 
@@ -128,9 +132,10 @@ namespace Restful.RequestsModule.ViewModels
         {
             try
             {
+                if(IsBusy)return;
+                IsBusy = true;
                 Request.UserId = _applicationUserService.GetApplicationUserGuid();
 
-                // Upsert - When Ready //
                 if (Request.Id == Guid.Empty)
                     await _requestBL.CreateAsync(Request);
                 else
@@ -145,8 +150,25 @@ namespace Restful.RequestsModule.ViewModels
 
                 _errorHandler.DisplayExceptionMessage(ex);
             }
+            finally { IsBusy  = false; }
         }
         private bool CanSaveButtonClickedExecuted() => !string.IsNullOrEmpty(Request.Name);
+        #endregion
+
+        #region OnDeleteButtonClickedExecuted
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private async Task OnDeleteButtonClickedExecuted()
+        {
+            try
+            {
+                var id = Request.Id;
+                await _requestBL.HardDeleteAsync(Request.Id);
+            }
+            catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
+        }
         #endregion
 
         #region OnExportButtonClickedExecuted

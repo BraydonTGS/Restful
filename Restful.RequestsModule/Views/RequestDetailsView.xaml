@@ -103,6 +103,7 @@
                             Height="15"
                             Kind="CabinetFilesVariant" />
                     </Button>
+
                 </StackPanel>
 
                 <!--  Request Type Dropdown  -->
@@ -143,16 +144,36 @@
                     ToolTip="Enter URL here" />
 
                 <!--  Submit Button  -->
-                <Button
+                <StackPanel
                     Grid.Row="1"
                     Grid.Column="2"
-                    Width="100"
-                    Height="30"
-                    Margin="5"
+                    Margin="0, 0, 18, 0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    Command="{Binding SubmitButtonClicked}"
-                    Content="Submit" />
+                    Orientation="Horizontal">
+                    <Button
+                        Margin="4"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Command="{Binding SubmitButtonClicked}">
+                        <iconPacks:PackIconModern
+                            Width="15"
+                            Height="15"
+                            Kind="Rocket" />
+                    </Button>
+
+                    <Button
+                        Margin="4"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Command="{Binding DeleteButtonClicked}">
+                        <iconPacks:PackIconModern
+                            Width="15"
+                            Height="15"
+                            Kind="Delete" />
+                    </Button>
+                </StackPanel>
+
 
                 <!--  Response Text Area  -->
                 <avalonEdit:TextEditor
