@@ -43,10 +43,16 @@ namespace Restful.RequestsModule.ViewModels
         {
             try
             {
-                // Pull out the Collection ID //
+                if (navigationContext.Parameters.TryGetValue(NavigationKeys.CollectionKey, out Guid collectionId))
+                {
+                    _collectionId = collectionId;
+                }
+
                 if (_requests is null || _requests.Count == 0)
-                    LoadRequestsAsync()
-                        .AwaitTask(TaskCompleted, HandleException);
+                {
+                    LoadRequestsAsync().AwaitTask(TaskCompleted, HandleException);
+                }
+
             }
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
 
@@ -63,13 +69,24 @@ namespace Restful.RequestsModule.ViewModels
             try
             {
                 _requests = new ObservableCollection<Request>();
+
                 if (IsBusy) return;
+
                 IsBusy = true;
+
                 if (_collectionId != Guid.Empty)
-                    _requests = await _requestBL.GetAllRequestsByCollectionIdAsync(_collectionId) as ObservableCollection<Request>;
-                else
+                {
                     _requests = await _requestBL
-                        .GetAllRequestsByUserIdAsync(_applicationUserService.GetApplicationUserGuid()) as ObservableCollection<Request>;
+                        .GetAllRequestsByCollectionIdAsync(_collectionId) as ObservableCollection<Request>;
+                }
+
+                else
+                {
+                    _requests = await _requestBL
+                        .GetAllRequestsByUserIdIncludeHeadersAndParametersAsync(
+                        _applicationUserService.GetApplicationUserGuid()) as ObservableCollection<Request>;
+                }
+
             }
             catch (Exception ex)
             {
@@ -101,7 +118,9 @@ namespace Restful.RequestsModule.ViewModels
         /// </summary>
         private void NavigateToRequestsTree()
         {
-            RequestNavigate(Regions.RequestsTreeRegion, nameof(RequestsTreeView));
+            var parameters = new NavigationParameters { { NavigationKeys.RequestsKey, _requests } };
+
+            RequestNavigate(Regions.RequestsTreeRegion, nameof(RequestsTreeView), parameters);
         }
         #endregion
     }

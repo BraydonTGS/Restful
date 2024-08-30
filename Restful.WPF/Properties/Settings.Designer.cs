@@ -58,5 +58,17 @@ namespace Restful.WPF.Properties {
                 this["DVDb"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool NotificationWindowClosed {
+            get {
+                return ((bool)(this["NotificationWindowClosed"]));
+            }
+            set {
+                this["NotificationWindowClosed"] = value;
+            }
+        }
     }
 }

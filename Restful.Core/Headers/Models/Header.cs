@@ -16,15 +16,20 @@ namespace Restful.Core.Headers.Models
         [ObservableProperty]
         private string _value = string.Empty;
 
-        private Guid RequestId { get; set; }
+        public Guid RequestId { get; set; }
 
         public Header() { }
 
-        public Header(string key, string value, bool enabled = false)
+        public Header(
+            string key,
+            string value,
+            bool enabled = false,
+            bool isDefault = false)
         {
             Key = key;
             Value = value;
             Enabled = enabled;
+            IsDefault = isDefault;
         }
 
         public override string ToString() => $"{Key}={Value}";

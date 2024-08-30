@@ -16,7 +16,7 @@ namespace Restful.Core.Parameters.Models
         [ObservableProperty]
         private string _value = string.Empty;
 
-        private Guid RequestId { get; set; }
+        public Guid RequestId { get; set; }
 
         public Parameter() { }
 

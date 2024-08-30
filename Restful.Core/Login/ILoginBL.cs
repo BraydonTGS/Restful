@@ -4,6 +4,6 @@ namespace Restful.Core.Login
 {
     public interface ILoginBL
     {
-        Task<LoginResponse?> LoginUserAsync(LoginRequest request);
+        Task<LoginResponse> LoginUserAsync(LoginRequest request);
     }
 }

@@ -3,11 +3,13 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
 using Restful.Core.Errors;
+using Restful.Core.Events;
 using Restful.Core.Users;
 using Restful.Core.ViewModels;
 using Restful.Global.Constant;
 using Restful.WPF.Theme;
 using System;
+using System.Diagnostics;
 
 namespace Restful.WPF.ViewModels
 {
@@ -23,6 +25,8 @@ namespace Restful.WPF.ViewModels
         public DelegateCommand ThemeButtonClicked { get; set; }
         public DelegateCommand<string> MenuItemClicked { get; set; }
         public DelegateCommand<string> AccentButtonClicked { get; set; }
+        public DelegateCommand LaunchTerminalCommand { get; set; }
+        public DelegateCommand LogoutCommand { get; set; }
 
         #region Constructor
         public MainWindowViewModel(
@@ -40,6 +44,10 @@ namespace Restful.WPF.ViewModels
             _errorHandler = errorHandler;
 
             ConfigureDelegateCommands();
+
+            _eventAggregator
+                .GetEvent<SetUsernameEvent>()
+                .Subscribe(OnSetUsernameEventPublished);
         }
         #endregion
 
@@ -52,15 +60,8 @@ namespace Restful.WPF.ViewModels
             MenuItemClicked = new DelegateCommand<string>(OnMenuItemClickedExecuted);
             ThemeButtonClicked = new DelegateCommand(OnThemeButtonClickedExecuted);
             AccentButtonClicked = new DelegateCommand<string>(OnAccentButtonClickedExecuted);
-        }
-        #endregion
-
-        #region OnNavigatedTo
-        /// <inheritdoc/>
-        public override void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            Username = _applicationUserService.GetApplicationUsername();
-            Title = $"{Constants.ApplicationTitle}: {Username}";
+            LaunchTerminalCommand = new DelegateCommand(OnLaunchTerminalCommandExecuted);
+            LogoutCommand = new DelegateCommand(OnLogoutCommandExecuted);
         }
         #endregion
 
@@ -106,6 +107,65 @@ namespace Restful.WPF.ViewModels
                 _themeService.ChangeApplicationAccent(str);
             }
             catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
+        }
+        #endregion
+
+        #region OnLaunchTerminalCommandExecuted
+        /// <summary>
+        /// Command that is executed when the User Clicks the Terminal Button
+        /// </summary>
+        private void OnLaunchTerminalCommandExecuted()
+        {
+            try
+            {
+                if (IsBusy) return;
+
+                IsBusy = true;
+
+                var psi = new ProcessStartInfo()
+                {
+                    FileName = Constants.Powershell,
+                    UseShellExecute = true,
+                };
+                
+                Process.Start(psi);
+            }
+            catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
+            finally { IsBusy = false; } 
+        }
+        #endregion
+
+        #region OnLogoutCommandExecuted
+        /// <summary>
+        /// Command that is Executed when the User Logouts of the Application
+        /// 
+        /// Re-Start the Application and Shutdown the Current Application that is running
+        /// </summary>
+        private void OnLogoutCommandExecuted()
+        {
+            try
+            {
+                if (IsBusy) return;
+                IsBusy = true;
+                System.Windows.Forms.Application.Restart();
+                System.Windows.Application.Current.Shutdown();
+
+            }
+            catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
+            finally { IsBusy = false; }
+        }
+        #endregion
+        
+        #region OnSetUsernameEventPublished
+        /// <summary>
+        /// Event that is Triggered when the User Login in Successful
+        /// 
+        /// We set the Application Title + Username
+        /// </summary>
+        private void OnSetUsernameEventPublished()
+        {
+            Username = _applicationUserService.GetApplicationUsername();
+            Title = $"{Constants.ApplicationTitle} - {Username}";
         }
         #endregion
     }

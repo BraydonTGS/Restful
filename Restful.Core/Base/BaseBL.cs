@@ -32,19 +32,19 @@ namespace Restful.Core.Base
         /// Retrieves all Models of the specified type asynchronously.
         /// </summary>
         /// <returns>A collection of Models or null if none are found.</returns>
-        public virtual async Task<IEnumerable<TModel>?> GetAllAsync()
+        public virtual async Task<IEnumerable<TModel>> GetAllAsync()
         {
             _log.Information($"Starting GetAllAsync for EntityType: {typeof(TEntity).Name}.");
             try
             {
                 var entities = await _repository.GetAllAsync();
 
-                if (entities == null)
+                if (entities.Count is 0)
                 {
                     _log.Warning($"No Entities Found During GetAllAsync for EntityType: {typeof(TEntity).Name}.");
-                    return null;
-                }
-
+                    return [];
+                };
+                
                 var models = _mapper.Map(entities);
 
                 _log.Information($"Completed GetAllAsync for EntityType: {typeof(TEntity).Name}. {entities.Count} Entities Mapped to Models.");
@@ -213,7 +213,6 @@ namespace Restful.Core.Base
             }
         }
         #endregion
-
 
         #region RestoreAsync
         /// <summary>

@@ -7,15 +7,19 @@ using Restful.Core.Events;
 using Restful.Core.Files;
 using Restful.Core.Requests;
 using Restful.Core.Requests.Models;
+using Restful.Core.Users;
 using Restful.Core.ViewModels;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Restful.RequestsModule.ViewModels
 {
     public partial class RequestDetailsViewModel : RegionViewModelBase
     {
+        private readonly IRequestBL _requestBL;
         private readonly IRequestApiService _apiService;
+        private readonly IApplicationUserService _applicationUserService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IFileExportService _fileExportService;
         private readonly IErrorHandler _errorHandler;
@@ -26,16 +30,21 @@ namespace Restful.RequestsModule.ViewModels
         public DelegateCommand SaveButtonClicked { get; set; }
         public DelegateCommand ExportButtonClicked { get; set; }
         public DelegateCommand RefreshButtonClicked { get; set; }
+        public DelegateCommand DeleteButtonClicked { get; set; }
 
         #region Constructor
         public RequestDetailsViewModel(
             IRegionManager regionManager,
+            IRequestBL requestBL,
             IRequestApiService apiService,
+            IApplicationUserService applicationUserService,
             IEventAggregator eventAggregator,
             IFileExportService fileExportService,
             IErrorHandler errorHandler) : base(regionManager)
         {
+            _requestBL = requestBL;
             _apiService = apiService;
+            _applicationUserService = applicationUserService;
             _eventAggregator = eventAggregator;
             _fileExportService = fileExportService;
             _errorHandler = errorHandler;
@@ -67,6 +76,8 @@ namespace Restful.RequestsModule.ViewModels
             if (Request?.TempResult != null)
                 RefreshButtonClicked = new DelegateCommand(OnRefreshButtonClickedExecuted, CanRefreshButtonClickedExecuted)
                 .ObservesProperty(() => Request.TempResult.Text);
+
+            DeleteButtonClicked = new DelegateCommand(async () => await OnDeleteButtonClickedExecuted());
         }
         #endregion
 
@@ -121,14 +132,16 @@ namespace Restful.RequestsModule.ViewModels
         {
             try
             {
-                // Simulate Saving the Result to the DB //
-                await Task.Delay(200);
+                if(IsBusy)return;
+                IsBusy = true;
+                Request.UserId = _applicationUserService.GetApplicationUserGuid();
 
-                // Validate the Request Being Saved //
-                if (!string.IsNullOrEmpty(Request?.Name))
-                    _eventAggregator
-                        .GetEvent<RequestSavedEvent>()
-                        .Publish(Request);
+                if (Request.Id == Guid.Empty)
+                    await _requestBL.CreateAsync(Request);
+                else
+                    await _requestBL.UpdateAsync(Request);
+
+                _eventAggregator.GetEvent<RequestSavedEvent>().Publish(Request);
             }
             catch (Exception ex)
             {
@@ -137,8 +150,25 @@ namespace Restful.RequestsModule.ViewModels
 
                 _errorHandler.DisplayExceptionMessage(ex);
             }
+            finally { IsBusy  = false; }
         }
         private bool CanSaveButtonClickedExecuted() => !string.IsNullOrEmpty(Request.Name);
+        #endregion
+
+        #region OnDeleteButtonClickedExecuted
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private async Task OnDeleteButtonClickedExecuted()
+        {
+            try
+            {
+                var id = Request.Id;
+                await _requestBL.HardDeleteAsync(Request.Id);
+            }
+            catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
+        }
         #endregion
 
         #region OnExportButtonClickedExecuted

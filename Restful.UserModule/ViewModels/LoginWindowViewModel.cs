@@ -6,8 +6,9 @@ using Restful.Core.Events;
 using Restful.Core.Login;
 using Restful.Core.Login.Models;
 using Restful.Core.Users;
-using Restful.Core.Users.Models;
 using Restful.Core.ViewModels;
+using Restful.Global.Exceptions;
+using Restful.UserModule.Views;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,6 +29,8 @@ namespace Restful.UserModule.ViewModels
         public DelegateCommand LoginUserCommand { get; set; }
         public DelegateCommand CreateNewUserCommand { get; set; }
         public DelegateCommand ResetPasswordCommand { get; set; }
+
+        #region Constructor
         public LoginWindowViewModel(
             ILoginBL loginBL,
             IApplicationUserService applicationUserService,
@@ -44,7 +47,12 @@ namespace Restful.UserModule.ViewModels
 
             ConfigureDelegateCommands();
         }
+        #endregion
 
+        #region ConfigureDelegateCommands
+        /// <summary>
+        /// Configure the Delegate Commands
+        /// </summary>
         private void ConfigureDelegateCommands()
         {
             LoginUserCommand = new DelegateCommand(
@@ -53,18 +61,28 @@ namespace Restful.UserModule.ViewModels
                 .ObservesProperty(() => LoginRequest.Username)
                 .ObservesProperty(() => LoginRequest.Password);
 
-            CreateNewUserCommand = new DelegateCommand(OnCreateNewUserCommandExecuted, CanExecute);
-            ResetPasswordCommand = new DelegateCommand(OnResetPasswordCommandExecuted, CanExecute);
+            CreateNewUserCommand = new DelegateCommand(OnCreateNewUserCommandExecuted);
+            ResetPasswordCommand = new DelegateCommand(OnResetPasswordCommandExecuted, CanResetPasswordCommandExecuted);
         }
+        #endregion
 
+        #region OnLoginUserCommandAsyncExecuted
+        /// <summary>
+        /// Command that is Fired when the User Clicks Login
+        /// 
+        /// Only Enabled if the Username and Password Requirements are met
+        /// </summary>
+        /// <returns></returns>
         private async Task OnLoginUserCommandAsyncExecuted()
         {
             try
             {
-                // Attempt to Login the User //
-                // responses 
+                if (IsBusy) return;
+
+                IsBusy = true;
+
                 var loginResponse = await _loginBL.LoginUserAsync(LoginRequest);
-                if (loginResponse is not null && loginResponse.IsSuccessful)
+                if (loginResponse.IsSuccessful)
                 {
                     _applicationUserService.SetApplicationUser(
                         loginResponse.User.Id, loginResponse.User.Username, loginResponse.User.Email);
@@ -75,21 +93,52 @@ namespace Restful.UserModule.ViewModels
                 }
 
                 else
-                    MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"{loginResponse.ErrorMessage}", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
+            catch (InvalidPasswordException ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                _errorHandler.DisplayExceptionMessage(ex);
+            }
+            finally { IsBusy = false; }
+        }
+        private bool CanLoginUserCommandExecuted() => LoginRequest.IsValid();
+        #endregion
 
+        #region 
+        /// <summary>
+        /// Command that is Executed when the User Clicks Register
+        /// </summary>
+        private void OnCreateNewUserCommandExecuted()
+        {
+            try
+            {
+                if (IsBusy) return;
+
+                IsBusy = true;
+
+                RegistrationWindow registrationWindow = new RegistrationWindow();
+                registrationWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                _errorHandler.DisplayExceptionMessage(ex);
+            }
+            finally { IsBusy = false; }
 
         }
+        #endregion
 
-        private bool CanLoginUserCommandExecuted()
-            => !string.IsNullOrEmpty(LoginRequest.Username)
-            && !string.IsNullOrEmpty(LoginRequest.Password);
-
-        private void OnCreateNewUserCommandExecuted() { }
-
+        #region OnResetPasswordCommandExecuted
+        /// <summary>
+        /// WIP
+        /// </summary>
         private void OnResetPasswordCommandExecuted() { }
 
-        private bool CanExecute() => false;
+        private bool CanResetPasswordCommandExecuted() => false;
+        #endregion 
     }
 }

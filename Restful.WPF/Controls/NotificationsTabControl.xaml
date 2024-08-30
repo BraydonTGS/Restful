@@ -36,11 +36,11 @@
         <TextBlock
             Margin="20,0,0,10"
             FontSize="16"
-            Text="• Feature A: User Login Functionality" />
+            Text="• Feature A: Reset Password Functionality" />
         <TextBlock
             Margin="20,0,0,10"
             FontSize="16"
-            Text="• Feature B: Saving of Requests to your Account" />
+            Text="• Feature B: Save Request Headers and Parameters" />
         <TextBlock
             Margin="20,0,0,10"
             FontSize="16"

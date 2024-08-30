@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
-using Restful.Core.Base;
+﻿using Restful.Core.Base;
 using Restful.Core.Users.Models;
 using System.Diagnostics;
 
@@ -15,6 +14,14 @@ namespace Restful.Core.Passwords.Model
         public Guid UserId { get; set; }
 
         public ApplicationUser? ApplicationUser { get; set; }
+
+        public Password() { }
+
+        public Password(byte[] salt, byte[] hash)
+        {
+            Hash = hash;
+            Salt = salt;    
+        }
 
         private string GetDebuggerDisplay()
         {

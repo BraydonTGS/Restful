@@ -1,7 +1,9 @@
-﻿using Prism.Regions;
+﻿using Prism.Commands;
+using Prism.Regions;
 using Restful.Core.Errors;
 using Restful.Core.Extensions;
 using Restful.Core.ViewModels;
+using Restful.WPF.Properties;
 using System;
 using System.Threading.Tasks;
 
@@ -11,12 +13,16 @@ namespace Restful.WPF.ViewModels
     {
         private readonly IErrorHandler _errorHandler;
 
+        public DelegateCommand CloseNotificationsTabCommand { get; set; }
+
         #region Constructor
         public WelcomeViewModel(
             IRegionManager regionManager,
             IErrorHandler errorHandler) : base(regionManager)
         {
             _errorHandler = errorHandler;
+
+            CloseNotificationsTabCommand = new DelegateCommand(OnCloseNotificationsTabCommandExecuted);
         }
         #endregion
 
@@ -65,6 +71,17 @@ namespace Restful.WPF.ViewModels
         /// Action that is Fired when the LoadNotificationsAsync Fails and throws an Exception
         /// </summary>
         protected override void HandleException(Exception ex) { _errorHandler.DisplayExceptionMessage(ex); }
+        #endregion
+
+        #region OnCloseNotificationsTabCommandExecuted
+        /// <summary>
+        /// 
+        /// </summary>
+        private void OnCloseNotificationsTabCommandExecuted()
+        {
+            Settings.Default.NotificationWindowClosed = true;
+            Settings.Default.Save();
+        }
         #endregion
     }
 }
