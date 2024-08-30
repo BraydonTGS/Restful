@@ -145,6 +145,9 @@ namespace Restful.WPF.ViewModels
         {
             try
             {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
                 if (IsBusy) return;
                 IsBusy = true;
                 System.Windows.Forms.Application.Restart();
