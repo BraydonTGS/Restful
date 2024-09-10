@@ -84,7 +84,7 @@ namespace Restful.WPF
         /// </summary>
         private void EnsureDatabaseIsCreated()
         {
-            _log.Information($"Ensure the Database is Property Created with Name: {Settings.Default.DVDb}");
+            _log.Information($"Ensure the Database is Property Created with Name: {Settings.Default.ProdDb}");
             var databaseManager = Container.Resolve<IDatabaseManager>();
             if (databaseManager != null)
                 databaseManager.InitializeDatabase();
