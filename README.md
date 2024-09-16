@@ -4,6 +4,27 @@ Restful is a WPF application designed to take the functionality of popular API t
 
 Built using .NET 8, Entity Framework Core, Prism, and the MVVM framework, Restful offers a highly modular, scalable, and testable approach to API interaction and management.
 
+![Launch Window](images/launch.png "Launch Window")
+
+![Create Window](images/create.png "Create Window")
+
+![Create Two Window](images/createtwo.png "Create Two")
+
+![Login Window](images/login.png "Login Window")
+
+![Request Window](images/request.png "Request Window")
+
+![New Request Window](images/requestone.png "New Request Window")
+
+![New Request Window Two](images/requesttwo.png "New Request Window Two")
+
+![New Request Window Three](images/requestthree.png "New Request Window Three")
+
+![Export Json Window](images/exportjson.png "Export Json")
+
+![Json Window](images/jsonexample.png "Json Example")
+
+
 ## Project Structure
 
 ### Entity
