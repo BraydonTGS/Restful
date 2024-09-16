@@ -34,8 +34,8 @@ The `Global` project serves as a central place for common files used across the 
 ## Technologies Used
 
 - **.NET 8:** The project is built using the .NET 8 framework, which provides the latest features and improvements for developing robust applications.
-- ** Prism Framework:** For MVVM support and modularity.
-- ** MAH Apps Metro:** For custom controls and a polished UI.
+- **Prism Framework:** For MVVM support and modularity.
+- **MAH Apps Metro:** For custom controls and a polished UI.
 - **Entity Framework Core - Version 8.0.1:** Entity Framework Core is used as the Object-Relational Mapping (ORM) framework to interact with the database. It simplifies data access and provides powerful querying capabilities.
 - **MS Test:** The unit tests are written using the MS Test framework, which is a testing framework included with the .NET platform.
 - **Serilog** an open-source logging library for .NET applications. It provides a flexible and efficient logging framework with a focus on structured logging.
