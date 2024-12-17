@@ -21,7 +21,6 @@ using Restful.WPF.Views;
 using Serilog;
 using System;
 using System.Windows;
-using System.Windows.Forms;
 
 namespace Restful.WPF
 {
@@ -30,6 +29,8 @@ namespace Restful.WPF
     /// 
     /// Publish Command - Self Contained and Include all Libraries
     /// dotnet publish -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+    /// 
+    /// Restfu.WPF - Prism Applicatio - Braydon Sutherland
     /// </summary>
     public partial class App : PrismApplication
     {
