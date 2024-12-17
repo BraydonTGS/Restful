@@ -15,16 +15,19 @@ namespace Restful.Core.Requests
         private readonly IRequestRepository _requestRepository;
         private readonly IHeaderBL _headerBL;
         private readonly IParameterBL _parameterBL;
+        private readonly ICacheManager _cacheManager;
         public RequestBL(
             IRequestRepository requestRepository,
             IHeaderBL headerBL,
             IParameterBL parameterBL,
+            ICacheManager cacheManager,
             IMapper<Request, RequestEntity> mapper,
             ILogger log) : base(requestRepository, mapper, log)
         {
             _requestRepository = requestRepository ?? throw new ArgumentNullException(nameof(IRequestRepository));
             _headerBL = headerBL ?? throw new ArgumentNullException(nameof(IHeaderBL));
             _parameterBL = parameterBL ?? throw new ArgumentNullException(nameof(IParameterBL));
+            _cacheManager = cacheManager ?? throw new ArgumentNullException(nameof(ICacheManager));
         }
 
         #region GetAllRequestsByCollectionIdAsync
@@ -104,6 +107,10 @@ namespace Restful.Core.Requests
             _log.Information($"Starting GetAllRequestsByUserIdIncludeHeadersAndParametersAsync");
             try
             {
+
+                var cache = _cacheManager.GetFromCache($"request-cache-{userId}");
+                if (cache is not null) return (ICollection<Request>)cache;
+
                 var requests = await GetAllRequestsByUserIdAsync(userId);
 
                 if (requests.Count > 0)
@@ -123,6 +130,7 @@ namespace Restful.Core.Requests
 
                     }
 
+                _cacheManager.AddToCache($"request-cache-{userId}", requests, 30);
                 return requests;
             }
             catch (Exception ex)
@@ -153,25 +161,25 @@ namespace Restful.Core.Requests
                     return null;
                 }
 
-                var resultModel = _mapper.Map(createdEntity);
-         
+                model = _mapper.Map(createdEntity);
+
                 _log.Information($"Check for Request Headers & Parameters and add to the Database.");
-                if (resultModel.Headers != null)
-                    foreach (var header in resultModel.Headers.Where(x => !x.IsDefault))
+                if (model.Headers != null)
+                    foreach (var header in model.Headers.Where(x => !x.IsDefault))
                     {
-                        header.RequestId = resultModel.Id;
+                        header.RequestId = model.Id;
                         await _headerBL.CreateAsync(header);
                     }
 
-                if (resultModel.Parameters != null)
-                    foreach (var parameter in resultModel.Parameters)
+                if (model.Parameters != null)
+                    foreach (var parameter in model.Parameters)
                     {
-                        parameter.RequestId = resultModel.Id;
+                        parameter.RequestId = model.Id;
                         await _parameterBL.CreateAsync(parameter);
                     }
 
                 _log.Information($"Completed CreateAsync for the Specified Request. RequestEntity Creation and Mapping Successful.");
-                return resultModel;
+                return model;
             }
             catch (Exception ex)
             {

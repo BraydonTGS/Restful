@@ -30,6 +30,9 @@ namespace Restful.Core.Config
     {
         public static void RegisterCoreServices(IContainerRegistry containerRegistry, string dbName)
         {
+            // Cache Manager //
+            containerRegistry.RegisterSingleton<ICacheManager, CacheManager>();
+
             // Http Client //
             containerRegistry.RegisterScoped<HttpClient>();
 

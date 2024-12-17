@@ -73,7 +73,7 @@ namespace Restful.Core.Requests
             using var context = await _contextFactory.CreateDbContextAsync();
 
             // Check if a password for the user already exists
-            bool requestExists = await context.Requests.AnyAsync(p => p.Name == request.Name);
+            bool requestExists = await context.Requests.AnyAsync(r => r.Name == request.Name && r.UserId == request.UserId);
 
             if (requestExists)
                 throw new RequestAlreadyExistsException("A Request With the Specified Name Already Exists.");
